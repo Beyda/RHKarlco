@@ -56,72 +56,7 @@
                   </div><!-- /.row -->
                   </div><!-- /.form group -->
                   </div>
-                      <script type="text/javascript">
-            $(document).ready(function() {
-              var max_fields      = 6; //maximum input boxes allowed
-              
-              var wrapper_puesto      = $(".puesto"); //Fields wrapper
-              var button_puesto       = $("#add_puesto"); //Add button ID
-              
-              var x_puesto = 1; //initlal text box count
-              $(button_puesto).click(function(e){ //on add input button click
-                  e.preventDefault();
-                  if(x_puesto < max_fields){ //max input box allowed  
-                      x_puesto++; //text box increment
-                      $(wrapper_puesto).append('<div>'+
-            '<div class="puesto">'+
-              '<div class="box-footer"></div>'+
-              '<!-- Escuela/Instituto/Universiad, grado máximo-->'+
-
-                            '<div class="form-group">'+                  
-                              '<div class="row">'+                    
-                              '<div class="col-lg-6">'+
-                              '<label>Puesto:</label>'+
-                                '<div class="input-group">'+
-                                  '<span class="input-group-addon">'+
-                                    '<i class="fa fa-graduation-cap"></i>'+
-                                  '</span>'+
-                                  '<input type="text" class="form-control" name="est_puesto[]" maxlength="20" placeholder="Puesto" required>'+
-                                '</div><!-- /input-group -->'+
-                              '</div><!-- /.col-lg-6 -->'+
-                              '<div class="col-lg-6">'+
-                              '<label>Disponibilidad:</label>'+
-                                '<div class="input-group">'+
-                                  '<span class="input-group-addon">'+
-                                    '<i class="fa fa-graduation-cap"></i>'+
-                                  '</span>'+
-                                  '<input type="text" class="form-control" name="est_disp[]" maxlength="20" placeholder="Disponibilidad" required>'+
-                                '</div><!-- /input-group -->'+                   
-                              '</div><!-- /.col-lg-6 -->'+
-                            '</div><!-- /.row -->'+
-                            '</div><!-- /.form group -->'+
-
-                            '<!-- Certificado/Titulo -->'+
-                            '<div class="form-group">'+                                     
-                              '<div class="row">'+
-                              '<div class="col-lg-12">'+
-                              '<label>Unidad Operativa:</label>'+
-                                '<div class="input-group">'+
-                                  '<span class="input-group-addon">'+
-                                    '<i class="fa fa-graduation-cap"></i>'+
-                                  '</span>'+
-                                  '<input type="text" class="form-control" name="est_uoper[]" maxlength="20" placeholder="Unidad Operativa" required>'+
-                                '</div><!-- /input-group -->'+                    
-                              '</div><!-- /col-lg-6 -->'+
-                            '</div><!-- /row -->'+
-                            '</div><!-- /form group -->'+
-            '</div>'+
-            '<button class="btn btn-block btn-danger btn-xs" id="remove_field" style="width:100px;">Borrar</button>'+
-            '</div>'); //add input box
-                  
-                }
-              });
-              
-              $(wrapper_puesto).on("click","#remove_field", function(e){ //user click on remove text
-                  e.preventDefault(); $(this).parent('div').remove(); x_puesto--;
-              })
-          });
-          </script>
+                     
                     
                   </div>
                   <div class="modal-footer">

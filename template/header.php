@@ -1,9 +1,9 @@
 <?php 
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
        //$nombre_session=$_SESSION['nombre_session'];
 // $apellidos_session=$_SESSION["apellidos_session"];
- $usuario=$_SESSION['login_session'];
+ $usuario=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
  $id_usuario=$_SESSION['id_usuario_session'];
  $id_tipous=$_SESSION['id_tipo_usuario'];
@@ -17,6 +17,9 @@ if (isset($_SESSION['login_session'])){
  if ($tipo_usuario_session == "Jefe") {
    $avatar_session="/rhkarlco/imagenes/avatar3.png";
  }
+ if ($tipo_usuario_session == "Recursos Humanos") {
+   $avatar_session="/rhkarlco/imagenes/avatar4.png";
+ }
 }
 ?>
 <header class="main-header">
@@ -25,7 +28,7 @@ if (isset($_SESSION['login_session'])){
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button--><?php
-        if (isset($_SESSION['login_session'])){
+        if (isset($_SESSION["session"])){
         ?>
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -228,7 +231,7 @@ if (isset($_SESSION['login_session'])){
 
 
 <?php
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
   ?>
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -1,11 +1,11 @@
 <?php
 include_once("../../control/connect.php");
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
       //$id_usuario_session=$_SESSION["id_usuario_session"];
        //$nombre_session=$_SESSION['nombre_session'];
 // $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
+ $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
  //$avatar_session=$_SESSION["avatar_session"];
  
@@ -17,6 +17,9 @@ include("../../template/todo2.php");
 
 <form method="post">
 <div class="content-wrapper">
+<?php
+          if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos"){
+        ?>
         <section class="content">
           <div class="row">
           <div class="col-md-3">
@@ -151,48 +154,6 @@ include("../../template/todo2.php");
                   </div><!-- /.row -->
                   </div><!-- /.form group -->
 
-<script type="text/javascript">
-$(document).ready(function(){
-$("#jefe").hide();
-});
-function mostrar(id) {
-   $val = id.value;
-    if ($val == "Administrador") {
-        $("#jefe").hide();
-    }else{
-      $("#jefe").show();
-    }
-
-}
-</script>
-
-
-                  <!-- Jefe -->
-                  <div class="form-group" id="jefe">                    
-                    <div class="row">
-                    <div class="col-lg-12">
-                    <label>Jefe:</label>
-                      <div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="fa fa-user"></i>
-                        </span>
-                        <select class="form-control" name="jefe" onChange="t_usuario(this)">
-                        <option value = "">Seleccionar un jefe de trabajo</option>
-                        <?php 
-                          $sel_jefe = "SELECT u.`id_usuario`, d.`primer_nombre`, d.`segundo_nombre`, t.`nombre`  FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper`  INNER JOIN `tipo_usuario` t ON u.`id_tipous` = t.`id_tipous` WHERE t.`nombre` = 'Administrador' OR t.`nombre` = 'Jefe'";       
-                          $res_jefe = $mysqli->query($sel_jefe);
-                          while ($row_jefe = $res_jefe->fetch_array()) {
-                            ?>
-                              <option value="<?php echo $row_jefe[0] ?>"><?php echo $row_jefe[1]. " ". $row_jefe[2] . " - " . $row_jefe[3] ?></option>
-                            <?php
-                          }
-                        ?>
-                      </select>  
-                      </div><!-- /input-group -->                    
-                    </div><!-- /.col-lg-6 -->
-                  </div><!-- /.row -->
-                  </div><!-- /.form group -->
-
 
 
                 </div><!-- /.box-body -->
@@ -219,21 +180,15 @@ function mostrar(id) {
         $pass = $_POST["pass"];
         $contra = md5($pass);
         $t_usuario = $_POST["t_usuario"];
-        if ($_POST["jefe"] != "") 
-        {
-          echo $jefe = $_POST["jefe"];
-          $datos = new usuario($empleado, "$user", "$contra", $t_usuario, $jefe, "$nomeclatura", $num_contador);
-          $datos->registrarJ();
-        }else
-        {
 
-          $datos = new usuario($empleado, "$user", "$contra", $t_usuario, 0, "$nomeclatura", $num_contador);
-          $datos->registrar();
-        }
-        
+        $datos = new usuario($empleado, "$user", "$contra", $t_usuario, "$nomeclatura", $num_contador);
+        $datos->registrar();
       } 
       ?>
 </section>
+<?php
+}
+?>
 </div>
 </body>
 <?php 

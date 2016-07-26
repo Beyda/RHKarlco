@@ -10,23 +10,51 @@ include_once("../../control/connect.php");
  if (isset($_POST["habilidades"])) 
   {
     $hab = $_POST["habilidades"];
+    $n=0;
+    $c=0;
     foreach ($hab as $key => $value) {
       //echo "El número: ".$value;
-      $where[] = $value;
+      $n++;
+      $where[] = "INNER JOIN  `habilidades` h".$n." ON h".$n.".`id_datosper` = d.`id_datosper` AND h".$n.".`id_lhab` = ".$value;
     }
-    echo $query = "SELECT DISTINCT d.* FROM `datos_personales` d INNER JOIN `habilidades` h ON h.`id_datosper` = h.`id_datosper` WHERE h.`id_lhab` IN (".implode(", ",$where).") and d.`solicitante` = 1 GROUP BY h.`id_datosper`";
   }
 
-/*  if (isset($_POST["carreras"]) && isset($_POST["habilidades"])) 
+  if (isset($_POST["carreras"])) 
   {
-    $hab = $_POST["carreras"];
-    foreach ($hab as $key => $value) {
+    $carr = $_POST["carreras"];
+    foreach ($carr as $key => $value) {
+      $c++;
       //echo "El número: ".$value;
-      $carrera[] = "AND `empleos_anteriores`.`id_sub` = ".$value;
+      $carrera[] = "INNER JOIN  `estudios` e".$c." ON e".$c.".`id_datosper` = d.`id_datosper` AND e".$c.".`certificado` = ".$value;
     }
-    
-    
   }
+
+  if ($_POST["experiencia"] != "") {
+    $experiencia = $_POST["experiencia"];
+    $tipo = $_POST["tipo"];
+    $exp = "and d.`ano_experiencia` $tipo $experiencia";
+  }
+
+
+  if ($_POST["edad"] != "") {
+    $edad = $_POST["edad"];
+
+    $fecha = date('Y-m-j');
+    $nuevafecha = strtotime ( '-'.$edad.' year' , strtotime ( $fecha ) ) ;
+    $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+    
+    $tipo_edad = $_POST["tipo_edad"];
+    $ed = "and d.`f_nacimiento` $tipo_edad '$nuevafecha'";
+  }
+
+  if (isset($_POST["sexo"]) && $_POST["sexo"] != " ") {
+    $sexo = $_POST["sexo"];
+    $sx = "and d.`sexo` = '$sexo'";
+  }
+
+ $query = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d.`correo`, d.`tel_part` FROM `datos_personales` d ".implode(" ",$where)." ".implode(" ",$carrera)." WHERE d.`solicitante` = 1 ".$exp." ".$sx." ".$ed;
+    
+/*  }
   if (isset($_POST["carreras"]) && $_POST["habilidades"] == "") 
   {
     $hab = $_POST["carreras"];
@@ -55,6 +83,8 @@ include_once("../../control/connect.php");
                     <thead>
                       <tr>
                         <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
                         <th>Perfil</th>
                         <th>Emplear</th>
                       </tr>
@@ -66,8 +96,10 @@ include_once("../../control/connect.php");
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
                       <tr>
-                        <td><?php echo $row_resemp[1]?> <?php echo $row_resemp[2]?></td>
-                        <td><center><a href="../empleados/a_perfil.php?id=<?php echo $row_resemp[2]?>"><button class="btn bg-olive margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
+                        <td><?php echo $row_resemp[5] ?></td>
+                        <td><?php echo $row_resemp[6] ?></td>
+                        <td><center><a href="../empleados/a_perfil.php?id=<?php echo $row_resemp[0]?>"><button class="btn bg-olive margin" style="width: 50%;">Ver</button></a></center></td>
                         <td><center><button class="btn bg-blue margin sweet-4" style="width: 50%;" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-4']);">
                         Confirmar</button></center></td>
                       </tr>
@@ -78,6 +110,8 @@ include_once("../../control/connect.php");
                     <tfoot>
                       <tr>
                         <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
                         <th>Perfil</th>
                         <th>Emplear</th>
                       </tr>

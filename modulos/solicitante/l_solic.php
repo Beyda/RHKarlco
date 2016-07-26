@@ -6,26 +6,12 @@
 * @version 1.0
 */
 include_once("../../control/connect.php"); 
-
-session_start();
-if (isset($_SESSION['login_session'])){
-      //$id_usuario_session=$_SESSION["id_usuario_session"];
-       //$nombre_session=$_SESSION['nombre_session'];
-// $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
- $tipo_usuario_session=$_SESSION["t_usuario_session"];session_start();
-if (isset($_SESSION['login_session'])){
-      //$id_usuario_session=$_SESSION["id_usuario_session"];
-       //$nombre_session=$_SESSION['nombre_session'];
-// $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
- $tipo_usuario_session=$_SESSION["t_usuario_session"];
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
       //$id_usuario_session=$_SESSION["id_usuario_session"];
        //$nombre_session=$_SESSION['nombre_session'];
 // $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
+ $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
  //$avatar_session=$_SESSION["avatar_session"];
  
@@ -105,12 +91,13 @@ $(document).ready(function() {
             <div class="col-xs-3">
 
               <div class="box">
+              <form method="post" action="filtrado.php" id="fo3" name="fo3" >
                 <div class="box-header">
                   <h3 class="box-title">Habilidades</h3>
                 </div><!-- /.box-header style="overflow-y: auto;"-->
                 <div class="box-body" >
-                <form method="post" action="filtrado.php" id="fo3" name="fo3" >
-                <select data-placeholder="Selecciona habilidades" name="habilidades[]" class="chosen-select" multiple style="width:350px;" tabindex="4">
+                
+                <select data-placeholder="Selecciona habilidades" name="habilidades[]" class="chosen-select" multiple style="width:100%;" tabindex="4">
                   <option value=""></option>
                   <?php
                     $ctr_emp = "SELECT * FROM `l_habilidad` ORDER BY `nombre` ASC";
@@ -128,7 +115,7 @@ $(document).ready(function() {
                   <h3 class="box-title">Carreras</h3>
                 </div><!-- /.box-header style="overflow-y: auto;"-->
                 <div class="box-body">
-                <form method="post">
+                
                 <select data-placeholder="Selecciona carreras" name="carreras[]" class="chosen-select" multiple style="width:100%;" tabindex="4">
                   <option value=""></option>
                   <?php
@@ -143,9 +130,43 @@ $(document).ready(function() {
                   ?>
                   </select>
                 </div><!-- /.box-body -->
+                <div class="box-header">
+                  <h3 class="box-title">Años de experiencia</h3>
+                </div><!-- /.box-header style="overflow-y: auto;"-->
+                <div class="box-body">
+                
+                <select name="tipo" class="form-control">
+                  <option value=">">Mayor a</option>
+                  <option value="<">Menor a</option>
+                </select>
+                <input type="number" class="form-control" name="experiencia" placeholder="Años de experiencia" max="99" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                </div><!-- /.box-body -->
+                <div class="box-header">
+                  <h3 class="box-title">Sexo</h3>
+                </div><!-- /.box-header style="overflow-y: auto;"-->
+                <div class="box-body">
+                
+                <select name="sexo" class="form-control">
+                  <option value=" ">Selecciona el sexo</option>
+                  <option value="Femenino">Femenino</option>
+                  <option value="Masculino">Masculino</option>
+                </select>
+                </div><!-- /.box-body -->
+                <div class="box-header">
+                  <h3 class="box-title">Edad</h3>
+                </div><!-- /.box-header style="overflow-y: auto;"-->
+                <div class="box-body">
+                
+                <select name="tipo_edad" class="form-control">
+                  <option value="<">Mayor a</option>
+                  <option value=">">Menor a</option>
+                </select>
+                <input type="number" class="form-control" name="edad" placeholder="Años de experiencia" max="99" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;">
+                </div><!-- /.box-body -->
                   <button class="btn bg-navy margin" style="width: 50%;">Buscar</button>
-                </form>
+                
               </div><!-- /.box -->
+              </form>
             </div><!-- /.col -->
 
 
@@ -155,25 +176,29 @@ $(document).ready(function() {
                 <div class="box-header">
                   <h3 class="box-title">Solicitantes</h3>
                 </div><!-- /.box-header -->
-                <div class="box-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                <div class="box-body table-responsive no-padding">
+                  <table id="example1" class="table table-hover">
                     <thead>
                       <tr>
                         <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
                         <th>Perfil</th>
                         <th>Emplear</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT `primer_nombre`, `ap_paterno`, `id_datosper`, `estatus` FROM `datos_personales` where `solicitante` = 1 ORDER BY `primer_nombre` ASC";
+                    $ctr_emp = "SELECT `id_datosper`, `primer_nombre`, `segundo_nombre`, `ap_paterno`, `ap_materno`, `correo`, `tel_part` FROM `datos_personales` where `solicitante` = 1 ORDER BY `primer_nombre` ASC";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
                       <tr>
-                        <td><?php echo $row_resemp[0]?> <?php echo $row_resemp[1]?></td>
-                        <td><center><a href="../empleados/a_perfil.php?id=<?php echo $row_resemp[2]?>"><button class="btn bg-olive margin" style="width: 50%;">Ver</button></a></center></td>
-                        <td><center><button class="btn bg-blue margin sweet-4" style="width: 50%;" onclick="_gaq.push(['_trackEvent', 'example', 'try', 'sweet-4']);">
+                        <td><?php echo $row_resemp[1] ." ".$row_resemp[2] ." ".$row_resemp[3] ." ".$row_resemp[4]?></td>
+                        <td><?php echo $row_resemp[5] ?></td>
+                        <td><?php echo $row_resemp[6] ?></td>
+                        <td><center><a href="../empleados/a_perfil.php?id=<?php echo $row_resemp[0]?>"><button class="btn bg-olive margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td class="tooltipster-shadow-preview" title="Emplear a este solicitante dando clic en confirmar"><center><button class="btn bg-blue margin sweet-4" style="width: 50%;" onclick="crearE(this)" value="<?php echo $row_resemp[0]?>">
                         Confirmar</button></center></td>
                       </tr>
                       <?php
@@ -183,6 +208,8 @@ $(document).ready(function() {
                     <tfoot>
                       <tr>
                         <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
                         <th>Perfil</th>
                         <th>Emplear</th>
                       </tr>
@@ -212,10 +239,10 @@ $(document).ready(function() {
         });*/
       });
 
-      document.querySelector('.sweet-4').onclick = function(){
+      function crearE(id){
         swal({
           title: "¿Desea convertirlo como empleado?",
-          text: "Clic en si para continuar",
+          text: "Clic en si para continuar y crear su usuario",
           type: "warning",
           showCancelButton: true,
           confirmButtonClass: 'btn-primary',
@@ -224,7 +251,7 @@ $(document).ready(function() {
           //closeOnCancel: false
         },
         function(){
-          swal("Felicidades!", "Crearle un usuario al empleado!", "success");
+          window.location.href = "emplear.php?emp="+id.value;
         });
       };
     </script>

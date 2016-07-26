@@ -1,11 +1,11 @@
 <?php
 include_once("../../control/connect.php");
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
       //$id_usuario_session=$_SESSION["id_usuario_session"];
        //$nombre_session=$_SESSION['nombre_session'];
 // $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
+ $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
  //$avatar_session=$_SESSION["avatar_session"];
  
@@ -20,7 +20,7 @@ include("../../template/todo2.php");
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
                 <?php 
-                  if ($tipo_usuario_session == "Administrador") {
+                  if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos") {
                 ?>
         <section class="content-header">
           <h1>

@@ -39,7 +39,15 @@ if ($tipo_usuario_session == "Administrador"){
               </a>
               <ul class="treeview-menu">
                 <li class="active"><a href="/rhkarlco/"><i class="fa fa-circle-o"></i>Home</a></li>
-                 <li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o"></i>Empresas <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="/rhkarlco/modulos/empresas/empresas.php"><i class="fa fa-circle-o"></i> Mis empresas</a></li> 
+                        <li><a href="/rhkarlco/modulos/puestos/puestos.php"><i class="fa fa-circle-o"></i> Puestos</a></li> 
+                        <li><a href="/rhkarlco/modulos/jefes/jefes.php"><i class="fa fa-circle-o"></i> Jefes</a></li>                       
+                        </ul>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-circle-o"></i>Empleados <i class="fa fa-angle-left pull-right"></i></a>
                       <ul class="treeview-menu">
                         <li><a href="/rhkarlco/modulos/empleados/r_empleados.php"><i class="fa fa-circle-o"></i> Registrar</a></li>
@@ -53,6 +61,46 @@ if ($tipo_usuario_session == "Administrador"){
                         <li><a href="/rhkarlco/modulos/usuarios/l_usuarios.php"><i class="fa fa-circle-o"></i> Mis usuarios</a></li>                        
                         </ul>
                 </li>
+                <li><a href="/rhkarlco/modulos/festivos/festivos.php"><i class="fa fa-circle-o"></i>Días festivos</a></li>
+                <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
+                <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
+                <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
+                </ul>
+            </li>
+
+<?php
+}
+if ($tipo_usuario_session == "Recursos Humanos"){
+?>
+            <li class="active treeview">
+              <a href="#">
+                <i class="fa fa-dashboard"></i> <span>MI MENU</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="/rhkarlco/"><i class="fa fa-circle-o"></i>Home</a></li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o"></i>Empresas <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="/rhkarlco/modulos/puestos/puestos.php"><i class="fa fa-circle-o"></i> Puestos</a></li> 
+                        <li><a href="/rhkarlco/modulos/jefes/jefes.php"><i class="fa fa-circle-o"></i> Jefes</a></li>                       
+                        </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o"></i>Empleados <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="/rhkarlco/modulos/empleados/r_empleados.php"><i class="fa fa-circle-o"></i> Registrar</a></li>
+                        <li><a href="/rhkarlco/modulos/empleados/l_empleados.php"><i class="fa fa-circle-o"></i> Mis empleados</a></li>                        
+                        </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-circle-o"></i>Usuarios <i class="fa fa-angle-left pull-right"></i></a>
+                      <ul class="treeview-menu">
+                        <li><a href="/rhkarlco/modulos/usuarios/r_usuarios.php"><i class="fa fa-circle-o"></i> Registrar</a></li>
+                        <li><a href="/rhkarlco/modulos/usuarios/l_usuarios.php"><i class="fa fa-circle-o"></i> Mis usuarios</a></li>                        
+                        </ul>
+                </li>
+                <li><a href="/rhkarlco/modulos/festivos/festivos.php"><i class="fa fa-circle-o"></i>Días festivos</a></li>
+                <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 </ul>
@@ -76,6 +124,7 @@ if ($tipo_usuario_session == "Empleado"){
                         <li><a href="/rhkarlco/modulos/usuarios/l_usuarios.php"><i class="fa fa-circle-o"></i> Mis usuarios</a></li>                        
                         </ul>
                 </li>
+                <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
                 </ul>
             </li>
 
@@ -102,6 +151,7 @@ if($tipo_usuario_session == "Jefe"){
                         <li><a href="/rhkarlco/modulos/usuarios/l_usuarios.php"><i class="fa fa-circle-o"></i> Mis usuarios</a></li>                        
                         </ul>
                 </li>
+                <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
                 </ul>
             </li>
 

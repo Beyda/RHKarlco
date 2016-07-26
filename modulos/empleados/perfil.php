@@ -7,7 +7,7 @@
 */
 include_once("../../control/connect.php");
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
 $_SESSION['id_tmp'] = $_SESSION['id_datosper'];
 include("../../template/todo2.php");
 //inicio de librerias 
@@ -882,6 +882,9 @@ include("../../template/todo2.php");
                 $clasP->actualizar();
               }
           ?>
+
+
+
  
 <!-- ========================== Documentos necesarios a entregar ================================= -->
           <?php
@@ -958,7 +961,223 @@ include("../../template/todo2.php");
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
+
+            <!-- ========================== Salario ================================= -->
+          <?php
+           $ctr_puesto = "SELECT * FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE `id_datosper` = $_SESSION[id_datosper] ORDER BY pp.`fecha` ASC";
+            $res_puesto = $mysqli->query($ctr_puesto);
+            $res_puesto2 = $mysqli->query($ctr_puesto);
+            $numrowsPuesto = $res_puesto->num_rows;
+            if ($numrowsPuesto <= 0) {
+              $sigPuesto = "fa fa-warning";
+              $botonPuesto = "<a href=modal/modal_salario.php data-toggle=modal data-target=.modalRefper class='modalLoad'><button class='btn btn-block btn-primary btn-sm'>Insertar puesto</button></a>";
+
+            } else
+            {
+              $sigPuesto = "";
+            }
+          ?>
+            <div class="col-md-12">  
+              <div class="box box-default collapsed-box">
+                <div class="box-header with-border">
+                <img src="../../imagenes/perfil/salario.png" style="width: 3%; height: 3%;">
+                  <h3 class="box-title">Hoja de servicio</h3>
+                  <i class="<?php echo $sigPuesto; ?>" style="color: red"></i>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                  </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                <?php 
+                if ($tipo_usuario_session == "Administrador") 
+                {
+                  echo $botonPuesto; 
+                }
+                ?>
+                  
+                  <!-- REFERENCIAS PERSONALES -->
+                    <?php
+                    if ($numrowsPuesto > 0) 
+                    {
+                      ?>
+                      <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+
+              <div class="box">
+              <?php
+                if ($tipo_usuario_session == "Administrador") {
+              ?>
+                <div class="box-header">
+                  <a href="modal/modal_salario.php" data-toggle="modal" data-target=".modalsal" class='modalLoad'><button class="btn btn-block btn-primary btn-sm">Insertar puestos</button></a>
+                </div><!-- /.box-header -->
+                <?php
+                  }
+                ?>
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Inicio</th>
+                        <th>Fin </th>
+                        <th>Puesto</th>
+                        <th>Empresa</th>
+                        <th>Salario</th>
+                        <th>Meses</th>
+                        <th>Acumulado</th>
+                        <?php
+                          if ($tipo_usuario_session == "Administrador") {
+                        ?>
+                        <th>Modificar</th>
+                        <?php
+                        }
+                      ?>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $i=0;
+                      while ($row_puesto1 = $res_puesto->fetch_array()) 
+                      {
+                        $fecha_inicial2[] = $row_puesto1["1"];
+                        $fecha_inicial = $row_puesto1["1"];
+                        $fecha_final = strtotime ( '-1 day' , strtotime ( $fecha_inicial ) ) ;
+                        $fecha_final2[] = date ( 'Y-m-j' , $fecha_final );
+                        $i++;
+                      }
+                      $n = 0;
+                      while ($row_puesto = $res_puesto2->fetch_array()) 
+                      {
+                        $fecha1 = new DateTime($row_puesto["1"]);
+                        $n++;
+                        $fecha2 = new DateTime($row_puesto["2"]);
+                        if ($row_puesto["2"] == "0000-00-00") {
+                          $row_puesto["2"] = date('Y-m-j');
+                          $fecha2 = date('Y-m-j');
+                        }
+
+                        $diferencia = $fecha1->diff($fecha2);
+                        $meses = ( $diferencia->y * 12 ) + $diferencia->m;
+                        $acumulado = $acumulado + $meses;
+
+                         
+                      ?>
+                     <tr>
+                        <td><?php echo date("d-m-Y", strtotime($row_puesto["1"])); ?></td>
+                        <td><?php echo date("d-m-Y", strtotime($row_puesto["2"])); ?></td>
+                        <td><?php echo $row_puesto["7"] ?></td>
+                        <td><?php echo $row_puesto["11"] ?></td>
+                        <td><?php echo $row_puesto["3"] ?></td>
+                        <td><?php echo $meses ?></td>
+                        <td><?php echo $acumulado ?></td>
+                        <?php
+                          if ($tipo_usuario_session == "Administrador") {
+                        ?>
+                        <td><center><a href="modal/modal_msalario.php?id=<?php echo $row_puesto["0"]; ?>" data-toggle="modal" data-target=".modalmsalario" class='modalLoad'><button class="btn btn-block btn-success btn-xs" style="width:100px;">Modificar</button></a></center></td>
+                        <?php
+                        }
+                      ?>
+                      </tr>
+                    <?php
+                      }
+                        $u = 0;
+                        $r=1;
+                        while ($u <= $acumulado) {  
+                         $u = 12 * $r;
+                         $r++;
+                        }
+                        $ano =$r - 2;
+                        $x = 12 * $ano;
+                        $mes = $acumulado - $x;
+                        if ($ano != 0) {
+                          if ($ano == 1) {
+                            $fano = $ano." año";
+                          }else
+                          {
+                            $fano = $ano." años";
+                          }
+                          
+                        }
+                        if ($mes != 0) {
+                          if ($mes == 1) {
+                            $fmes = ", ".$mes. " mes";
+                          }else
+                          {
+                            $fmes = ", ".$mes. " meses";
+                          }
+                        }
+                        
+                        
+                      ?>
+                      <p><strong>TOTAL MESES DEL EMPLEADO PARA PLAN SEGURO SOCIAL: <?php echo $acumulado ?></strong></p>
+                      <p><strong>TIEMPO TOTAL DEL EMPLEADO PARA PLAN SEGURO SOCIAL: <?php echo $fano ."". $fmes; ?></strong></p>
+
+                      </tbody>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+                      <?php
+                    }
+                    ?>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          <?php      
+              if (isset($_POST["puesto"])) {
+                include "cls_empleado.php";
+                $f_inicio = $_POST["f_inicio"];
+                $f_final = $_POST["f_final"];
+                $salario = $_POST["salario"];
+                $puesto = $_POST["puesto"];
+                if ($f_final < $f_inicio) {
+                  echo "<script>if(confirm('La fecha final no puede ser menor a la inicial')){ 
+                  document.location='perfil.php';} 
+                  else{ alert('Operacion Cancelada'); 
+                  }</script>";
+                }else
+                {
+                  $clasRP = new salario($f_inicio, $salario, $puesto,0, $f_final);
+                  $clasRP->insertar();
+                }
+                
+              }
+              if (isset($_POST["Mpuesto"])) {
+                include "cls_empleado.php";
+                $f_inicio = $_POST["Mf_inicio"];
+                $f_final = $_POST["mf_final"];
+                if (isset($_POST["check"])) {
+                  $f_final = "0000-00-00";
+                }else
+                {
+                  $f_final = $_POST["mf_final"];
+                }
+
+                $salario = $_POST["Msalario"];
+                $puesto = $_POST["Mpuesto"];
+                $id = $_POST["id"];
+                if ($f_final < $f_inicio && $f_final != "0000-00-00") {
+                  echo "<script>if(confirm('La fecha final no puede ser menor a la inicial')){ 
+                  document.location='perfil.php';} 
+                  else{ alert('Operacion Cancelada'); 
+                  }</script>";
+                } else
+                {
+                  $clasRP = new salario($f_inicio, $salario, $puesto, $id, $f_final);
+                  $clasRP->actualizar();
+                }
+                
+              }
+          ?>
+
+
           </div> <!-- /.row -->
+
+          
+
           <!-- END ALERTS AND CALLOUTS -->
           </div> <!-- /.row -->
 
@@ -1046,6 +1265,8 @@ include("../../template/todo2.php");
                 });
             });
         </script>   
+
+
 
 <script language="javascript">
 function recargar(){    

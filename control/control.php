@@ -20,7 +20,7 @@ if ($filas==1){	 // verifica que el la variable filas tenga un valor 1
 		$_SESSION["id_tipo_usuario"]=$fila['id_tipous'];
 		$_SESSION["id_datosper"]=$fila['id_datosper']; //Guarda en session lo que este en la base de datos en la columna nombre
 		//$_SESSION["apellidos_session"]=$fila['apellidos'];
-		$_SESSION["login_session"]=$fila['usuario']; //Guarda en session lo que este en la base de datos en la columna usuario
+		$_SESSION["session"]=$fila['usuario']; //Guarda en session lo que este en la base de datos en la columna usuario
 		$_SESSION["t_usuario_session"]=$fila['nombre'];//Guarda en session lo que este en la base de datos en la columna tipo_usuario
 		//$_SESSION["avatar_session"]=$fila['avatar'];
 		header("location: /rhkarlco/index.php");//redirecciona al inicio con las sessiones guardadas

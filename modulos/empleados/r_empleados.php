@@ -1,11 +1,11 @@
 <?php
 include_once("../../control/connect.php");
  session_start();
-if (isset($_SESSION['login_session'])){
+if (isset($_SESSION["session"])){
       //$id_usuario_session=$_SESSION["id_usuario_session"];
        //$nombre_session=$_SESSION['nombre_session'];
 // $apellidos_session=$_SESSION["apellidos_session"];
- $correo_session=$_SESSION['login_session'];
+ $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
  //$avatar_session=$_SESSION["avatar_session"];
  
@@ -17,6 +17,9 @@ include("../../template/todo2.php");
 
 <form method="post" enctype="multipart/form-data">
 <div class="content-wrapper">
+        <?php
+          if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos" || $tipo_usuario_session == "Jefe"){
+        ?>
         <section class="content">
           <div class="row">
           <div class="col-md-1">
@@ -74,7 +77,11 @@ include("../../template/todo2.php");
                   </div><!-- /.row -->
                   </div><!-- /.form group -->
                   
-
+                  <?php
+                  $fecha = date('Y-m-j');
+                  $nuevafecha = strtotime ( '-18 year' , strtotime ( $fecha ) ) ;
+                  $nuevafecha = date ( 'Y-m-j' , $nuevafecha );
+                  ?>
                    <!-- Lugar y fecha nacimiento -->
                   <div class="form-group">                    
                     <div class="row">
@@ -93,7 +100,7 @@ include("../../template/todo2.php");
                         <span class="input-group-addon">
                           <i class="fa fa-calendar"></i>
                         </span>
-                        <input type="date" name="datper_date" class="form-control" required>
+                        <input type="date" name="datper_date" class="form-control" max="<?php echo $nuevafecha ?>" required>
                       </div><!-- /input-group -->                    
                     </div><!-- /.col-lg-6 -->
                   </div><!-- /.row -->
@@ -431,6 +438,93 @@ include("../../template/todo2.php");
                     </div><!-- /.col-lg-6 -->                    
                   </div><!-- /.row -->
                   </div><!-- /.form group -->
+                  <!-- *****************************************/.ajax pais******************************** -->
+                  <script type="text/javascript">
+                  //Mostrar los estados obteniendo el id del pais
+                  $(document).ready(function(){
+
+                      //Mostrar las ciudades con el id del estadocipio
+                      $("#empresa").change(function(){
+                          var empresa=$(this).val();
+                          var dataString2 = 'empresa='+ empresa;
+                          $.ajax({
+                              type: "POST",
+                              url: "../puestos/ajax_puesto.php",
+                              data: dataString2,
+                              cache: false,
+                          success: function(html){
+                          $("#puesto").html(html);
+                          }
+                          });
+                      });
+
+
+                      
+
+                    });
+                  </script>
+
+                  <!-- Empresa y fecha inicial -->
+                  <div class="form-group">                    
+                    <div class="row">
+                    <div class="col-lg-6">
+                    <label>Empresa:</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <select class="form-control" name="empresa" id="empresa" required>
+                          <option>Selecciona una empresa</option>
+                          <?php
+                          $empresa = "SELECT * FROM `empresas` WHERE `status` = 1";
+                          $res_empresa = $mysqli->query($empresa);
+                          while ( $row_empresa = $res_empresa->fetch_array()) {
+                            ?>
+                              <option value="<?php echo $row_empresa[0] ?>"><?php echo $row_empresa[1] ?></option>
+                            <?php
+                          }
+                          ?>
+                        </select>
+                      </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-6">
+                    <label>Fecha de inicio:</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <input type="date" name="f_inicio" value="<?php echo date("Y-m-d"); ?>" class="form-control" required></input>
+                      </div><!-- /input-group -->                    
+                    </div><!-- /.col-lg-6 -->
+                  </div><!-- /.row -->
+                  </div><!-- /.form group -->
+
+
+                  <!-- Salario y puesto -->
+                  <div class="form-group">                    
+                    <div class="row">
+                    <div class="col-lg-6">
+                    <label>Salario:</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <input type="text" class="form-control" name="salario" maxlength="18" placeholder="Salario" onKeypress="if (event.keyCode < 8 || event.keyCode > 57) event.returnValue = false;" required>
+                      </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <div class="col-lg-6">
+                    <label>Puesto:</label>
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-user"></i>
+                        </span>
+                        <select class="form-control" name="puesto" id="puesto" required>
+                          <option>Selecciona un puesto</option>
+                        </select>
+                      </div><!-- /input-group -->                    
+                    </div><!-- /.col-lg-6 -->
+                  </div><!-- /.row -->
+                  </div><!-- /.form group -->
 
                 </div><!-- /.box-body -->
                 <div class="box-footer">
@@ -484,6 +578,10 @@ include("../../template/todo2.php");
         $datper_nclabe = $_POST["datper_nclabe"];
         $datper_sexo = $_POST["datper_sexo"];
         $datper_ncredito = $_POST["datper_ncredito"];
+        $empresa = $_POST["empresa"];
+        $f_inicio = $_POST["f_inicio"];
+        $salario = $_POST["salario"];
+        $puesto = $_POST["puesto"];
         if (empty($datper_ncredito)) {
           $datper_ncredito = "NULL";
         }
@@ -491,11 +589,14 @@ include("../../template/todo2.php");
 
 
 
-       $datos = new datos("$datper_pnom", "$datper_snom", "$datper_pape", "$datper_sape", "$datper_lugar", "$datper_date", "$datper_rfc", "$datper_curp", "$datper_imss", "$datper_unifam", $datper_anoexp, "$datper_calle", $datper_extint, "$datper_col", $datper_cp, $datper_municipio, $datper_telpart, $datper_telcel, "$datper_correo", "$datper_ecivil", "$datper_banco", $datper_ncuenta, $datper_nclabe, "$datper_sexo", $datper_ncredito, $id, "$datper_nacio");
+       $datos = new datos("$datper_pnom", "$datper_snom", "$datper_pape", "$datper_sape", "$datper_lugar", "$datper_date", "$datper_rfc", "$datper_curp", "$datper_imss", "$datper_unifam", $datper_anoexp, "$datper_calle", $datper_extint, "$datper_col", $datper_cp, $datper_municipio, $datper_telpart, $datper_telcel, "$datper_correo", "$datper_ecivil", "$datper_banco", $datper_ncuenta, $datper_nclabe, "$datper_sexo", $datper_ncredito, $id, "$datper_nacio",$empresa, "$f_inicio", $salario, $puesto);
       $datos->registrar();
       } 
       ?>
 </section>
+<?php
+}
+?>
 </div>
 </body>
 <?php 

@@ -8,9 +8,131 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 	$_SESSION['id_tmp2'] = $_SESSION['id_tmp'];
 	$link = "a_perfil.php?id=$_SESSION[id_tmp2]";
 }
+		
+		/**
+		* Aqui se realiza la clase de registro de días de vacaciones
+		*/
+		class dvaca
+		{
+			public $signo;
+			public $dias;
+			public $ano;
+			public $desc;
+			public $id_dias;
+			
+			function __construct($signo, $dias, $ano, $desc, $id_dias)
+			{
+				$this->signo = $signo;
+				$this->dias = $dias;
+				$this->ano = $ano;
+				$this->desc = $desc;
+				$this->id_dias = $id_dias;
+			}
 
-	class datos
-	{
+			public function insertar()
+			{
+				session_start();
+				require("../../control/connect.php");
+				$date = date('Y-m-j');
+				$sel_pp = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `año`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('$this->desc',$this->dias,$this->ano,'$date',$_SESSION[id_tmp2],$_SESSION[id_datosper],'$this->signo')";				
+				$res_pu = $mysqli->query($sel_pp);
+				if ($mysqli->error) 
+				{
+					echo "<script>if(confirm('No se pudo agregar los días de vacaciones')){ 
+					document.location='$link';} 
+					else{ alert('Operacion Cancelada'); 
+					}</script>";
+				}else
+				{
+					echo "<script> document.location='$link'; </script>";
+				}
+			}
+		}
+	
+		/**
+		* Aqui se hace la clase de agregar puestos en la hoja de salario
+		*/
+		class salario
+		{
+		public $f_inicio;
+        public $salario;
+        public $puesto;
+        public $id;
+        public $f_final;
+			function __construct($f_inicio, $salario, $puesto, $id, $f_final)
+			{
+				$this->f_inicio = $f_inicio;
+		        $this->salario = $salario;
+		        $this->puesto = $puesto;
+		        $this->id = $id;
+		        $this->f_final = $f_final;
+			}
+
+			public function insertar()
+			{
+				session_start();
+				require("../../control/connect.php");
+				$sel_pp = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $_SESSION[id_tmp2] AND `fecha_final` = '0000-00-00'";				
+				$res_pu = $mysqli->query($sel_pp);
+				$numrows = $res_pu->num_rows;
+				if ($numrows > 0 && $this->f_final == '0000-00-00') 
+				{	
+					echo "<script>if(confirm('Ya existe un puesto actual')){ 
+						document.location='$link';} 
+						else{ alert('Operacion Cancelada'); 
+						}</script>";
+				}else
+				{
+					$isert_pp = "INSERT INTO `puesto_per`(`fecha`, `fecha_final`, `salario`, `id_datosper`, `id_puesto`) VALUES ('$this->f_inicio', '$this->f_final', $this->salario,$_SESSION[id_tmp2],$this->puesto)";				
+					$res_pu = $mysqli->query($isert_pp);
+					if ($mysqli->error) {
+						echo "<script>if(confirm('No se pudo agregar el puesto')){ 
+						document.location='$link';} 
+						else{ alert('Operacion Cancelada'); 
+						}</script>";
+					}else
+					{
+						echo "<script> document.location='$link'; </script>";
+					}
+				}
+			}
+
+
+			public function actualizar()
+			{
+				session_start();
+				require("../../control/connect.php");
+				$sel_pp = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $_SESSION[id_tmp2] AND `fecha_final` = '0000-00-00'";				
+				$res_pu = $mysqli->query($sel_pp);
+				$numrows = $res_pu->num_rows;
+				if ($numrows > 0 && $this->f_final == '0000-00-00') 
+				{
+					echo "<script>if(confirm('Ya existe un puesto actual')){ 
+						document.location='$link';} 
+						else{ alert('Operacion Cancelada'); 
+						}</script>";
+				}else
+				{
+					
+					$upd_pu = "UPDATE `puesto_per` SET `fecha`='$this->f_inicio', `fecha_final` = '$this->f_final', `salario`=$this->salario,`id_puesto`=$this->puesto WHERE `id_puestoper` = $this->id";
+					$res_updpu = $mysqli->query($upd_pu);
+
+
+					if ($mysqli->error) {
+						echo "<script>if(confirm('No se pudo agregar el puesto')){ 
+						document.location='$link';} 
+						else{ alert('Operacion Cancelada'); 
+						}</script>";
+					}else
+					{
+						echo "<script> document.location='$link'; </script>";
+					}
+				}
+			}
+		}
+
+		class datos
+		{
 		public $datper_pnom;
         public $datper_snom;
         public $datper_pape;
@@ -38,8 +160,12 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
         public $datper_sexo;
         public $datper_ncredito;
         public $id;
+        public $empresa;
+        public $f_inicio;
+        public $salario;
+        public $puesto;
 
-		function __construct($datper_pnom, $datper_snom, $datper_pape, $datper_sape, $datper_lugar, $datper_date, $datper_rfc, $datper_curp, $datper_imss, $datper_unifam, $datper_anoexp, $datper_calle, $datper_extint, $datper_col, $datper_cp, $datper_municipio, $datper_telpart, $datper_telcel, $datper_correo, $datper_ecivil,  $datper_banco, $datper_ncuenta, $datper_nclabe, $datper_sexo, $datper_ncredito, $id, $datper_nacio)
+		function __construct($datper_pnom, $datper_snom, $datper_pape, $datper_sape, $datper_lugar, $datper_date, $datper_rfc, $datper_curp, $datper_imss, $datper_unifam, $datper_anoexp, $datper_calle, $datper_extint, $datper_col, $datper_cp, $datper_municipio, $datper_telpart, $datper_telcel, $datper_correo, $datper_ecivil,  $datper_banco, $datper_ncuenta, $datper_nclabe, $datper_sexo, $datper_ncredito, $id, $datper_nacio, $empresa, $f_inicio, $salario, $puesto)
 		{
 			$this->datper_pnom = $datper_pnom;
 	        $this->datper_snom = $datper_snom;
@@ -70,6 +196,11 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 
 	        $this->id = $id;
 
+	        $this->empresa = $empresa;
+	        $this->f_inicio = $f_inicio;
+	        $this->salario = $salario;
+	        $this->puesto = $puesto;
+
 
 		}
 		public function registrar()
@@ -89,15 +220,25 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 				/*if (!$mysqli->query($res_datper)) {
     echo "Falló la selección de la tabla: (" . $mysqli->errno . ") " . $mysqli->error;
 }*/
-$numrows = $res_datper->num_rows;
- $row_resdatper = $res_datper->fetch_array();
+				$numrows = $res_datper->num_rows;
+ 				$row_resdatper = $res_datper->fetch_array();
 				if($numrows > 0)
 				{
-					echo "<script> document.location='l_empleados.php'; </script>";
+					$sel_pu = "INSERT INTO `puesto_per`(`fecha`, `salario`, `id_datosper`, `id_puesto`) VALUES ('$this->f_inicio',$this->salario,$row_resdatper[0],$this->puesto)";				
+					$res_pu = $mysqli->query($sel_pu);
+					if ($mysqli->error) {
+						echo "<script>if(confirm('No se pudo agregar el puesto')){ 
+						document.location='http://admonkco.com/rhkarlco/modulos/empleados/l_empleados.php';} 
+						else{ alert('Operacion Cancelada'); 
+						}</script>";
+					}else
+					{
+						echo "<script> document.location='l_empleados.php'; </script>";
+					}
 				
 				} //FINALIZA EL IF DE DATOS PERSONALES
-				if($numrows = 0){
-					echo "<script>if(confirm('No se pudo agregar')){ 
+				if($numrows == 0){
+					echo "<script>if(confirm('Hubo un error o ya existe su información en la base de datos')){ 
 					document.location='http://admonkco.com/rhkarlco/modulos/empleados/r_empleados.php';} 
 					else{ alert('Operacion Cancelada'); 
 					}</script>";

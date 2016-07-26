@@ -1,0 +1,88 @@
+/*!
+ * Universidad de Navojoa (http://unav.edu.mx/en/)
+ * Copyright 2016-2017
+ * Ingeniería en Sistemas Computacinales
+ * Autor Beyda Mariana Trejo Román 
+ */
+
+*
+{
+	font-family: Arial;
+	font-size: 14px;
+	position: center;
+}
+
+#head
+{
+	display: block;
+	float:left;
+}
+
+#empresa
+{
+	border: 4px solid;
+	padding: 10px;
+	padding-left: 75px;
+	padding-right: 75px;
+	text-align: center;
+	border-radius: 7px;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#solicitud
+{
+	margin-top: 10px;
+	border: 2px solid;
+	padding: 5px;
+	text-align: center;
+	border-radius: 7px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+#logo
+{
+	width: 150px;
+}
+
+#dp
+{
+	border-collapse: collapse;
+	border-top: 1px solid;
+	width: 750px;
+	margin-top: 110px;
+}
+
+#dp tr, #dp td
+{
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#dtv
+{
+	border-collapse: collapse;
+	border: 1px solid;
+	margin-top: 10px;
+}
+
+#dtv tr, #dtv td
+{
+	border: 1px solid;
+	border-bottom: 1px solid;
+}
+
+#fechas
+{
+	border-collapse: collapse;
+	border: 1px solid;
+	margin-top: 10px;
+	background: rgba(192,192,192, 0.3);
+}
+
+#fechas tr, #fechas td
+{
+	border: 1px solid;
+	border-bottom: 1px solid;
+}
