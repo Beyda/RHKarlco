@@ -18,6 +18,11 @@
 	float:left;
 }
 
+#cuerpo
+{
+
+}
+
 #empresa
 {
 	border: 4px solid;
@@ -85,4 +90,13 @@
 {
 	border: 1px solid;
 	border-bottom: 1px solid;
+	font-size: 10px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#firmas div
+{
+	display: inline-block;
+	float: left;
 }

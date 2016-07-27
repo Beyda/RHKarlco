@@ -109,14 +109,32 @@
 				<td>FECHA DE REINICIO DE VACACIONES</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td style=" width: 25px;"><input type="text" name="anos" placeholder="Año" style="width: 70px;"></td>
+				<td style=" width: 25px;"><input type="text" name="dias" placeholder="Días" style="width: 70px;"></td>
+				<td style=" width: 40px;"><input type="date" name="f_in"></td>
+				<td style=" width: 40px;"><input type="date" name="f_fin"></td>
+				<td style=" width: 40px;"><input type="date" name="f_re"></td>
 			</tr>
 		</tbody>
 	</table>
+				<!-- FECHAS DE VACACIONES -->
+	<center>
+	<div id="firmas">
+		<div>
+			<div style="width: 130px;"></div>
+			<div style="border-top: 1px solid; width: 130px; text-align: center; margin-top: 100px;">Solicitante</div>
+		</div>
+		<div>
+			<div style="width: 130px;"></div>
+			<div style="border-top: 1px solid; width: 130px; text-align: center; margin-top: 100px;">Jefe inmediato</div>
+		</div>
+		<div>
+			<div style="width: 130px;"></div>
+			<div style="border-top: 1px solid; width: 130px; text-align: center; margin-top: 100px;">Legal y R.H.</div>
+		</div>
+	</div>
+	</center>
 </div>
+
 </body>
 </html>
