@@ -34,7 +34,7 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 				session_start();
 				require("../../control/connect.php");
 				$date = date('Y-m-j');
-				$sel_pp = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `año`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('$this->desc',$this->dias,$this->ano,'$date',$_SESSION[id_tmp2],$_SESSION[id_datosper],'$this->signo')";				
+				$sel_pp = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('$this->desc',$this->dias,$this->ano,'$date',$_SESSION[id_tmp2],$_SESSION[id_datosper],'$this->signo')";				
 				$res_pu = $mysqli->query($sel_pp);
 				if ($mysqli->error) 
 				{
@@ -114,12 +114,12 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 				}else
 				{
 					
-					$upd_pu = "UPDATE `puesto_per` SET `fecha`='$this->f_inicio', `fecha_final` = '$this->f_final', `salario`=$this->salario,`id_puesto`=$this->puesto WHERE `id_puestoper` = $this->id";
+					echo $upd_pu = "UPDATE `puesto_per` SET `fecha`='$this->f_inicio', `fecha_final` = '$this->f_final', `salario`=$this->salario,`id_puesto`=$this->puesto WHERE `id_puestoper` = $this->id";
 					$res_updpu = $mysqli->query($upd_pu);
 
 
 					if ($mysqli->error) {
-						echo "<script>if(confirm('No se pudo agregar el puesto')){ 
+						echo "<script>if(confirm('No se pudo actualizar el puesto')){ 
 						document.location='$link';} 
 						else{ alert('Operacion Cancelada'); 
 						}</script>";

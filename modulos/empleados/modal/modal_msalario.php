@@ -2,7 +2,7 @@
 session_start();
 require("../../../control/connect.php");
 $id = $_GET["id"];
-$salario2 = "SELECT * FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pp.`id_puestoper` = $id";
+echo $salario2 = "SELECT * FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pp.`id_puestoper` = $id";
 $res_salario2 = $mysqli->query($salario2);
 $row_salario2 = $res_salario2->fetch_array();
 ?>
@@ -57,7 +57,7 @@ $row_salario2 = $res_salario2->fetch_array();
                           <i class="fa fa-user"></i>
                         </span>
                         <select class="form-control" name="Mempresa" id="empresa" required>
-                          <option value="<?php echo $row_salario2[10] ?>"><?php echo $row_salario2[11] ?></option>
+                          <option value="<?php echo $row_salario2[11] ?>"><?php echo $row_salario2[12] ?></option>
                           <?php
                           $empresa = "SELECT * FROM `empresas` WHERE `status` = 1";
                           $res_empresa = $mysqli->query($empresa);
@@ -131,7 +131,7 @@ $row_salario2 = $res_salario2->fetch_array();
                           <i class="fa fa-user"></i>
                         </span>
                         <select class="form-control" name="Mpuesto" id="puesto" required>
-                          <option value="<?php echo $row_salario2[6] ?>"><?php echo $row_salario2[7] ?></option>
+                          <option value="<?php echo $row_salario2[8] ?>"><?php echo $row_salario2[7] ?></option>
                         </select>
                       </div><!-- /input-group -->                    
                     </div><!-- /.col-lg-6 -->

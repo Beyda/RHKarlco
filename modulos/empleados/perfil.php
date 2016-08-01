@@ -11,7 +11,53 @@ if (isset($_SESSION["session"])){
 $_SESSION['id_tmp'] = $_SESSION['id_datosper'];
 include("../../template/todo2.php");
 //inicio de librerias 
-
+$actual2 = date('Y');
+$sel_dvaca2 = "SELECT * FROM `dias_vacaciones` WHERE `id_datosper` = $_SESSION[id_tmp] AND `ano` = $actual2";
+$res_dvaca2 = $mysqli->query($sel_dvaca2);
+$numrowsDvaca2 = $res_dvaca2->num_rows;
+if ($numrowsDvaca2 == 0) {
+  $selano = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $_SESSION[id_tmp] ORDER BY `fecha` ASC LIMIT 1";
+  $res_selano = $mysqli->query($selano);
+  $row_reselano = $res_selano->fetch_array();
+  $actual = date('Y-m-j');
+  $an = date('Y');
+  $total_ano = strtotime($actual) - strtotime($row_reselano[1]);
+  $tot = $total_ano / (60 * 60 * 24 * 365);
+  $fin = floor($tot);
+  
+  if ($fin == 0 || $fin == 1) {
+    $dias = 6;
+  }
+  if ($fin == 2) {
+    $dias = 8;
+  }
+  if ($fin == 3) {
+    $dias = 10;
+  }
+  if ($fin == 4) {
+    $dias = 12;
+  }
+  if ($fin >= 5 && $fin <= 9) {
+    $dias = 14;
+  }
+  if ($fin >= 10 && $fin <= 14) {
+    $dias = 16;
+  }
+  if ($fin >= 15 && $fin <= 19) {
+    $dias = 18;
+  }
+  if ($fin >= 20 && $fin <= 24) {
+    $dias = 20;
+  }
+  if ($fin >= 25 && $fin <= 29) {
+    $dias = 22;
+  }
+  if ($fin >= 30) {
+    $dias = 24;
+  }
+  echo $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$an,'$actual',$_SESSION[id_tmp],77,'+')";
+  $res_ivacaa = $mysqli->query($insertvaca);
+}
 ?>
 
 <div class="content-wrapper">
