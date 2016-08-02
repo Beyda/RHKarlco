@@ -58,7 +58,7 @@ if ($numrowsDvaca2 == 0) {
   if ($fin >= 30) {
     $dias = 24;
   }
-  echo $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$an,'$actual',$id_tmp,77,'+')";
+  $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$an,'$actual',$id_tmp,77,'+')";
   $res_ivacaa = $mysqli->query($insertvaca);
 }
 
@@ -225,14 +225,12 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
                           });
                       });
 
-
-                      
-
                     });
+                  
                   </script>
 
 			<!-- FECHAS DE VACACIONES -->
-
+	<form method="post">
 	<table id="fechas">
 		<tbody>
 			<tr>
@@ -242,15 +240,25 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 				<td>FECHA DE CULMINACIÓN DE VACACIONES</td>
 				<td>FECHA DE REINICIO DE VACACIONES</td>
 			</tr>
+			<?php
+              $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+              $res_anos = $mysqli->query($ano);
+              $row_anos = $res_anos->fetch_array();
+            ?>
 			<tr>
-				<td style=" width: 25px;"><input type="text" name="anos" placeholder="Año" style="width: 70px;"></td>
-				<td style=" width: 25px;"><input type="text" name="dias" placeholder="Días" style="width: 70px;"></td>
+				<td style=" width: 25px;"><?php echo $row_anos[1] ?></td>
+				<td style=" width: 25px;"></td>
 				<td style=" width: 40px;"><input type="date" name="f_in"></td>
-				<td style=" width: 40px;"><input type="date" name="f_fin" id="f_fin"></td>
+				<td style=" width: 40px;"><input type="date" name="f_fin" id="f_fin" onclick="date()"></td>
 				<td style=" width: 40px;"><label id="regreso"></label></td>
 			</tr>
 		</tbody>
 	</table>
+	<center><button>Calcular</button></center>
+	
+	</form>
+	
+	
 				<!-- FECHAS DE VACACIONES -->
 	<center>
 	<div id="firmas">

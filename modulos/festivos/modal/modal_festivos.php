@@ -4,9 +4,10 @@ session_start();
 if (isset($_GET["id"])) {
   $id = $_GET["id"];
 
-      $selfest = "SELECT * FROM `dias_festivos` WHERE `id_festivos` = $id";
-      $resul_selfest = $mysqli->query($selfest);
-      $row_selfest = $resul_selfest->fetch_array();
+  $selfest = "SELECT * FROM `dias_festivos` WHERE `id_festivos` = $id";
+  $resul_selfest = $mysqli->query($selfest);
+  $row_selfest = $resul_selfest->fetch_array();
+   
   ?>
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

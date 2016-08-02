@@ -9,6 +9,10 @@ $row_dv = $res_dv->fetch_array();
 $sel_da = "SELECT `id_datosper`, `primer_nombre`,`segundo_nombre`,`ap_paterno`,`ap_materno` FROM `datos_personales` WHERE `id_datosper` = $row_dv[6]";       
 $res_da = $mysqli->query($sel_da);
 $row_da = $res_da->fetch_array();
+
+$ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+$res_anos = $mysqli->query($ano);
+$row_anos = $res_anos->fetch_array();
 ?>
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -48,7 +52,7 @@ $row_da = $res_da->fetch_array();
                         <span class="input-group-addon">
                           <i class="fa fa-user"></i>
                         </span>
-                        <input type="number" class="form-control" name="ano" maxlength="20" value="<?php echo $row_dv[3] ?>" disabled>
+                        <input type="number" class="form-control" name="ano" maxlength="20" value="<?php echo $row_anos[1] ?>" disabled>
                       </div><!-- /input-group -->                    
                     </div><!-- /.col-lg-6 -->
                   </div><!-- /.row -->

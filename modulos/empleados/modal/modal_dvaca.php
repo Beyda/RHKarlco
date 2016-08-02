@@ -34,12 +34,17 @@ require("../../../control/connect.php");
                       </div><!-- /input-group -->
                     </div><!-- /.col-lg-6 -->
                     <div class="col-lg-5">
+                    <?php
+                      $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+                      $res_anos = $mysqli->query($ano);
+                      $row_anos = $res_anos->fetch_array();
+                    ?>  
                     <label>Año:</label>
                       <div class="input-group">
                         <span class="input-group-addon">
                           <i class="fa fa-user"></i>
                         </span>
-                        <input type="number" class="form-control" name="ano" maxlength="20" placeholder="Año">
+                        <input type="number" class="form-control" name="ano" maxlength="20" value="<?php echo $row_anos[1] ?>" disabled>
                       </div><!-- /input-group -->                    
                     </div><!-- /.col-lg-6 -->
                   </div><!-- /.row -->

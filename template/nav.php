@@ -61,6 +61,7 @@ if ($tipo_usuario_session == "Administrador"){
                         <li><a href="/rhkarlco/modulos/usuarios/l_usuarios.php"><i class="fa fa-circle-o"></i> Mis usuarios</a></li>                        
                         </ul>
                 </li>
+                <li><a href="/rhkarlco/modulos/ejercicio/ejercicio.php"><i class="fa fa-circle-o"></i>Ejercicio</a></li>
                 <li><a href="/rhkarlco/modulos/festivos/festivos.php"><i class="fa fa-circle-o"></i>Días festivos</a></li>
                 <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>

@@ -1080,8 +1080,11 @@ if ($numrowsDvaca2 == 0) {
                       $prof1 = 0;
                       while ($row_dvac = $res_dvac->fetch_array()) 
                       {
+                        $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+                        $res_anos = $mysqli->query($ano);
+                        $row_anos = $res_anos->fetch_array();
                         $ano = date(Y);
-                        if ($row_dvac["3"] == $ano) {
+                        if ($row_anos["1"] == $ano) {
                           if ($row_dvac["7"] == "+") {
                             $total = $total + $row_dvac["2"];
                           }
@@ -1125,7 +1128,7 @@ if ($numrowsDvaca2 == 0) {
                 include "cls_empleado.php";
                 $signo = $_POST["signo"];
                 $dias = $_POST["dias"];
-                $ano = $_POST["ano"];
+                $ano = $row_anos[0];
                 $desc = $_POST["desc"];
                 $clasHld = new dvaca($signo, $dias, $ano, $desc, 0);
                 $clasHld->insertar();

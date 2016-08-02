@@ -25,9 +25,14 @@
 		{
 			require("../../control/connect.php");
 
+
+			$ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+			$res_anos = $mysqli->query($ano);
+			$row_anos = $res_anos->fetch_array();
+
 			// AGREGAR EMPRESAS 
 			
-			$festivos = "INSERT INTO `dias_festivos`(`fecha`, `desc`, `estatus`) VALUES ('$this->fecha','$this->desc',1)";
+			$festivos = "INSERT INTO `dias_festivos`(`fecha`, `desc`, `estatus`, `id_ejercicio`) VALUES ('$this->fecha','$this->desc',1, $row_anos[0])";
 			$resul_festivos = $mysqli->query($festivos);
 
 			if ($mysqli->error) {

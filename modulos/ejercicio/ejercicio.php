@@ -15,14 +15,14 @@ include("../../template/todo2.php");
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
                 <?php 
-                  if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos") {
+                  if ($tipo_usuario_session == "Administrador") {
                 ?>
 
       <form method="post" action="p_empresas.php" id="fo3" name="fo3" >
         <section class="content-header">
           <h1>
-            Lista de días festivos
-            <a href="modal/modal_festivos.php" data-toggle="modal" data-target=".modal" class='modalLoad tooltipster-shadow-preview' title="Agregar días no laborales"><button class="btn bg-navy margin">Agregar días festivos</button></a>
+            Lista de ejercicios
+            <a href="modal/modal_ejercicio.php" data-toggle="modal" data-target=".modal" class='modalLoad tooltipster-shadow-preview' title="Agregar el año activo"><button class="btn bg-navy margin">Agregar un nuevo ejercicio</button></a>
           </h1>
 
         </section>
@@ -37,20 +37,19 @@ include("../../template/todo2.php");
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Días festivos</h3>
+                  <h3 class="box-title">Lista de ejercicio</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
-                        <th>Fecha</th>
+                        <th>Año</th>
                         <th>Descripción</th>
-                        <th>Estatus</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $sel_df = "SELECT * FROM `dias_festivos`";
+                    $sel_df = "SELECT * FROM `ejercicio`";
 
                     $res_df = $mysqli->query($sel_df);
                     while ($row_resdf = $res_df->fetch_array()) {
@@ -58,7 +57,7 @@ include("../../template/todo2.php");
                       <tr>
                         <td><?php echo $row_resdf[1]?></td>
                         <td><?php echo $row_resdf[2] ?></td>
-                        <!--<td><a href="modal/modal_festivos.php?id=<?php echo $row_resdf[0] ?>" data-toggle="modal" data-target=".modal" class='modalLoad tooltipster-shadow-preview'><button class="btn bg-navy margin">Modificar</button></a></td>-->
+                        <!--<td><a href="modal/modal_festivos.php?id=<?php echo $row_resdf[0] ?>" data-toggle="modal" data-target=".modal" class='modalLoad tooltipster-shadow-preview'><button class="btn bg-navy margin">Modificar</button></a></td>
                         <td>
                           <div class="btn-group">
                           <?php
@@ -82,7 +81,7 @@ include("../../template/todo2.php");
                                   <li><a href="cls_festivos.php?status=0&festivo=<?php echo $row_resdf[0] ?>">Inactivo</a></li>
                                 </ul>
                           </div>
-                        </td>
+                        </td>-->
                       </tr>
                       <?php
                         }
@@ -90,9 +89,8 @@ include("../../template/todo2.php");
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Fecha</th>
+                        <th>Año</th>
                         <th>Descripción</th>
-                        <th>Estatus</th>
                       </tr>
                     </tfoot>
                   </table>
@@ -103,24 +101,13 @@ include("../../template/todo2.php");
         </section><!-- /.content -->
                   <?php
 
-                  if (isset($_POST["fecha"])) {
-                    include "cls_festivos.php";
-                    $fecha = $_POST["fecha"];
+                  if (isset($_POST["ano"])) {
+                    include "cls_ejercicio.php";
+                    $ano = $_POST["ano"];
                     $desc = $_POST["desc"];
 
-                    $classFest = new festivos ($fecha,$desc, 0);
+                    $classFest = new ejercicio ($ano,$desc, 0);
                     $classFest->insertar();
-
-                  }
-                  if (isset($_POST["Mfecha"])) {
-                    include "cls_festivos.php";
-                    $fecha = $_POST["Mfecha"];
-                    $desc = $_POST["Mdesc"];
-                    $Mid = $_POST["Mid"];
-
-                    $classFest = new festivos ($fecha,$desc, $Mid);
-                    $classFest->actualizar();
-
                   }
 
               }

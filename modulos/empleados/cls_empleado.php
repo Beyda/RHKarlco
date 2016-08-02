@@ -34,7 +34,10 @@ if ($_SESSION['id_tmp'] == $_SESSION['id_datosper']) {
 				session_start();
 				require("../../control/connect.php");
 				$date = date('Y-m-j');
-				$sel_pp = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('$this->desc',$this->dias,$this->ano,'$date',$_SESSION[id_tmp2],$_SESSION[id_datosper],'$this->signo')";				
+	              $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+	              $res_anos = $mysqli->query($ano);
+	              $row_anos = $res_anos->fetch_array();
+				  $sel_pp = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('$this->desc',$this->dias,$row_anos[0],'$date',$_SESSION[id_tmp2],$_SESSION[id_datosper],'$this->signo')";				
 				$res_pu = $mysqli->query($sel_pp);
 				if ($mysqli->error) 
 				{
