@@ -107,7 +107,7 @@ $(document).ready(function() {
                     </thead>
                     <tbody>
                     <?php
-                   $sel_puesto = "SELECT j.*, p.`id_puesto`, p.`puesto`, u.`id_usuario`, u.`id_datosper`, d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, us.`id_usuario`, us.`id_datosper`, da.`id_datosper`, da.`primer_nombre`, da.`segundo_nombre`, da.`ap_paterno`, da.`ap_materno` FROM `jefes` j INNER JOIN `puestos` p ON j.`id_puesto` = p.`id_puesto` INNER JOIN `usuarios` u ON j.`id_jefin` = u.`id_usuario` INNER JOIN `datos_personales` d ON d.`id_datosper` = u.`id_datosper` INNER JOIN `usuarios` us ON j.`id_jefar` = us.`id_usuario` INNER JOIN `datos_personales` da ON da.`id_datosper` = us.`id_datosper`";
+                  $sel_puesto = "SELECT j.*, p.`id_puesto`, p.`puesto`, d.`id_datosper`, d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, da.`id_datosper`, da.`id_datosper`, da.`primer_nombre`, da.`segundo_nombre`, da.`ap_paterno`, da.`ap_materno` FROM `jefes` j INNER JOIN `puestos` p ON j.`id_puesto` = p.`id_puesto` INNER JOIN `datos_personales` d ON d.`id_datosper` = j.`id_jefin` INNER JOIN `datos_personales` da ON da.`id_datosper` = j.`id_jefar`";
 
                     $res_puesto = $mysqli->query($sel_puesto);
                     while ($row_respuesto = $res_puesto->fetch_array()) {

@@ -7,7 +7,6 @@ if (isset($_SESSION["session"])){
 // $apellidos_session=$_SESSION["apellidos_session"];
  $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
- $id_emp = $_GET["id"];
  //$avatar_session=$_SESSION["avatar_session"];
  
 //$id_tmp = uniqid('', true);
@@ -66,7 +65,7 @@ $(document).ready(function() {
           <h1>
             Lista de vacaciones
             <small>por empleados</small>
-            <a href="solicitud.php" class='tooltipster-shadow-preview' title="Abrir una solicitud de vacaciones" target="blanck"><button class="btn bg-navy margin">Solicitar vacaciones</button></a>
+            <a href="solicitud.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de vacaciones" target="blanck"><button class="btn bg-navy margin">Solicitar vacaciones</button></a>
             <form method="post" action="p_empresas.php" id="fo3" name="fo3" >
             <select class="form-control tooltipster-shadow-preview" title="Filtrar los puestos por empresa al seleccionarla" style="width: 30%;" name="empresa" id="empresa" required>
               <option value="">Selecciona empresa</option>

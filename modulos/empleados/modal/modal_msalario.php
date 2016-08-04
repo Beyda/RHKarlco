@@ -2,7 +2,7 @@
 session_start();
 require("../../../control/connect.php");
 $id = $_GET["id"];
-echo $salario2 = "SELECT * FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pp.`id_puestoper` = $id";
+$salario2 = "SELECT * FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pp.`id_puestoper` = $id";
 $res_salario2 = $mysqli->query($salario2);
 $row_salario2 = $res_salario2->fetch_array();
 ?>

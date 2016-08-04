@@ -15,96 +15,21 @@ include_once("../../control/connect.php");
 <body>
 <?php
 	if (isset($_GET["id"])) {
-	  	$id_tmp = $_GET["id"];
-	  }
-	if ($_SESSION["id_datosper"] == $id_tmp) {
-		
-	  $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
-	  $res_anos = $mysqli->query($ano);
-	  $row_anos = $res_anos->fetch_array();
+		$id = $_GET["id"];
+	}
+	$datosper = "SELECT v.`fecha_inicial`, v.`fecha_final`, v.`reinicio_labores`, v.`fecha`, v.`dias_descanso`, .d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, pp.`fecha`, pp.`salario`, p.`id_puesto`, p.`puesto` FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper` INNER JOIN `puesto_per` pp ON v.`id_puesto` = pp.`id_puestoper` INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` WHERE v.`id_vaca` = $id";
+	$res_datosper = $mysqli->query($datosper);
+	$row_datosper = $res_datosper->fetch_array();
 
-
-	  
-	
-	$rh = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
-	  $res_rh = $mysqli->query($rh);
-	  $row_rh = $res_rh->fetch_array();
-
-	$ctr_emp = "SELECT `id_datosper`, `primer_nombre`, `segundo_nombre`, `ap_paterno`, `ap_materno`  FROM `datos_personales` WHERE `id_datosper` = $id_tmp";
-    $res_emp = $mysqli->query($ctr_emp);
-    $row_resemp = $res_emp->fetch_array();
-    $ctr_jefes = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d2.`id_datosper`, d2.`primer_nombre`, d2.`segundo_nombre`, d2.`ap_paterno`, d2.`ap_materno`, p.`puesto`, pp.`salario`, pp.`id_puestoper` FROM `puesto_per` pp INNER JOIN `jefes` j ON pp.`id_datosper` = 1 AND pp.`id_puesto` = j.`id_puesto` INNER JOIN `datos_personales` d ON j.`id_jefin` = d.`id_datosper` INNER JOIN `datos_personales` d2 ON j.`id_jefar` = d2.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` WHERE pp.`fecha_final` = '0000-00-00'";
-    $res_jefes = $mysqli->query($ctr_jefes);
-    $row_resjefes = $res_jefes->fetch_array();
-
-    $ctr_fing = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $id_tmp ORDER BY `fecha` ASC LIMIT 1";
+	$ctr_fing = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $row_datosper[5] ORDER BY `fecha` ASC LIMIT 1";
     $res_fing = $mysqli->query($ctr_fing);
     $row_resfing = $res_fing->fetch_array();
 
-$actual2 = date('Y');
-$sel_dvaca2 = "SELECT dv.*, e.`ano` FROM `dias_vacaciones` dv INNER JOIN `ejercicio` e ON dv.`id_ejercicio` = e.`id_ejercicio` WHERE dv.`id_datosper` = $id_tmp AND e.`id_ejercicio` = $row_anos[0]";
-$res_dvaca2 = $mysqli->query($sel_dvaca2);
-$numrowsDvaca2 = $res_dvaca2->num_rows;
-if ($numrowsDvaca2 == 0) {
-  $selano = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $id_tmp ORDER BY `fecha` ASC LIMIT 1";
-  $res_selano = $mysqli->query($selano);
-  $row_reselano = $res_selano->fetch_array();
-  $actual = date('Y-m-j');
-  $an = date('Y');
-  $total_ano = strtotime($actual) - strtotime($row_reselano[1]);
-  $tot = $total_ano / (60 * 60 * 24 * 365);
-  $fin = floor($tot);
-  
-  if ($fin == 0 || $fin == 1) {
-    $dias = 6;
-  }
-  if ($fin == 2) {
-    $dias = 8;
-  }
-  if ($fin == 3) {
-    $dias = 10;
-  }
-  if ($fin == 4) {
-    $dias = 12;
-  }
-  if ($fin >= 5 && $fin <= 9) {
-    $dias = 14;
-  }
-  if ($fin >= 10 && $fin <= 14) {
-    $dias = 16;
-  }
-  if ($fin >= 15 && $fin <= 19) {
-    $dias = 18;
-  }
-  if ($fin >= 20 && $fin <= 24) {
-    $dias = 20;
-  }
-  if ($fin >= 25 && $fin <= 29) {
-    $dias = 22;
-  }
-  if ($fin >= 30) {
-    $dias = 24;
-  }
- $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$row_anos[0],'$actual',$id_tmp,77,'+')";
-  $res_ivacaa = $mysqli->query($insertvaca);
-}
+    $ctr_jefe = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `jefes` j INNER JOIN `datos_personales` d ON j.`id_jefin` = d.`id_datosper` WHERE j.`id_puesto` = $row_datosper[12]";
+    $res_jefe = $mysqli->query($ctr_jefe);
+    $row_resjefes = $res_jefe->fetch_array();
 
-$divacas = "SELECT dv.*, e.`ano` FROM `dias_vacaciones` dv INNER JOIN `datos_personales` dp ON dv.`id_datosper` = dp.`id_datosper` INNER JOIN `ejercicio` e ON dv.`id_ejercicio` = e.`id_ejercicio` WHERE dp.`id_datosper` = $id_tmp";
-$res_divacas = $mysqli->query($divacas);
-$an = date('Y');
-while($row_redivacas = $res_divacas->fetch_array())
-{
-	if ($row_redivacas["8"] == $an) 
-	{ 
-      if ($row_redivacas["7"] == "+") {
-        $totaldis = $totaldis + $row_redivacas["2"];
-      }
-      if ($row_redivacas["7"] == "-") {
-        $totaldis = $totaldis - $row_redivacas["2"];
-      }
-      
-    }
-}
+	 
 ?>
 <!-- ENCABEZADO DE LA SOLICITUD DE VACACIONES -->
 <table>
@@ -128,12 +53,16 @@ while($row_redivacas = $res_divacas->fetch_array())
 		<tbody>
 			<tr>
 				<td>Fecha:</td>
-				<td style="float: right;"><?php 
+				<td style="float: right;"><?php
+					$ano1 = date("Y", strtotime($row_datosper[3]));
+					$dia1 = date('d', strtotime($row_datosper[3]));
+					$mes1 = date('n', strtotime($row_datosper[3]));
+					$nom1 = date('w', strtotime($row_datosper[3]));
+
 					$dias2 = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
 					$meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-					 
-					echo $dias2[date('w')].", ".date('d')." de ".$meses[date('n')-1]. " de ".date('Y');
-				?></td>
+					echo $dias2[$nom1].", ".$dia1." de ".$meses[$mes1-1]. " de ".$ano1;
+					?></td>
 			</tr>
 			<tr>
 				<td>  </td>
@@ -141,11 +70,11 @@ while($row_redivacas = $res_divacas->fetch_array())
 			</tr>
 			<tr>
 				<td>Nombre del Empleado</td>
-				<td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
+				<td><?php echo $row_datosper[6] ." ". $row_datosper[7] ." ". $row_datosper[8] ." ". $row_datosper[9] ?></td>
 			</tr>
 			<tr>
 				<td>Área de Trabajo</td>
-				<td><?php echo $row_resjefes[10] ?></td>
+				<td><?php echo $row_datosper[13] ?></td>
 			</tr>
 			<tr>
 				<td>Jefe de Trabajo</td>
@@ -291,7 +220,6 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 		</tbody>
 	</table>
 	</div>
-	<button>Calcular</button>
 	</form>
 	
 	
@@ -326,9 +254,6 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 	Despues del cuarto año de servicio, el periodo de vacaciones aumentará en dos días por cada cinco años de servicio.<br>
 	El sábado es día laborable y remunerado.</p>
 </div>
-<form method="post">
-	<button style="float: right;" value="descarga" name="descarga">Descargar PDF</button>
-</form>
 <?php
 	if (isset($_POST["descarga"])) {
 		$id_solicitante = $id_tmp;
@@ -338,8 +263,8 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 		$_SESSION["regresa"];
 		$fecha = date("Y-m-d");
 		$id_puesto = $row_resjefes[12];
-		$vacaciones = "INSERT INTO `vacaciones`(`id_solicitante`, `fecha_inicial`, `fecha_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `dias`, `id_ejercicio`) VALUES ($id_solicitante,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$id_puesto,$_SESSION[dias], $totaldis, $row_anos[0])"; //Busca todos los días vacaciones
-		//$res_vacaciones = $mysqli->query($vacaciones);
+		$vacaciones = "INSERT INTO `vacaciones`(`id_solicitante`, `fecha_inicial`, `fecha_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `id_ejercicio`) VALUES ($id_solicitante,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$id_puesto,$_SESSION[dias],$row_anos[0])"; //Busca todos los días vacaciones
+		$res_vacaciones = $mysqli->query($vacaciones);
 		if ($mysqli->error) 
 				{
 					echo "<script>if(confirm('Ocurrió un error, favor de intentarlo nuevamente')){ 
@@ -348,13 +273,13 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 					}</script>";
 				}else
 				{
-					echo $selvac = "SELECT `id_vaca` FROM `vacaciones` WHERE `id_solicitante` = $id_solicitante AND `fecha_inicial` = '$_SESSION[f_in]' AND `fecha_final` = '$_SESSION[f_final]' AND `fecha` = '$fecha' AND `dias_descanso` = $_SESSION[dias]"; //Busca todos los días selvac
+					$selvac = "SELECT `id_vaca` FROM `vacaciones` WHERE `id_solicitante` = $id_solicitante AND `fecha_inicial` = '$_SESSION[f_in]' AND `fecha_final` = '$_SESSION[f_final]' AND `fecha` = $fecha AND `dias_descanso` = $_SESSION[dias]"; //Busca todos los días selvac
 					$res_selvac = $mysqli->query($selvac);
-					$row_reselvar = $res_selvac->fetch_array();
-					echo "<script> document.location='../pdf/vacaciones.php?id=$row_reselvar[0]'; </script>";
+					$row_reselvar = $res_festivos->fetch_array();
+					header("Location: http://admonkco.com/rhkarlco/modulos/pdf/vacaciones.php?id=$row_reselvar[0]");
+					//echo "<script> document.location='../pdf/vacaciones.php?id=$row_reselvar[0]'; </script>";
 				}
 	}
-}
 ?>
 </body>
 </html>

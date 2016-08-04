@@ -43,7 +43,7 @@ session_start();
                         <select class="form-control" name="jefi" id="jefi" required>
                           <option value="">Selecciona un jefe inmeadiato</option>
                           <?php
-                          $obt_ji = "SELECT u.`id_usuario`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, t.`nombre`  FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper`  INNER JOIN `tipo_usuario` t ON u.`id_tipous` = t.`id_tipous` WHERE t.`nombre` = 'Administrador' OR t.`nombre` = 'Jefe'";       
+                          $obt_ji = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, t.`nombre`  FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper`  INNER JOIN `tipo_usuario` t ON u.`id_tipous` = t.`id_tipous` WHERE t.`nombre` = 'Administrador' OR t.`nombre` = 'Jefe'";       
                           $res_ji = $mysqli->query($obt_ji);
                           while ($row_ji = $res_ji->fetch_array()) { 
                             ?>
@@ -63,7 +63,7 @@ session_start();
                         <select class="form-control" name="jefa" id="jefa" required>
                           <option value="">Selecciona un jefe de área</option>
                           <?php
-                          $obt_ja = "SELECT u.`id_usuario`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, t.`nombre`  FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper`  INNER JOIN `tipo_usuario` t ON u.`id_tipous` = t.`id_tipous` WHERE t.`nombre` = 'Administrador' OR t.`nombre` = 'Jefe'";       
+                          $obt_ja = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, t.`nombre`  FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper`  INNER JOIN `tipo_usuario` t ON u.`id_tipous` = t.`id_tipous` WHERE t.`nombre` = 'Administrador' OR t.`nombre` = 'Jefe'";       
                           $res_ja = $mysqli->query($obt_ja);
                           while ($row_ja = $res_ja->fetch_array()) { 
                             ?>

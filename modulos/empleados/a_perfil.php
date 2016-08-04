@@ -12,6 +12,9 @@ if (isset($_SESSION["session"])){
   $_SESSION['id_tmp'] = $id;
 include("../../template/todo2.php");
 //inicio de librerias 
+$ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+$res_anos = $mysqli->query($ano);
+$row_anos = $res_anos->fetch_array();
 $actual2 = date('Y');
 $sel_dvaca2 = "SELECT * FROM `dias_vacaciones` WHERE `id_datosper` = $_SESSION[id_tmp] AND `ano` = $actual2";
 $res_dvaca2 = $mysqli->query($sel_dvaca2);
@@ -56,7 +59,7 @@ if ($numrowsDvaca2 == 0) {
   if ($fin >= 30) {
     $dias = 24;
   }
-  $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `ano`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$an,'$actual',$_SESSION[id_tmp],77,'+')";
+  $insertvaca = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Ingreso de días de vacaciones automático anual',$dias,$row_anos[0],'$actual',$id_tmp,77,'+')";
   $res_ivacaa = $mysqli->query($insertvaca);
 }
 ?>
@@ -1080,9 +1083,6 @@ if ($numrowsDvaca2 == 0) {
                       $prof1 = 0;
                       while ($row_dvac = $res_dvac->fetch_array()) 
                       {
-                        $ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
-                        $res_anos = $mysqli->query($ano);
-                        $row_anos = $res_anos->fetch_array();
                         $ano = date(Y);
                         if ($row_anos["1"] == $ano) {
                           if ($row_dvac["7"] == "+") {
