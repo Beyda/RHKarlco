@@ -93,12 +93,13 @@ $(document).ready(function() {
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
+                        <th>Pendientes</th>
                         <th>Vacaciones</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto` FROM `datos_personales` d INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `empresas` e ON e.`id_empresa` = p.`id_empresa` WHERE `solicitante` = 0";
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha_rh` ASC";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
@@ -106,6 +107,31 @@ $(document).ready(function() {
                         <td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
                         <td><?php echo $row_resemp[5] ?></td>
                         <td><?php echo $row_resemp[6] ?></td>
+                        <td>
+                          <?php
+                          if ($row_resemp[7] == 0) {
+                            $etapa = "btn btn-block btn-danger";
+                            $valor = "Jefe inmediato";
+                            $link = "#";
+                          }
+                          elseif ($row_resemp[7] == 1) {
+                            $etapa = "btn btn-block btn-warning";
+                            $valor = "Jefe de área";
+                            $link = "#";
+                          }
+                          elseif ($row_resemp[7] == 2) {
+                            $etapa = "btn btn-block btn-info";
+                            $valor = "Recursos Humanos";
+                            $link = "#";
+                          }
+                          elseif ($row_resemp[7] == 3) {
+                            $etapa = "btn btn-block btn-success";
+                            $valor = "Eutorizado";
+                            $link = "#";
+                          }
+                          ?>
+                          <center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center>
+                        </td>
                         <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
@@ -117,6 +143,7 @@ $(document).ready(function() {
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
+                        <th>Pendientes</th>
                         <th>Vacaciones</th>
                       </tr>
                     </tfoot>
