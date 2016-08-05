@@ -23,52 +23,41 @@ include("../../template/todo2.php");
                   if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos") {
                 ?>
 <script language="javascript">
-$(document).ready(function() {
-    $().ajaxStart(function() {
-        $('#loading').show();
-        $('#result').hide();
-    }).ajaxStop(function() {
-        $('#loading').hide();
-        $('#result').fadeIn('slow');
-    });
-    $('#form, #fat, #fo3').submit(function() {
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'),
-            data: $(this).serialize(),
-            success: function(data) {
-                $('#result').html(data);
+    $(document).ready(function() {
+        $().ajaxStart(function() {
+            $('#loading').show();
+            $('#result').hide();
+        }).ajaxStop(function() {
+            $('#loading').hide();
+            $('#result').fadeIn('slow');
+        });
+        $('#form, #fat, #fo3').submit(function() {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('#result').html(data);
 
-            }
-        })
-        
-        return false;
-    }); 
-
-    $("#empresa").change(function(){
-    var empresa=$(this).val();
-    var dataString2 = 'empresa='+ empresa;
-    $.ajax({
-        type: "POST",
-        url: "p_empresas.php",
-        data: dataString2,
-        cache: false,
-    success: function(html){
-    $("#result").html(html);
-    }
-    });
-});
-})  
+                }
+            })
+            
+            return false;
+        }); 
+    })  
 </script>
       
         <section class="content-header">
           <h1>
-            Lista de vacaciones
-            <small>por empleados</small>
+            Lista de solicitudes
+            <small>de vacaciones </small>
             <a href="solicitud.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de vacaciones" target="blanck"><button class="btn bg-navy margin">Solicitar vacaciones</button></a>
-            <form method="post" action="p_empresas.php" id="fo3" name="fo3" >
-            <select class="form-control tooltipster-shadow-preview" title="Filtrar los puestos por empresa al seleccionarla" style="width: 30%;" name="empresa" id="empresa" required>
-              <option value="">Selecciona empresa</option>
+            <form method="post" action="ajax_solic.php" id="fo3" name="fo3" >
+            <select class="form-control tooltipster-shadow-preview" title="Busca las diferentes solicitudes" style="width: 30%;" name="tipo" id="tipo" required>
+              <option value="">Selecciona que mostrar</option>
+              <option value="0">Todas las solicitudes</option>
+              <option value="1">Solicitudes de mis empleados</option>
+              <option value="2">Mis solicitudes</option>
             </select>
             </form>
           </h1>
@@ -93,13 +82,13 @@ $(document).ready(function() {
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Pendientes</th>
+                        <th>Etapa</th>
                         <th>Vacaciones</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha_rh` ASC";
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha_rh` ASC";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
@@ -109,28 +98,43 @@ $(document).ready(function() {
                         <td><?php echo $row_resemp[6] ?></td>
                         <td>
                           <?php
-                          if ($row_resemp[7] == 0) {
+                          $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` ASC LIMIT 1";
+                          $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
+                          $row_resetapa = $res_etapa->fetch_array();
+
+                          $ctr_jefpu = "SELECT * FROM `jefes` WHERE `id_puesto` = $row_resemp[8]";
+                          $res_jefpu = $mysqli->query($ctr_jefpu); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
+                          $row_resjefpu = $res_jefpu->fetch_array();
+                          $disable = "disabled";
+
+                          if ($row_resetapa[1] == 0) {
                             $etapa = "btn btn-block btn-danger";
                             $valor = "Jefe inmediato";
                             $link = "#";
+                            if ($row_resjefpu[2] == $_SESSION["id_datosper"]) {
+                              $disable = "enable";
+                            }
                           }
-                          elseif ($row_resemp[7] == 1) {
+                          elseif ($row_resetapa[1] == 1) {
                             $etapa = "btn btn-block btn-warning";
                             $valor = "Jefe de área";
                             $link = "#";
+                            if ($row_resjefpu[3] == $_SESSION["id_datosper"]) {
+                              $disable = "enable";
+                            }
                           }
-                          elseif ($row_resemp[7] == 2) {
+                          elseif ($row_resetapa[1] == 2) {
                             $etapa = "btn btn-block btn-info";
                             $valor = "Recursos Humanos";
                             $link = "#";
                           }
-                          elseif ($row_resemp[7] == 3) {
+                          elseif ($row_resetapa[1] == 3) {
                             $etapa = "btn btn-block btn-success";
-                            $valor = "Eutorizado";
+                            $valor = "Autorizado";
                             $link = "#";
                           }
                           ?>
-                          <center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center>
+                          <center><a href="<?php echo $link ?>"><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
                         </td>
                         <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
@@ -143,7 +147,7 @@ $(document).ready(function() {
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Pendientes</th>
+                        <th>Etapa</th>
                         <th>Vacaciones</th>
                       </tr>
                     </tfoot>

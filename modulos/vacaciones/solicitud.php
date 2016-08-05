@@ -338,7 +338,9 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 		$_SESSION["regresa"];
 		$fecha = date("Y-m-d");
 		$id_puesto = $row_resjefes[12];
-		$vacaciones = "INSERT INTO `vacaciones`(`id_solicitante`, `fecha_inicial`, `fecha_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `dias`, `id_rh`, `id_ejercicio`) VALUES ($id_solicitante,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$id_puesto,$_SESSION[dias], $totaldis, $row_rh[0], $row_anos[0])"; //Busca todos los días vacaciones
+		if ($_SESSION["dias"] <= $totaldis) {
+		
+		$vacaciones = "INSERT INTO `vacaciones`(`id_solicitante`, `fecha_inicial`, `fecha_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `dias`, `id_rh`, `id_ejercicio`, `etapa`) VALUES ($id_solicitante,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$id_puesto,$_SESSION[dias], $totaldis, $row_rh[0], $row_anos[0], 0)"; //Busca todos los días vacaciones
 		$res_vacaciones = $mysqli->query($vacaciones);
 		if ($mysqli->error) 
 				{
@@ -353,6 +355,13 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 					$row_reselvar = $res_selvac->fetch_array();
 					echo "<script> document.location='../pdf/vacaciones.php?id=$row_reselvar[0]'; </script>";
 				}
+		}else
+		{
+			echo "<script>if(confirm('Estás tomando más días de los que tienes disponibles')){ 
+					document.location='solicitud.php?id=$id_solicitante';} 
+					else{ alert('Operacion Cancelada'); 
+					}</script>";
+		}
 	}
 }
 ?>
