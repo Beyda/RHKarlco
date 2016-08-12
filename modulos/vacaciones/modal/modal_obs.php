@@ -1,7 +1,10 @@
 <?php
 include_once("../../../control/connect.php");
 session_start();
-$id_emp = $_GET["id_emp"];
+$id_vac = $_GET["id_vac"];
+$ctr_obs = "SELECT `jefe_in`, `fecha_in`, `obs_in`, `jefe_ar`, `fecha_ar`, `obs_ar`, `rh`, `fecha_rh`, `obs_rh` FROM `vacaciones` WHERE `id_vaca` = $id_vac";
+$res_obs = $mysqli->query($ctr_obs);
+$row_resobs = $res_obs->fetch_array();
 ?>
 <script type="text/javascript" src="/rhkarlco/bootstrap/js/scripts.js"></script>
                   <div class="modal-header">
@@ -13,52 +16,91 @@ $id_emp = $_GET["id_emp"];
               <!-- The time line -->
               <ul class="timeline">
                 <!-- timeline time label -->
+                <?php
+                if ($row_resobs[0] != NULL) {
+                ?>
                 <li class="time-label">
                   <span class="bg-red">
-                    10 Feb. 2014
+                    <?php echo $row_resobs[1] ?>
                   </span>
                 </li>
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
-                  <i class="fa fa-envelope bg-blue"></i>
+                  <i class="fa fa-user bg-blue"></i>
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                    <h3 class="timeline-header"><a href="#">Jefe inmediato</a> da la siguiente observación</h3>
                     <div class="timeline-body">
-                      Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                      weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                      jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                      quora plaxo ideeli hulu weebly balihoo...
+                      <?php echo $row_resobs[2] ?>
                     </div>
                   </div>
                 </li>
+                <?php
+                  }
+                ?>
                 <!-- END timeline item -->
                 <!-- timeline time label -->
+                <?php
+                if ($row_resobs[3] != NULL) {
+                ?>
                 <li class="time-label">
-                  <span class="bg-green">
-                    3 Jan. 2014
+                  <span class="bg-yellow">
+                    <?php echo $row_resobs[4] ?>
                   </span>
                 </li>
                 <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
-                  <i class="fa fa-envelope bg-blue"></i>
+                  <i class="fa fa-user bg-purple"></i>
                   <div class="timeline-item">
-                    <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                    <h3 class="timeline-header"><a href="#">Jefe de área</a> da la siguiente observación</h3>
                     <div class="timeline-body">
-                      Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                      weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                      jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                      quora plaxo ideeli hulu weebly balihoo...
+                      <?php echo $row_resobs[5] ?>
                     </div>
                   </div>
                 </li>
+                <?php
+                  }
+                ?>
                 <!-- END timeline item -->
+                <!-- timeline time label -->
+                <?php
+                if ($row_resobs[6] != NULL) {
+                ?>
+                <li class="time-label">
+                  <span class="bg-success">
+                    <?php echo $row_resobs[7] ?>
+                  </span>
+                </li>
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                  <i class="fa fa-user bg-yellow"></i>
+                  <div class="timeline-item">
+                    <h3 class="timeline-header"><a href="#">Recursos Humanos</a> da la siguiente observación</h3>
+                    <div class="timeline-body">
+                      <?php echo $row_resobs[8] ?>
+                    </div>
+                  </div>
+                </li>
+                <?php
+                  }else
+                  {
+                ?>
                 <li>
                   <i class="fa fa-clock-o bg-gray"></i>
+                  <div class="timeline-item">
+                    <h3 class="timeline-header">No hay comentarios hasta el momento</h3>
+                    <div class="timeline-body">
+                      <?php echo $row_resobs[8] ?>
+                    </div>
+                  </div>
                 </li>
+                <?php
+                  }
+                ?>
+                <!-- END timeline item -->
+                
               </ul>
             </div><!-- /.col -->
                 
