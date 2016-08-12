@@ -33,7 +33,7 @@ include_once("../../control/connect.php");
 	$ctr_emp = "SELECT `id_datosper`, `primer_nombre`, `segundo_nombre`, `ap_paterno`, `ap_materno`  FROM `datos_personales` WHERE `id_datosper` = $id_tmp";
     $res_emp = $mysqli->query($ctr_emp);
     $row_resemp = $res_emp->fetch_array();
-    $ctr_jefes = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d2.`id_datosper`, d2.`primer_nombre`, d2.`segundo_nombre`, d2.`ap_paterno`, d2.`ap_materno`, p.`puesto`, pp.`salario`, pp.`id_puestoper` FROM `puesto_per` pp INNER JOIN `jefes` j ON pp.`id_datosper` = 1 AND pp.`id_puesto` = j.`id_puesto` INNER JOIN `datos_personales` d ON j.`id_jefin` = d.`id_datosper` INNER JOIN `datos_personales` d2 ON j.`id_jefar` = d2.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` WHERE pp.`fecha_final` = '0000-00-00'";
+    $ctr_jefes = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d2.`id_datosper`, d2.`primer_nombre`, d2.`segundo_nombre`, d2.`ap_paterno`, d2.`ap_materno`, p.`puesto`, pp.`salario`, pp.`id_puestoper` FROM `puesto_per` pp INNER JOIN `jefes` j ON pp.`id_datosper` = $_SESSION[id_datosper] AND pp.`id_puesto` = j.`id_puesto` INNER JOIN `datos_personales` d ON j.`id_jefin` = d.`id_datosper` INNER JOIN `datos_personales` d2 ON j.`id_jefar` = d2.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` WHERE pp.`fecha_final` = '0000-00-00'";
     $res_jefes = $mysqli->query($ctr_jefes);
     $row_resjefes = $res_jefes->fetch_array();
 

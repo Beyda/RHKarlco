@@ -19,9 +19,9 @@ include("../../template/todo2.php");
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-                <?php 
-                  if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos") {
-                ?>
+    <?php 
+      if ($tipo_usuario_session == "Administrador" || $tipo_usuario_session == "Recursos Humanos") {
+    ?>
 <script language="javascript">
     $(document).ready(function() {
         $().ajaxStart(function() {
@@ -46,6 +46,33 @@ include("../../template/todo2.php");
         }); 
     })  
 </script>
+
+<!-- *****************************************/.ajax tipo******************************** -->
+  <script type="text/javascript">
+  //Mostrar el tipo de resultado que se desea ver
+  $(document).ready(function(){
+
+
+      //Manda el tipo de información que se desea consultar
+      $("#tipo").change(function(){
+          var tipo=$(this).val();
+          var dataString2 = 'tipo='+ tipo;
+          $.ajax({
+              type: "POST",
+              url: "l_solic.php",
+              data: dataString2,
+              cache: false,
+          success: function(html){
+          $("#result").html(html);
+          }
+          });
+      });
+
+
+      
+
+    });
+  </script>
       
         <section class="content-header">
           <h1>
@@ -56,6 +83,214 @@ include("../../template/todo2.php");
             <select class="form-control tooltipster-shadow-preview" title="Busca las diferentes solicitudes" style="width: 30%;" name="tipo" id="tipo" required>
               <option value="">Selecciona que mostrar</option>
               <option value="0">Todas las solicitudes</option>
+              <?php 
+                if ($tipo_usuario_session == "Administrador") {
+              ?>
+              <option value="1">Solicitudes de mis empleados</option>
+              <?php
+            }
+            ?>
+              <option value="2">Mis solicitudes</option>
+            </select>
+            </form>
+          </h1>
+        </section>
+      
+
+        <!-- Main content -->
+        <section class="content">
+          <div class="row">
+            <div class="col-xs-12">
+
+              <div class="col-xs-12" id="result">
+
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Empleados</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Empresa</th>
+                        <th>Puesto</th>
+                        <th>Autorización</th>
+                        <th>Vacaciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper`";
+                    $res_emp = $mysqli->query($ctr_emp);
+                    while ($row_resemp = $res_emp->fetch_array()) {
+                      $epv = "SELECT DISTINCT e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` AND d.`id_datosper` = $row_resemp[0] INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha` DESC LIMIT 1";
+                      $res_epv = $mysqli->query($epv);
+                      $row_resepv = $res_epv->fetch_array();
+                      ?>
+                      <tr>
+                        <td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
+                        <td><?php echo $row_resepv[0] ?></td>
+                        <td><?php echo $row_resepv[1] ?></td>
+                        <td>
+                          <?php
+
+                          $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
+                          $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
+                          $row_resetapa = $res_etapa->fetch_array();
+
+                          $ctr_jefpu = "SELECT * FROM `jefes` WHERE `id_puesto` = $row_resepv[3]";
+                          $res_jefpu = $mysqli->query($ctr_jefpu); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
+                          $row_resjefpu = $res_jefpu->fetch_array();
+                          $disable = "disabled";
+
+                          if ($row_resetapa[1] == 0) {
+                            $etapa = "btn btn-block btn-danger";
+                            $valor = "Jefe inmediato";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
+                            if ($row_resjefpu[2] == $_SESSION["id_datosper"]) {
+                              $disable = "enable";
+                            }
+                          }
+                          elseif ($row_resetapa[1] == 1) {
+                            $etapa = "btn btn-block btn-warning";
+                            $valor = "Jefe de área";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
+                            if ($row_resjefpu[3] == $_SESSION["id_datosper"]) {
+                              $disable = "enable";
+                            }
+                          }
+                          elseif ($row_resetapa[1] == 2) {
+                            $etapa = "btn btn-block btn-info";
+                            $valor = "Recursos Humanos";
+                            $rh = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
+                            $res_rh = $mysqli->query($rh);
+                            $row_rh = $res_rh->fetch_array();
+                            if ($row_rh[0] == $_SESSION["id_datosper"]) {
+                              $disable = "enable";
+                            }
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
+                          }
+                          elseif ($row_resetapa[1] == 3) {
+                            $etapa = "btn btn-block btn-success";
+                            $valor = "Autorizado";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
+                          }
+                          ?>
+                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resetapa[1]; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resetapa[0]?>"><?php echo $valor ?></button></center>
+                        </td>
+                        <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+                      </tr>
+                      <?php
+                        }
+                        ?>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <th>Nombre</th>
+                        <th>Empresa</th>
+                        <th>Puesto</th>
+                        <th>Autorización</th>
+                        <th>Vacaciones</th>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </section><!-- /.content -->
+                  <?php
+
+                  if (isset($_POST["puesto"])) {
+                    include "cls_jefe.php";
+                    $puesto = $_POST["puesto"];
+                    $jefi = $_POST["jefi"];
+                    $jefa = $_POST["jefa"];
+
+                    $classEmp = new jefes ($puesto,$jefi, $jefa, 0);
+                    $classEmp->insertar();
+
+                  }
+                  if (isset($_POST["Mpuesto"])) {
+                    include "cls_jefe.php";
+                    $puesto = $_POST["Mpuesto"];
+                    $jefi = $_POST["Mjefi"];
+                    $jefa = $_POST["Mjefa"];
+                    $id = $_POST["id"];
+
+                    $classEmp = new jefes ($puesto,$jefi, $jefa, $id);
+                    $classEmp->actualizar();
+
+                  }
+
+              }
+
+
+?>
+ <?php 
+      if ($tipo_usuario_session == "Jefe") {
+    ?>
+<script language="javascript">
+    $(document).ready(function() {
+        $().ajaxStart(function() {
+            $('#loading').show();
+            $('#result').hide();
+        }).ajaxStop(function() {
+            $('#loading').hide();
+            $('#result').fadeIn('slow');
+        });
+        $('#form, #fat, #fo3').submit(function() {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(data) {
+                    $('#result').html(data);
+
+                }
+            })
+            
+            return false;
+        }); 
+    })  
+</script>
+
+<!-- *****************************************/.ajax tipo******************************** -->
+  <script type="text/javascript">
+  //Mostrar el tipo de resultado que se desea ver
+  $(document).ready(function(){
+
+
+      //Manda el tipo de información que se desea consultar
+      $("#tipo").change(function(){
+          var tipo=$(this).val();
+          var dataString2 = 'tipo='+ tipo;
+          $.ajax({
+              type: "POST",
+              url: "l_solic.php",
+              data: dataString2,
+              cache: false,
+          success: function(html){
+          $("#result").html(html);
+          }
+          });
+      });
+
+
+      
+
+    });
+  </script>
+      
+        <section class="content-header">
+          <h1>
+            Lista de solicitudes
+            <small>de vacaciones </small>
+            <a href="solicitud.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de vacaciones" target="blanck"><button class="btn bg-navy margin">Solicitar vacaciones</button></a>
+            <form method="post" action="ajax_solic.php" id="fo3" name="fo3" >
+            <select class="form-control tooltipster-shadow-preview" title="Busca las diferentes solicitudes" style="width: 30%;" name="tipo" id="tipo" required>
+              <option value="">Selecciona que mostrar</option>
               <option value="1">Solicitudes de mis empleados</option>
               <option value="2">Mis solicitudes</option>
             </select>
@@ -82,27 +317,31 @@ include("../../template/todo2.php");
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Etapa</th>
+                        <th>Autorización</th>
                         <th>Vacaciones</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha_rh` ASC";
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto` WHERE  j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper]";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
+                      $epv = "SELECT DISTINCT e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` AND d.`id_datosper` = $row_resemp[0] INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha` DESC LIMIT 1";
+                      $res_epv = $mysqli->query($epv);
+                      $row_resepv = $res_epv->fetch_array();
                       ?>
                       <tr>
                         <td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
-                        <td><?php echo $row_resemp[5] ?></td>
-                        <td><?php echo $row_resemp[6] ?></td>
+                        <td><?php echo $row_resepv[0] ?></td>
+                        <td><?php echo $row_resepv[1] ?></td>
                         <td>
                           <?php
-                          $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` ASC LIMIT 1";
+
+                          $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
                           $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
                           $row_resetapa = $res_etapa->fetch_array();
 
-                          $ctr_jefpu = "SELECT * FROM `jefes` WHERE `id_puesto` = $row_resemp[8]";
+                          $ctr_jefpu = "SELECT * FROM `jefes` WHERE `id_puesto` = $row_resepv[3]";
                           $res_jefpu = $mysqli->query($ctr_jefpu); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
                           $row_resjefpu = $res_jefpu->fetch_array();
                           $disable = "disabled";
@@ -110,7 +349,7 @@ include("../../template/todo2.php");
                           if ($row_resetapa[1] == 0) {
                             $etapa = "btn btn-block btn-danger";
                             $valor = "Jefe inmediato";
-                            $link = "#";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
                             if ($row_resjefpu[2] == $_SESSION["id_datosper"]) {
                               $disable = "enable";
                             }
@@ -118,7 +357,7 @@ include("../../template/todo2.php");
                           elseif ($row_resetapa[1] == 1) {
                             $etapa = "btn btn-block btn-warning";
                             $valor = "Jefe de área";
-                            $link = "#";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
                             if ($row_resjefpu[3] == $_SESSION["id_datosper"]) {
                               $disable = "enable";
                             }
@@ -126,17 +365,17 @@ include("../../template/todo2.php");
                           elseif ($row_resetapa[1] == 2) {
                             $etapa = "btn btn-block btn-info";
                             $valor = "Recursos Humanos";
-                            $link = "#";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
                           }
                           elseif ($row_resetapa[1] == 3) {
                             $etapa = "btn btn-block btn-success";
                             $valor = "Autorizado";
-                            $link = "#";
+                            $link = "../pdf/vacaciones.php?id=$row_resetapa[0]";
                           }
                           ?>
-                          <center><a href="<?php echo $link ?>"><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
+                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resetapa[1]; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resetapa[0]?>"><?php echo $valor ?></button></center>
                         </td>
-                        <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                         }
@@ -147,7 +386,7 @@ include("../../template/todo2.php");
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Etapa</th>
+                        <th>Autorización</th>
                         <th>Vacaciones</th>
                       </tr>
                     </tfoot>
@@ -189,6 +428,23 @@ include("../../template/todo2.php");
     </div><!-- ./wrapper -->
 
     <script type="text/javascript">
+
+     function autorizar(id, etapa){
+        swal({
+        title: "¿Desea autorizar estas vacaciones?",
+        text: "Escribir las observaciones",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Observaciones"
+      }, function (inputValue) {
+        if (inputValue === false) return false;
+        if (inputValue === "") 
+        swal("Bien!", "solicitud autorizada" , "success");
+        window.location.href = "autorizar.php?idvac="+id.value+"&obs="+inputValue+"&tipo="+etapa;
+      });
+      };
+
       $(function () {
         $("#example1").dataTable();
         /*$('#example2').dataTable({
@@ -215,14 +471,13 @@ include("../../template/todo2.php");
       });
       </script>
 
-      <div class="example-modal">
-            <div class="modal">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-          </div><!-- /.example-modal -->
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>
 
   </body>
 <?php 

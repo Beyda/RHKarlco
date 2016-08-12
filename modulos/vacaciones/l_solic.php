@@ -9,6 +9,7 @@ if ($tipo == 0) {
 }
 elseif ($tipo == 1) {
   $query = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto` WHERE  j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper]";
+  $ver = "enable";
 
 }
 elseif ($tipo == 2) {
@@ -41,6 +42,9 @@ elseif ($tipo == 2) {
       $ctr_emp = $query;
       $res_emp = $mysqli->query($ctr_emp);
       while ($row_resemp = $res_emp->fetch_array()) {
+            $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
+            $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
+            $row_resetapa = $res_etapa->fetch_array();
         if ($tipo == 0) {
           $epv = "SELECT DISTINCT e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` AND d.`id_datosper` = $row_resemp[0] INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` ORDER BY v.`fecha` DESC LIMIT 1";
           $res_epv = $mysqli->query($epv);
@@ -70,9 +74,7 @@ elseif ($tipo == 2) {
         
         
 
-            $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
-            $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
-            $row_resetapa = $res_etapa->fetch_array();
+            
             if ($tipo == 2) {
               $etapa = $row_resemp[7];
             }
@@ -82,7 +84,7 @@ elseif ($tipo == 2) {
             $row_resjefpu = $res_jefpu->fetch_array();
 
             if ($etapa == 0) {
-              $etapa = "btn btn-block btn-danger";
+              $etapa2 = "btn btn-block btn-danger";
               $valor = "Jefe inmediato";
               $link = "#";
               if ($row_resjefpu[2] == $_SESSION["id_datosper"]) {
@@ -91,7 +93,7 @@ elseif ($tipo == 2) {
               }
             }
             elseif ($etapa == 1) {
-              $etapa = "btn btn-block btn-warning";
+              $etapa2 = "btn btn-block btn-warning";
               $valor = "Jefe de área";
               $link = "#";
               if ($row_resjefpu[3] == $_SESSION["id_datosper"]) {
@@ -100,7 +102,7 @@ elseif ($tipo == 2) {
               }
             }
             elseif ($etapa == 2) {
-              $etapa = "btn btn-block btn-info";
+              $etapa2 = "btn btn-block btn-info";
               $valor = "Recursos Humanos";
               $link = "#";
               if ($row_resjefpu[4] == $_SESSION["id_datosper"]) {
@@ -109,7 +111,7 @@ elseif ($tipo == 2) {
               }
             }
             elseif ($etapa == 3) {
-              $etapa = "btn btn-block btn-success";
+              $etapa2 = "btn btn-block btn-success";
               $valor = "Autorizado";
               $link = "#";
             }
@@ -123,7 +125,7 @@ elseif ($tipo == 2) {
           <td><?php echo $empresa ?></td>
           <td><?php echo $puesto ?></td>
           <td>
-            <center><a href="<?php echo $link ?>"><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
+            <center><button class="<?php echo $etapa2 ?>" onclick="autorizar(this, '<?php echo $etapa; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resetapa[0]?>"><?php echo $valor ?></button></center>
           </td>
           <?php
           if($tipo != 2){
@@ -157,6 +159,24 @@ elseif ($tipo == 2) {
   </div><!-- /.box-body -->
 </div><!-- /.box -->
 <script type="text/javascript">
+  function autorizar(id, etapa){
+        swal({
+        title: "¿Desea autorizar estas vacaciones?",
+        text: "Escribir las observaciones",
+        type: "input",
+        showCancelButton: true,
+        closeOnConfirm: false,
+        inputPlaceholder: "Observaciones"
+      }, function (inputValue) {
+        if (inputValue === false) return false;
+        if (inputValue === "") 
+        swal("Bien!", "solicitud autorizada" , "success");
+        window.location.href = "autorizar.php?idvac="+id.value+"&obs="+inputValue+"&tipo="+etapa;
+      });
+      };
+
+
+
       $(function () {
         $("#example1").dataTable();
         /*$('#example2').dataTable({
