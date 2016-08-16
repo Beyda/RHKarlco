@@ -135,7 +135,7 @@ elseif ($tipo == 2) {
           <?php
           if($tipo != 2){
           ?>
-          <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+          <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
           <?php
         }
           ?>
@@ -322,3 +322,16 @@ elseif ($tipo == 2) {
         });*/
       });
     </script>
+    <script type="text/javascript">
+
+      $(document).ready(function(){
+        $('.modalLoad').click(function() { 
+          $('.modal').modal('show'); 
+          $('.modal-content').val('');
+          $('.modal-content').load($(this).attr('href'));
+           return false;
+
+        });
+
+      });
+      </script>

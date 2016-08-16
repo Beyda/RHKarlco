@@ -1,8 +1,8 @@
 <?php
 include_once("../../control/connect.php");
- session_start();
+session_start();
 
- ?>
+?>
 <!DOCTYPE html>
 <html name="html">
 <head>
@@ -296,7 +296,7 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 	
 	
 	
-				<!-- FECHAS DE VACACIONES -->
+				<!-- FIRMAS DE VACACIONES -->
 
 	
 	

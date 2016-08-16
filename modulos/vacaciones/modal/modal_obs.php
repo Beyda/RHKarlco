@@ -68,7 +68,7 @@ $row_resobs = $res_obs->fetch_array();
                 if ($row_resobs[6] != NULL) {
                 ?>
                 <li class="time-label">
-                  <span class="bg-success">
+                  <span class="bg-green">
                     <?php echo $row_resobs[7] ?>
                   </span>
                 </li>
