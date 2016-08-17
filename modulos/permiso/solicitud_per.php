@@ -140,7 +140,7 @@ $(document).ready(function() {
 	</form>
 
 	<!-- DÍAS DISTRIBUIDOS -->
-
+<form method="post">
 	<div id="dd">
 		<table id="distribuidos">
 			<tr>
@@ -252,7 +252,7 @@ $(document).ready(function() {
 			</td>
 		</tr>
 	</table>
-<form method="post">
+
 	<button style="float: right;" value="descarga" name="descarga">Descargar PDF</button>
 </form>
 </body>

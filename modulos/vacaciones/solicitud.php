@@ -353,6 +353,8 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 					$selvac = "SELECT `id_vaca` FROM `vacaciones` WHERE `id_solicitante` = $id_solicitante AND `fecha_inicial` = '$_SESSION[f_in]' AND `fecha_final` = '$_SESSION[f_final]' AND `fecha` = '$fecha' AND `dias_descanso` = $_SESSION[dias]"; //Busca todos los días selvac
 					$res_selvac = $mysqli->query($selvac);
 					$row_reselvar = $res_selvac->fetch_array();
+					$descuento = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Descuento por solicitud de vacaciones',$_SESSION[dias],$row_anos[0],'$fecha',$id_solicitante,77,'-')"; //Busca todos los días vacaciones
+					$res_descuento = $mysqli->query($descuento);
 					echo "<script> document.location='../pdf/vacaciones.php?id=$row_reselvar[0]'; </script>";
 				}
 		}else

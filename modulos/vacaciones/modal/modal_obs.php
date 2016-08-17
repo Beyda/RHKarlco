@@ -84,7 +84,7 @@ $row_resobs = $res_obs->fetch_array();
                   </div>
                 </li>
                 <?php
-                  }else
+                  }if($row_resobs[0] == NULL && $row_resobs[3] == NULL && $row_resobs[6] == NULL)
                   {
                 ?>
                 <li>

@@ -90,7 +90,7 @@ elseif ($tipo == 2) {
 
             if ($etapa == 0) {
               $etapa2 = "btn btn-block btn-danger";
-              $valor = "Jefe inmediato";
+              $valor = "Empleado inmediato";
               $link = "#";
               if ($row_resjefpu[2] == $_SESSION["id_datosper"]) {
                 $disable = "enable";
@@ -99,7 +99,7 @@ elseif ($tipo == 2) {
             }
             elseif ($etapa == 1) {
               $etapa2 = "btn btn-block btn-warning";
-              $valor = "Jefe de área";
+              $valor = "Empleado de área";
               $link = "#";
               if ($row_resjefpu[3] == $_SESSION["id_datosper"]) {
                 $disable = "enable";

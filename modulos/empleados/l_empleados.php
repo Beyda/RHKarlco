@@ -7,6 +7,7 @@ if (isset($_SESSION["session"])){
 // $apellidos_session=$_SESSION["apellidos_session"];
  $correo_session=$_SESSION["session"];
  $tipo_usuario_session=$_SESSION["t_usuario_session"];
+ $id_datosper = $_SESSION["id_datosper"];
  //$avatar_session=$_SESSION["avatar_session"];
  
 //$id_tmp = uniqid('', true);
@@ -129,31 +130,31 @@ include("../../template/todo2.php");
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT d.`primer_nombre`, d.`ap_paterno`, d.`id_datosper`, d.`estatus` FROM `datos_personales` d INNER JOIN `usuarios` u ON d.`id_datosper` = u.`id_datosper` WHERE u.`jefe` = $id_usuario ORDER BY `primer_nombre` ASC"; 
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d.`estatus` FROM `datos_personales` d INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto` WHERE j.`id_jefin` = $id_datosper OR j.`id_jefar` = $id_datosper ORDER BY `primer_nombre` ASC"; 
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
                       <tr>
-                        <td><?php echo $row_resemp[0]?> <?php echo $row_resemp[1]?></td>
+                        <td><?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?></td>
                         <td><center><a href="a_perfil.php?id=<?php echo $row_resemp[2]?>"><button class="btn bg-olive margin" style="width: 50%;">Modificar</button></a></center></td>
                         <?php 
-                        if($row_resemp[3] == 1)
+                        if($row_resemp[5] == 1)
                         {
                           $color = "btn bg-blue margin";
                           $estatus = "Activo";                
                         }
-                        if($row_resemp[3] == 2)
+                        if($row_resemp[5] == 2)
                         {
                           $color = "btn bg-orange margin";
                           $estatus = "Con permiso"; 
                         }
-                        if($row_resemp[3] == 3)
+                        if($row_resemp[5] == 3)
                         {
                           $color = "btn bg-red margin";
                           $estatus = "Dado de baja"; 
                         }
                         ?>
-                        <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[2]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="<?php echo $color; ?>" style="width: 50%;"><?php echo $estatus ?></button></a></center></td>
+                        <td><center><a href="modal/modal.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".modal" class='modalLoad'><button class="<?php echo $color; ?>" style="width: 50%;"><?php echo $estatus ?></button></a></center></td>
                       </tr>
                       <?php
                         }

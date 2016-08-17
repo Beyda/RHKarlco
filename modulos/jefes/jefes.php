@@ -107,15 +107,15 @@ $(document).ready(function() {
                     </thead>
                     <tbody>
                     <?php
-                  $sel_puesto = "SELECT j.*, p.`id_puesto`, p.`puesto`, d.`id_datosper`, d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, da.`id_datosper`, da.`id_datosper`, da.`primer_nombre`, da.`segundo_nombre`, da.`ap_paterno`, da.`ap_materno` FROM `jefes` j INNER JOIN `puestos` p ON j.`id_puesto` = p.`id_puesto` INNER JOIN `datos_personales` d ON d.`id_datosper` = j.`id_jefin` INNER JOIN `datos_personales` da ON da.`id_datosper` = j.`id_jefar`";
+                  $sel_puesto = "SELECT j.*, p.`id_puesto`, p.`puesto`, d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, da.`id_datosper`, da.`primer_nombre`, da.`segundo_nombre`, da.`ap_paterno`, da.`ap_materno` FROM `jefes` j INNER JOIN `puestos` p ON j.`id_puesto` = p.`id_puesto` INNER JOIN `datos_personales` d ON d.`id_datosper` = j.`id_jefin` INNER JOIN `datos_personales` da ON da.`id_datosper` = j.`id_jefar`";
 
                     $res_puesto = $mysqli->query($sel_puesto);
                     while ($row_respuesto = $res_puesto->fetch_array()) {
                       ?>
                       <tr>
                         <td><?php echo $row_respuesto[5]?></td>
-                        <td><?php echo $row_respuesto[9]." ".$row_respuesto[10]." ".$row_respuesto[11]." ".$row_respuesto[12] ?></td>
-                        <td><?php echo $row_respuesto[16]." ".$row_respuesto[17]." ".$row_respuesto[18]." ".$row_respuesto[19] ?></td>
+                        <td><?php echo $row_respuesto[7]." ".$row_respuesto[8]." ".$row_respuesto[9]." ".$row_respuesto[10] ?></td>
+                        <td><?php echo $row_respuesto[12]." ".$row_respuesto[13]." ".$row_respuesto[14]." ".$row_respuesto[15] ?></td>
                         <td><center><a href="modal/modal_mjefes.php?id=<?php echo $row_respuesto["0"]; ?>" data-toggle="modal" data-target=".modalmsalario" class='modalLoad'><button class="btn btn-block btn-success btn-xs" style="width:100px;">Modificar</button></a></center></td>
                       </tr>
                       <?php
