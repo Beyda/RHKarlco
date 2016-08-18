@@ -9,6 +9,10 @@ if ($_SESSION["id_datosper"] == $id_tmp)
 {
 	$id_tmp = $_SESSION["id_datosper"];
 }
+	$rh = "SELECT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
+	$res_rh = $mysqli->query($rh);
+	$row_rh = $res_rh->fetch_array();
+
   	$ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
  	$res_anos = $mysqli->query($ano);
   	$row_anos = $res_anos->fetch_array();
@@ -17,7 +21,7 @@ if ($_SESSION["id_datosper"] == $id_tmp)
   	$res_datos = $mysqli->query($datos);
   	$row_datos = $res_datos->fetch_array();
 
-  	$inicio_trab = "SELECT `fecha` FROM `puesto_per` WHERE `id_datosper` = $id_tmp ORDER BY `fecha` ASC LIMIT 1";
+  	$inicio_trab = "SELECT `fecha`, `id_puesto` FROM `puesto_per` WHERE `id_datosper` = $id_tmp ORDER BY `fecha` ASC LIMIT 1";
   	$res_itrab = $mysqli->query($inicio_trab);
   	$row_itrab = $res_itrab->fetch_array();
 ?>
@@ -149,23 +153,23 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td>Enfermedad no comprobada</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="enf_com_vac"></td>
 			</tr>
 			<tr>
 				<td>Enfermedad de un familiar</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="enf_fam_vac"></td>
 			</tr>
 			<tr>
 				<td>Tramite de Visa</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="visa_vac" ></td>
 			</tr>
 			<tr>
 				<td>Asunto personal</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="personal_vac"></td>
 			</tr>
 			<tr>
 				<td>Otros</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="otros_vac"></td>
 			</tr>
 		</table>
 
@@ -176,23 +180,23 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td>Incapacidad IMSS</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"  name="imss_cs"></td>
 			</tr>
 			<tr>
 				<td>Nacimiento hijo</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="nacimiento_cs"></td>
 			</tr>
 			<tr>
 				<td>Defunción Familiar Directo</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="defuncion_cs"></td>
 			</tr>
 			<tr>
 				<td>Reposición de día</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="reposicion_cs"></td>
 			</tr>
 			<tr>
 				<td>Otros</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="otros_cs"></td>
 			</tr>
 		</table>
 
@@ -203,21 +207,21 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td>Consulta Servicio Médico Particular</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="consulta_ss"></td>
 			</tr>
 			<tr>
 				<td>Asunto Personal</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="personal_ss"></td>
 			</tr>
 			<tr>
 				<td>Otros</td>
-				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></input></td>
+				<td id="verde"><input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="otros_ss"></td>
 			</tr>
 		</table>
 	</div>
 
 	<div id="pie">
-		<p><strong>Observaciones: </strong><input type="text" name="obs"></input></p>
+		<p><strong>Observaciones: </strong><input type="text" name="obs"></p>
 		<p><strong>DURANTE MI AUSENCIA, EN MI REPRESENTACIÓN ATENDERÁ CUALQUIER ASUNTO O PENDIENTE:</strong></p>
 		<table>
 			<tr>
@@ -226,7 +230,7 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<td><br><br><br>FIRMA CONFORMIDAD:________________________________</td>
-				<td><br><br><br>CORREO: <input type="text" name="correo"></td>
+				<td><br><br><br>CORREO: <input type="email" name="correo"></td>
 			</tr>
 		</table>
 	</div>
@@ -236,12 +240,12 @@ $(document).ready(function() {
 	<table id="firmas">
 		<tr>
 			<td>
-				<?php echo $row_resemp[1] ." ". $row_resemp[2] ." ". $row_resemp[3] ." ". $row_resemp[4] ?>
+				<?php echo $row_datos[1] ." ". $row_datos[2] ." ". $row_datos[3] ." ". $row_datos[4] ?>
 				<div style="border-top: 1px solid; width: auto;"></div>
 				<p>Solicitante</p>
 			</td>
 			<td>
-				<?php echo $row_resjefes[1] ." ". $row_resjefes[2] ." ". $row_resjefes[3] ." ". $row_resjefes[4] ?>
+				<?php echo $row_datos[8] ." ". $row_datos[9] ." ". $row_datos[10] ." ". $row_datos[11] ?>
 				<div style="border-top: 1px solid; width: auto;"></div>
 				<p>Jefe inmediato</p>
 			</td>
@@ -257,3 +261,36 @@ $(document).ready(function() {
 </form>
 </body>
 </html>
+<?php
+	if (isset($_POST["descarga"])) {
+		$_SESSION["f_in"];
+		$_SESSION["f_final"];
+		$_SESSION["dias"];
+		$_SESSION["regresa"];
+		$fecha = date("Y-m-d");
+
+		$enf_com_vac = $_POST["enf_com_vac"];
+		$enf_fam_vac = $_POST["enf_fam_vac"];
+		$visa_vac = $_POST["visa_vac"];
+		$personal_vac = $_POST["personal_vac"];
+		$otros_vac = $_POST["otros_vac"];
+
+		$imss_cs = $_POST["imss_cs"];
+		$nacimiento_cs = $_POST["nacimiento_cs"];
+		$defuncion_cs = $_POST["defuncion_cs"];
+		$reposicion_cs = $_POST["reposicion_cs"];
+		$otros_cs = $_POST["otros_cs"];
+
+		$consulta_ss = $_POST["consulta_ss"];
+		$personal_ss = $_POST["personal_ss"];
+		$otros_ss = $_POST["otros_ss"];
+
+		$obs = $_POST["obs"];
+		$representante = $_POST["representante"];
+		$tel_rep = $_POST["tel_rep"];
+		$correo = $_POST["correo"];
+
+		echo $permisos = "INSERT INTO `permisos`(`id_solicitante`, `f_inicio`, `f_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `enf_com_vac`, `enf_fam_vac`, `visa_vac`, `personales_vac`, `otro_vac`, `imss_cs`, `nacimiento_cs`, `defuncion_cs`, `reposicion_cs`, `otro_cs`, `consulta_ss`, `personal_ss`, `otro_ss`, `obs`, `representante`, `tel_rep`, `correo_rep`, `id_ejercicio`, `id_rh`, `etapa`) VALUES ($id_tmp,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$row_itrab[1],$_SESSION[dias],$enf_com_vac,$enf_fam_vac,$visa_vac,$personal_vac,$otros_vac,$imss_cs,$nacimiento_cs,$defuncion_cs,$reposicion_cs,$otros_cs,$consulta_ss,$personal_ss,$otros_ss,'$obs','$representante',$tel_rep,'$correo',$row_anos[0],$row_rh[0],0)"; //Busca todos los días vacaciones
+		$res_permisos = $mysqli->query($permisos);
+	}
+?>
