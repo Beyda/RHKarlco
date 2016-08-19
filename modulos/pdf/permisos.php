@@ -1,4 +1,3 @@
-
 <?php
 require_once("dompdf/dompdf_config.inc.php");
 spl_autoload_register('DOMPDF_autoload');
@@ -14,6 +13,6 @@ if (isset($_GET["id"])) {
 	$id = $_GET["id"];
 }
 $DOMPDF = new DOMPDF();
-$html = file_get_contents("http://admonkco.com/rhkarlco/modulos/vacaciones/solbd.php?id=$id");
+$html = file_get_contents("http://admonkco.com/rhkarlco/modulos/permiso/solbd.php?id=$id");
 pdf_create($html);
 ?>

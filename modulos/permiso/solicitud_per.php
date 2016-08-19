@@ -226,7 +226,7 @@ $(document).ready(function() {
 		<table>
 			<tr>
 				<td>NOMBRE: <input type="text" name="nombre"></td>
-				<td>TELÉFONO: <input type="text" maxlength="3" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;"></td>
+				<td>TELÉFONO: <input type="text" maxlength="10" onKeypress="if (event.keyCode < 45 || event.keyCode > 57) event.returnValue = false;" name="tel"></td>
 			</tr>
 			<tr>
 				<td><br><br><br>FIRMA CONFORMIDAD:________________________________</td>
@@ -263,34 +263,123 @@ $(document).ready(function() {
 </html>
 <?php
 	if (isset($_POST["descarga"])) {
+
+		$vac = array(
+			'enf_com' => "NULL",
+			'enf_fam' => "NULL",
+			'visa' => "NULL",
+			'personal' => "NULL",
+			'otros' => "NULL"
+			);
+
+		$cs = array(
+			'imss' => "NULL",
+			'nacimiento' => "NULL", 
+			'defuncion' => "NULL",
+			'reposicion' => "NULL",
+			'otros' => "NULL"
+			);
+
+		$ss = array(
+			'consulta' => "NULL",
+			'personal' => "NULL", 
+			'otros' => "NULL"
+			);
+
 		$_SESSION["f_in"];
 		$_SESSION["f_final"];
 		$_SESSION["dias"];
 		$_SESSION["regresa"];
 		$fecha = date("Y-m-d");
 
-		$enf_com_vac = $_POST["enf_com_vac"];
-		$enf_fam_vac = $_POST["enf_fam_vac"];
-		$visa_vac = $_POST["visa_vac"];
-		$personal_vac = $_POST["personal_vac"];
-		$otros_vac = $_POST["otros_vac"];
+		$total_dias = 0;
 
-		$imss_cs = $_POST["imss_cs"];
-		$nacimiento_cs = $_POST["nacimiento_cs"];
-		$defuncion_cs = $_POST["defuncion_cs"];
-		$reposicion_cs = $_POST["reposicion_cs"];
-		$otros_cs = $_POST["otros_cs"];
+		if (!empty($_POST["enf_com_vac"])) {
+			$vac['enf_com'] = $_POST["enf_com_vac"];
+			$total_dias = $total_dias + $_POST["enf_com_vac"];
+		}
+		if (!empty($_POST["enf_fam_vac"])) {
+			$vac['enf_fam'] = $_POST["enf_fam_vac"];
+			$total_dias = $total_dias + $_POST["enf_fam_vac"];
+		}
+		if (!empty($_POST["visa_vac"])) {
+			$vac['visa'] = $_POST["visa_vac"];
+			$total_dias = $total_dias + $_POST["visa_vac"];
+		}
+		if (!empty($_POST["personal_vac"])) {
+			$vac['personal'] = $_POST["personal_vac"];
+			$total_dias = $total_dias + $_POST["personal_vac"];
+		}
+		if (!empty($_POST["otros_vac"])) {
+			$vac['otros'] = $_POST["otros_vac"];
+			$total_dias = $total_dias + $_POST["otros_vac"];
+		}
 
-		$consulta_ss = $_POST["consulta_ss"];
-		$personal_ss = $_POST["personal_ss"];
-		$otros_ss = $_POST["otros_ss"];
+		if (!empty($_POST["imss_cs"])) {
+			$cs['imss'] = $_POST["imss_cs"];
+			$total_dias = $total_dias + $_POST["imss_cs"];
+		}
+		if (!empty($_POST["nacimiento_cs"])) {
+			$cs['nacimiento'] = $_POST["nacimiento_cs"];
+			$total_dias = $total_dias + $_POST["nacimiento_cs"];
+		}
+		if (!empty($_POST["defuncion_cs"])) {
+			$cs['defuncion'] = $_POST["defuncion_cs"];
+			$total_dias = $total_dias + $_POST["defuncion_cs"];
+		}
+		if (!empty($_POST["reposicion_cs"])) {
+			$cs['reposicion'] = $_POST["reposicion_cs"];
+			$total_dias = $total_dias + $_POST["reposicion_cs"];
+		}
+		if (!empty($_POST["otros_cs"])) {
+			$cs['otros'] = $_POST["otros_cs"];
+			$total_dias = $total_dias + $_POST["otros_cs"];
+		}
+
+		if (!empty($_POST["consulta_ss"])) {
+			$ss['consulta'] = $_POST["consulta_ss"];
+			$total_dias = $total_dias + $_POST["consulta_ss"];
+		}
+		if (!empty($_POST["personal_ss"])) {
+			$ss['personal'] = $_POST["personal_ss"];
+			$total_dias = $total_dias + $_POST["personal_ss"];
+		}
+		if (!empty($_POST["otros_ss"])) {
+			$ss['otros'] = $_POST["otros_ss"];
+			$total_dias = $total_dias + $_POST["otros_ss"];
+		}
+
 
 		$obs = $_POST["obs"];
-		$representante = $_POST["representante"];
-		$tel_rep = $_POST["tel_rep"];
+		$representante = $_POST["nombre"];
+		$tel_rep = $_POST["tel"];
 		$correo = $_POST["correo"];
+		echo $total_dias;
+		if ($_SESSION["dias"] == $total_dias) 
+		{
 
-		echo $permisos = "INSERT INTO `permisos`(`id_solicitante`, `f_inicio`, `f_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `enf_com_vac`, `enf_fam_vac`, `visa_vac`, `personales_vac`, `otro_vac`, `imss_cs`, `nacimiento_cs`, `defuncion_cs`, `reposicion_cs`, `otro_cs`, `consulta_ss`, `personal_ss`, `otro_ss`, `obs`, `representante`, `tel_rep`, `correo_rep`, `id_ejercicio`, `id_rh`, `etapa`) VALUES ($id_tmp,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$row_itrab[1],$_SESSION[dias],$enf_com_vac,$enf_fam_vac,$visa_vac,$personal_vac,$otros_vac,$imss_cs,$nacimiento_cs,$defuncion_cs,$reposicion_cs,$otros_cs,$consulta_ss,$personal_ss,$otros_ss,'$obs','$representante',$tel_rep,'$correo',$row_anos[0],$row_rh[0],0)"; //Busca todos los días vacaciones
-		$res_permisos = $mysqli->query($permisos);
+			$permisos = "INSERT INTO `permisos`(`id_solicitante`, `f_inicio`, `f_final`, `reinicio_labores`, `fecha`, `id_puesto`, `dias_descanso`, `enf_com_vac`, `enf_fam_vac`, `visa_vac`, `personales_vac`, `otro_vac`, `imss_cs`, `nacimiento_cs`, `defuncion_cs`, `reposicion_cs`, `otro_cs`, `consulta_ss`, `personal_ss`, `otro_ss`, `obs`, `representante`, `tel_rep`, `correo_rep`, `id_ejercicio`, `id_rh`, `etapa`) VALUES ($id_tmp,'$_SESSION[f_in]','$_SESSION[f_final]','$_SESSION[regresa]','$fecha',$row_itrab[1],$_SESSION[dias],$vac[enf_com],$vac[enf_fam],$vac[visa],$vac[personal],$vac[otros],$cs[imss],$cs[nacimiento],$cs[defuncion],$cs[reposicion],$cs[otros],$ss[consulta],$ss[personal],$ss[otros],'$obs','$representante',$tel_rep,'$correo',$row_anos[0],$row_rh[0],0)"; //Busca todos los días vacaciones
+			$res_permisos = $mysqli->query($permisos);
+			if ($mysqli->error) 
+				{
+					echo "<script>if(confirm('Los días a disfrutar no coinciden con los días puestos')){ 
+					document.location='solicitud_per.php?id=$id_tmp';} 
+					else{ alert('Operacion Cancelada'); 
+					}</script>";
+				}else
+				{
+					$selper = "SELECT `id_permiso` FROM `permisos` WHERE `id_solicitante` = $id_tmp AND `f_inicio` = '$_SESSION[f_in]' AND `f_final` = '$_SESSION[f_final]' AND `reinicio_labores` = '$_SESSION[regresa]' AND `fecha` = '$fecha' AND `id_puesto` = $row_itrab[1] AND `dias_descanso` = $_SESSION[dias] AND `id_ejercicio` = $row_anos[0] AND `id_rh` = $row_rh[0] "; //Busca todos los días selper
+					$res_selper = $mysqli->query($selper);
+					$row_reselper = $res_selper->fetch_array();
+					echo "<script> document.location='../pdf/permisos.php?id=$row_reselper[0]'; </script>";
+				}
+		} else
+		{
+			echo "<script>if(confirm('Los días a disfrutar no coinciden con los días puestos')){ 
+			document.location='solicitud_per.php?id=$id_tmp';} 
+			else{ alert('Operacion Cancelada'); 
+			}</script>";
+		}
+
 	}
 ?>
