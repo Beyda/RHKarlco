@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto`, v.`id_vaca` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE v.`id_solicitante` = $_SESSION[id_datosper] ORDER BY v.`fecha_rh` ASC";
+                   $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, pe.`etapa`, p.`id_puesto`, pe.`id_permiso` FROM `datos_personales` d INNER JOIN `permisos` pe ON d.`id_datosper` = pe.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pe.`id_solicitante` = $_SESSION[id_datosper] ORDER BY pe.`fecha_rh` ASC";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
@@ -34,7 +34,7 @@
                         <td>
                           <?php
 
-                          $ctr_etapa = "SELECT `id_vaca`, `etapa` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
+                          $ctr_etapa = "SELECT `id_permiso`, `etapa` FROM `permisos` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1";
                           $res_etapa = $mysqli->query($ctr_etapa); //Consulta el estatus de la ultima solicitud de vacaciones de este empleado
                           $row_resetapa = $res_etapa->fetch_array();
 
@@ -77,7 +77,7 @@
                           <li class="time-label">
                           <span class="<?php echo $etapa ?>"><?php echo $valor ?></span></li></ul></center>
                         </td>
-                        <td><center><a href="../pdf/vacaciones.php?id=<?php echo $row_resemp[9]?>" target="blanck"><button class="btn bg-blue" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="../pdf/permisos.php?id=<?php echo $row_resemp[9]?>" target="blanck"><button class="btn bg-blue" style="width: 50%;">Ver</button></a></center></td>
                         <td><center><a href="modal/modal_obs.php?id_vac=<?php echo $row_resemp[9]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
@@ -113,16 +113,3 @@
 
       });
       </script>
-  <script type="text/javascript">
-      $(function () {
-        $("#example1").dataTable();
-        /*$('#example2').dataTable({
-          "bPaginate": true,
-          "bLengthChange": false,
-          "bFilter": false,
-          "bSort": true,
-          "bInfo": true,
-          "bAutoWidth": false
-        });*/
-      });
-    </script>

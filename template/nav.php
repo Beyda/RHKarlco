@@ -64,6 +64,7 @@ if ($tipo_usuario_session == "Administrador"){
                 <li><a href="/rhkarlco/modulos/ejercicio/ejercicio.php"><i class="fa fa-circle-o"></i>Ejercicio</a></li>
                 <li><a href="/rhkarlco/modulos/festivos/festivos.php"><i class="fa fa-circle-o"></i>Días festivos</a></li>
                 <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
+                <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 </ul>
@@ -102,6 +103,7 @@ if ($tipo_usuario_session == "Recursos Humanos"){
                 </li>
                 <li><a href="/rhkarlco/modulos/festivos/festivos.php"><i class="fa fa-circle-o"></i>Días festivos</a></li>
                 <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
+                <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 </ul>
@@ -126,6 +128,7 @@ if ($tipo_usuario_session == "Empleado"){
                         </ul>
                 </li>
                 <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
+                <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 </ul>
             </li>
 
@@ -153,6 +156,7 @@ if($tipo_usuario_session == "Jefe"){
                         </ul>
                 </li>
                 <li><a href="/rhkarlco/modulos/vacaciones/vacaciones.php"><i class="fa fa-circle-o"></i>Vacaciones</a></li>
+                <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 </ul>
             </li>
 
