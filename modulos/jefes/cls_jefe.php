@@ -27,8 +27,12 @@
 		{
 			require("../../control/connect.php");
 
+			$rh = "SELECT d.`id_datosper` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
+	        $res_rh = $mysqli->query($rh);
+	        $row_rh = $res_rh->fetch_array();
+
 			// AGREGAR EMPRESAS 
-			$jefes = "INSERT INTO `jefes`(`id_puesto`, `id_jefin`, `id_jefar`) VALUES ($this->puesto,$this->jefi,$this->jefa)";
+			$jefes = "INSERT INTO `jefes`(`id_puesto`, `id_jefin`, `id_jefar`, `id_rh`) VALUES ($this->puesto,$this->jefi,$this->jefa)";
 			$resul_jefe = $mysqli->query($jefes);
 
 			if ($mysqli->error) {

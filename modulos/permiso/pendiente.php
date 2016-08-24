@@ -22,14 +22,13 @@
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Autorizar</th>
-                        <th>Rechazar</th>
+                        <th>Autorización</th>
                         <th>Permisos</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper` FROM `permisos` pe INNER JOIN `datos_personales` d ON pe.`id_solicitante` = d.`id_datosper` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto` WHERE j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper]"; //Busca a todos los empleados de ese usuario
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper` FROM `permisos` pe INNER JOIN `datos_personales` d ON pe.`id_solicitante` = d.`id_datosper` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto` WHERE j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper]  OR $row_rh[0] = $_SESSION[id_datosper]"; //Busca a todos los empleados de ese usuario
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       $ultimo = "SELECT `id_permiso` FROM `permisos` WHERE `id_solicitante` = $row_resemp[0] ORDER BY `fecha` DESC LIMIT 1"; //Busca la última solicitud de vacaciones enviada
@@ -73,10 +72,7 @@
                         <td><?php echo $row_resinfo[0] ?></td>
                         <td><?php echo $row_resinfo[1] ?></td>
                         <td>
-                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resinfo[2]; ?>')"style="width: 50%;" value="<?php echo $row_resultimo[0]?>"><?php echo $valor ?></button></center>
-                        </td>
-                        <td>
-                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resinfo[2]; ?>')"style="width: 50%;" value="<?php echo $row_resultimo[0]?>"><?php echo $valor ?></button></center>
+                          <center><a href="modal/modal_autor.php?id_per=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="<?php echo $etapa ?>" style="width: 50%;"><?php echo $valor ?></button></a></center>
                         </td>
                         <td><center><a href="modal/modal_lper.php?id_emp=<?php echo $row_resinfo[4]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
@@ -90,8 +86,7 @@
                         <th>Nombre</th>
                         <th>Empresa</th>
                         <th>Puesto</th>
-                        <th>Autorizar</th>
-                        <th>Rechazar</th>
+                        <th>Autorización</th>
                         <th>Permisos</th>
                       </tr>
                     </tfoot>
@@ -127,3 +122,4 @@
         });*/
       });
     </script>
+   

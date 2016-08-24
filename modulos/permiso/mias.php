@@ -71,6 +71,10 @@
                             $etapa = "bg-green";
                             $valor = "Autorizado";
                           }
+                          elseif ($row_resemp[7] == 4) {
+                            $etapa = "bg-red";
+                            $valor = "Rechazado";
+                          }
                           ?>
                           <center>
                           <ul class="timeline">

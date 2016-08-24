@@ -68,10 +68,14 @@
                           $disable = "enable";
                         }
                       }
-                      /*elseif ($row_resinfo[2] == 3) {
+                      elseif ($row_resinfo[2] == 3) {
                             $etapa = "btn btn-block btn-success";
                             $valor = "Autorizado";
-                          }*/
+                          }
+                      elseif ($row_resinfo[2] == 4) {
+                            $etapa = "btn btn-block btn-danger";
+                            $valor = "Rechazado";
+                          }
 
                       
                       ?>
@@ -80,7 +84,7 @@
                         <td><?php echo $row_resinfo[0] ?></td>
                         <td><?php echo $row_resinfo[1] ?></td>
                         <td>
-                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resinfo[2]; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resultimo[0]?>"><?php echo $valor ?></button></center>
+                          <center><a href="modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
                         </td>
                         <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resinfo[4]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>

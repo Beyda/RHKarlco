@@ -28,7 +28,7 @@
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper` AND v.`etapa` = 3 INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto`  WHERE j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper]"; //Busca a todos los empleados de ese usuario
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`FROM `vacaciones` v INNER JOIN `datos_personales` d ON v.`id_solicitante` = d.`id_datosper` AND v.`etapa` = 3 INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto`  WHERE j.`id_jefin` = $_SESSION[id_datosper] OR j.`id_jefar` = $_SESSION[id_datosper] OR $row_rh[0] = $_SESSION[id_datosper]"; //Busca a todos los empleados de ese usuario
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       $ultimo = "SELECT `id_vaca` FROM `vacaciones` WHERE `id_solicitante` = $row_resemp[0]  ORDER BY `fecha` DESC LIMIT 1"; //Busca la última solicitud de vacaciones enviada
