@@ -86,7 +86,7 @@
                         <td>
                           <center><a href="modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
                         </td>
-                        <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resinfo[4]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="empleado.php?id_emp=<?php echo $row_resinfo[4]?>" target="blanck" ><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                         }

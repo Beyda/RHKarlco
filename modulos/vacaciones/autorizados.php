@@ -62,7 +62,7 @@
                         <td>
                           <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resinfo[2]; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resultimo[0]?>"><?php echo $valor ?></button></center>
                         </td>
-                        <td><center><a href="modal/modal_lvaca.php?id_emp=<?php echo $row_resinfo[4]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="empleado.php?id_emp=<?php echo $row_resinfo[4]?>" target="blanck" ><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                           }
