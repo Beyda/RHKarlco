@@ -68,6 +68,7 @@ if ($tipo_usuario_session == "Administrador"){
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
+                <li><a href="/rhkarlco/modulos/constancia/l_constancia.php"><i class="fa fa-circle-o"></i>Constancia</a></li>
                 </ul>
             </li>
 
@@ -108,6 +109,7 @@ if ($tipo_usuario_session == "Recursos Humanos"){
                 <li><a href="/rhkarlco/modulos/solicitante/l_solic.php"><i class="fa fa-circle-o"></i>Lista de solicitantes</a></li>
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
+                <li><a href="/rhkarlco/modulos/constancia/l_constancia.php"><i class="fa fa-circle-o"></i>Constancia</a></li>
                 </ul>
             </li>
 
