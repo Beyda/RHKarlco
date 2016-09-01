@@ -61,6 +61,12 @@ $row_rh = $res_rh->fetch_array();
 <input type="submit" name="descargar" value="Descargar">
 </form>
 <?php
+	if ($row_puesto[3] == "") {
+		echo "<script>if(confirm('Tienes que asignarle a este trabajador un puesto actual primero')){ 
+				document.location='/rhkarlco/modulos/empleados/a_perfil.php?id=$id_emp';} 
+				else{ alert('Operacion Cancelada'); 
+				}</script>";
+	}
 	if (isset($_POST["descargar"])) {
 		$fecha = date('Y-m-d');
 		$subscribe = $_POST["subscribe"];
@@ -71,7 +77,7 @@ $row_rh = $res_rh->fetch_array();
 		$fecha_ingreso = $row_ingreso[0];
 		$id_rh = $row_rh[0];
 
-		$constancia = "INSERT INTO `constancia`(`fecha`, `subscribe`, `encargo`, `id_solicitante`, `id_puestoper`, `sueldo`, `fecha_ingreso`, `id_rh`) VALUES ('$fecha','$subscribe','$encargado',$id_solicitante,$id_puestoper,$sueldo,'$fecha_ingreso',$id_rh)"; //Busca todos los días vacaciones
+		echo $constancia = "INSERT INTO `constancia`(`fecha`, `subscribe`, `encargo`, `id_solicitante`, `id_puestoper`, `sueldo`, `fecha_ingreso`, `id_rh`) VALUES ('$fecha','$subscribe','$encargado',$id_solicitante,$id_puestoper,$sueldo,'$fecha_ingreso',$id_rh)"; //Busca todos los días vacaciones
 		$res_constancia = $mysqli->query($constancia);
 		if ($mysqli->error) 
 			{
@@ -84,7 +90,7 @@ $row_rh = $res_rh->fetch_array();
 				$selconst = "SELECT `id_cons` FROM `constancia` WHERE `fecha` = '$fecha' AND `id_solicitante` = $id_solicitante AND `id_puestoper` = $id_puestoper AND `subscribe` = '$subscribe' AND `encargo` = '$encargado' AND `fecha_ingreso` = '$fecha_ingreso' LIMIT 1"; //Busca todos los días selconst
 				$res_selconst = $mysqli->query($selconst);
 				$row_reselconst = $res_selconst->fetch_array();
-				echo "<script> document.location='../pdf/vacaciones.php?id=$row_reselconst[0]'; </script>";
+				echo "<script> document.location='../pdf/constancia.php?id=$row_reselconst[0]'; </script>";
 			}
 	}
 ?>

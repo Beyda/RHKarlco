@@ -14,7 +14,27 @@ include("../../template/todo2.php");
 //inicio de librerias 
 
 ?>
-     
+   <!-- *****************************************/.ajax tipo******************************** -->
+  <script type="text/javascript">
+  //Mostrar el tipo de resultado que se desea ver
+  $(document).ready(function(){
+      //Manda el tipo de información que se desea consultar
+      $("#tipo").change(function(){
+          var tipo=$(this).val();
+          var dataString2 = 'tipo='+ tipo;
+          $.ajax({
+              type: "POST",
+              url: "todos.php",
+              data: dataString2,
+              cache: false,
+          success: function(html){
+          $("#result").html(html);
+          }
+          });
+      });
+
+    });
+  </script>  
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
@@ -29,6 +49,12 @@ include("../../template/todo2.php");
             <small>de constancias </small>
             <a href="constancia.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de constancia" target="blanck"><button class="btn bg-navy margin">Solicitar constancia</button></a>
           </h1>
+          <form method="post" action="ajax_solic.php" id="fo3" name="fo3" >
+            <select class="form-control tooltipster-shadow-preview" title="Busca las diferentes solicitudes" style="width: 30%;" name="tipo" id="tipo" required>
+              <option value="">Selecciona que mostrar</option>
+              <option value="1">Ver todos los empleados</option>
+            </select>
+            </form>
         </section>
       <?php 
         $rh = "SELECT d.`id_datosper` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
@@ -77,9 +103,9 @@ include("../../template/todo2.php");
                         <td><?php echo $row_resinfo[0] ?></td>
                         <td><?php echo $row_resinfo[1] ?></td>
                         <td>
-                          <center><button class="<?php echo $etapa ?>" onclick="autorizar(this, '<?php echo $row_resinfo[2]; ?>')"style="width: 50%;" <?php echo $disable ?> value="<?php echo $row_resultimo[0]?>"><?php echo $valor ?></button></center>
+                          <center><a href="modal/modal_lcons.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;" >Ver</button></a></center>
                         </td>
-                        <td><center><a href="empleado.php?id_emp=<?php echo $row_resinfo[4]?>" target="blanck" ><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="constancia.php?id=<?php echo $row_resemp[0]?>" target="blanck" ><button class="btn bg-navy margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                         }
