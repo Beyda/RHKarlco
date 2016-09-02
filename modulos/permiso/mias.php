@@ -82,7 +82,7 @@
                           <span class="<?php echo $etapa ?>"><?php echo $valor ?></span></li></ul></center>
                         </td>
                         <td><center><a href="../pdf/permisos.php?id=<?php echo $row_resemp[9]?>" target="blanck"><button class="btn bg-blue" style="width: 50%;">Ver</button></a></center></td>
-                        <td><center><a href="modal/modal_obs.php?id_vac=<?php echo $row_resemp[9]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="modal/modal_obs.php?id_permiso=<?php echo $row_resemp[9]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                         }

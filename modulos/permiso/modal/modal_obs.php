@@ -1,8 +1,8 @@
 <?php
 include_once("../../../control/connect.php");
 session_start();
-$id_vac = $_GET["id_vac"];
-$ctr_obs = "SELECT `jefe_in`, `fecha_in`, `obs_in`, `jefe_ar`, `fecha_ar`, `obs_ar`, `rh`, `fecha_rh`, `obs_rh` FROM `vacaciones` WHERE `id_vaca` = $id_vac";
+$id_permiso = $_GET["id_permiso"];
+$ctr_obs = "SELECT `jefe_in`, `fecha_in`, `obs_in`, `jefe_ar`, `fecha_ar`, `obs_ar`, `rh`, `fecha_rh`, `obs_rh` FROM `permisos` WHERE `id_permiso` = $id_permiso";
 $res_obs = $mysqli->query($ctr_obs);
 $row_resobs = $res_obs->fetch_array();
 ?>

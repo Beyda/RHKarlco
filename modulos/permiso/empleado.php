@@ -44,7 +44,7 @@ $id_emp = $_GET["id_emp"];
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, v.`etapa`, p.`id_puesto`, v.`id_vaca` FROM `datos_personales` d INNER JOIN `vacaciones` v ON d.`id_datosper` = v.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` AND v.`id_puesto` = pp.`id_puestoper` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE v.`id_solicitante` = $id_emp ORDER BY v.`fecha_rh` ASC ";
+                    $ctr_emp = "SELECT DISTINCT d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, e.`nombre`, p.`puesto`, pe.`etapa`, p.`id_puesto`, pe.`id_permiso` FROM `datos_personales` d INNER JOIN `permisos` pe ON d.`id_datosper` = pe.`id_solicitante` INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` AND pe.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` WHERE pe.`id_solicitante` = $id_emp ORDER BY pe.`fecha_rh` ASC ";
                     $res_emp = $mysqli->query($ctr_emp);
                     while ($row_resemp = $res_emp->fetch_array()) {
                       ?>
@@ -92,14 +92,18 @@ $id_emp = $_GET["id_emp"];
                             $etapa = "bg-green";
                             $valor = "Autorizado";
                           }
+                          elseif ($row_resemp[7] == 4) {
+                            $etapa = "bg-red";
+                            $valor = "Rechazado";
+                          }
                           ?>
                           <center>
                           <ul class="timeline">
                           <li class="time-label">
                           <span class="<?php echo $etapa ?>"><?php echo $valor ?></span></li></ul></center>
                         </td>
-                        <td><center><a href="../pdf/vacaciones.php?id=<?php echo $row_resemp[9]?>" target="blanck"><button class="btn bg-blue" style="width: 50%;">Ver</button></a></center></td>
-                        <td><center><a href="modal/modal_obs.php?id_vac=<?php echo $row_resemp[9]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="../pdf/permisos.php?id=<?php echo $row_resemp[9]?>" target="blanck"><button class="btn bg-blue" style="width: 50%;">Ver</button></a></center></td>
+                        <td><center><a href="modal/modal_obs.php?id_permiso=<?php echo $row_resemp[9]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy" style="width: 50%;">Ver</button></a></center></td>
                       </tr>
                       <?php
                         }
