@@ -48,6 +48,7 @@
                         if ($row_resinfo[9] == $_SESSION["id_datosper"]) {
                           //echo "Jefe inmeadito";
                           $disable = "enable";
+                          $link = "href=modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?> data-toggle=modal data-target=.bs-example-modal-lg class=modalLoad";
                         }
                       }
                       elseif ($row_resinfo[2] == 1) {
@@ -57,6 +58,7 @@
                         if ($row_resinfo[10] == $_SESSION["id_datosper"]) {
                           //echo "Jefe de área";
                           $disable = "enable";
+                          $link = "href=modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?> data-toggle=modal data-target=.bs-example-modal-lg class=modalLoad";
                         }
                       }
                       elseif ($row_resinfo[2] == 2) {
@@ -66,15 +68,18 @@
                         if ($row_rh[0] == $_SESSION["id_datosper"]) {
                           //echo "Recursos Humanos";
                           $disable = "enable";
+                          $link = "href=modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?> data-toggle=modal data-target=.bs-example-modal-lg class=modalLoad";
                         }
                       }
                       elseif ($row_resinfo[2] == 3) {
                             $etapa = "btn btn-block btn-success";
                             $valor = "Autorizado";
+                            $link = "href=#";
                           }
                       elseif ($row_resinfo[2] == 4) {
                             $etapa = "btn btn-block btn-danger";
                             $valor = "Rechazado";
+                            $link = "href=#";
                           }
 
                       
@@ -84,7 +89,7 @@
                         <td><?php echo $row_resinfo[0] ?></td>
                         <td><?php echo $row_resinfo[1] ?></td>
                         <td>
-                          <center><a href="modal/modal_autor.php?id_vac=<?php echo $row_resultimo[0]?>&tipo=<?php echo $row_resinfo[2]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
+                          <center><a <?php echo $link ?>><button class="<?php echo $etapa ?>" style="width: 50%;" <?php echo $disable ?>><?php echo $valor ?></button></a></center>
                         </td>
                         <td><center><a href="empleado.php?id_emp=<?php echo $row_resinfo[4]?>" target="blanck" ><button class="btn bg-blue margin" style="width: 50%;">Ver</button></a></center></td>
                       </tr>

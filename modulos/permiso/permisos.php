@@ -53,7 +53,7 @@ include("../../template/todo2.php");
           <h1>
             Lista de solicitudes
             <small>de permisos </small>
-            <a href="solicitud.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de permisos" target="blanck"><button class="btn bg-navy margin">Solicitar permiso</button></a>
+            <a href="solicitud_per.php?id=<?php echo $_SESSION["id_datosper"] ?>" class='tooltipster-shadow-preview' title="Abrir una solicitud de permisos" target="blanck"><button class="btn bg-navy margin">Solicitar permiso</button></a>
             <form method="post" action="ajax_solic.php" id="fo3" name="fo3" >
             <select class="form-control tooltipster-shadow-preview" title="Busca las diferentes solicitudes" style="width: 30%;" name="tipo" id="tipo" required>
               <option value="">Selecciona que mostrar</option>

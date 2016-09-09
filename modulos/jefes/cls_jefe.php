@@ -32,7 +32,7 @@
 	        $row_rh = $res_rh->fetch_array();
 
 			// AGREGAR EMPRESAS 
-			$jefes = "INSERT INTO `jefes`(`id_puesto`, `id_jefin`, `id_jefar`, `id_rh`) VALUES ($this->puesto,$this->jefi,$this->jefa)";
+			$jefes = "INSERT INTO `jefes`(`id_puesto`, `id_jefin`, `id_jefar`) VALUES ($this->puesto,$this->jefi,$this->jefa)";
 			$resul_jefe = $mysqli->query($jefes);
 
 			if ($mysqli->error) {
