@@ -107,21 +107,21 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 		<tbody>
 			<tr>
 				<td>Años de Trabajo</td>
-				<td><?php echo floor($tot); ?></td>
+				<td><center><?php echo floor($tot); ?></center></td>
 			</tr>
 			<tr>
 				<td>Días de Descanso</td>
-				<td><?php echo $row_datosper[14] ?></td>
+				<td><center><?php echo $row_datosper[14] ?></center></td>
 			</tr>
 			<tr>
 				<td>Sueldo Mensual</td>
-				<td><?php echo "$".$row_resfing[3] ?></td>
+				<td style="text-align: right;"><?php echo "$".number_format($row_resfing[3],2) ?></td>
 			</tr>
 			<tr>
 				<td>Sueldo Diario</td>
-				<td><?php 
+				<td style="text-align: right;"><?php 
 				$diario = $row_resfing[3] / 30;
-				echo "$".round($diario, 2) ?></td>
+				echo "$".number_format(round($diario, 2),2) ?></td>
 			</tr>
 		</tbody>
 	</table>
@@ -133,21 +133,21 @@ $tot = $total_ano / (60 * 60 * 24 * 365);
 			<tr>
 				<td>Vacaciones</td>
 
-				<td><?php 
+				<td style="text-align: right;"><?php 
 				$vaca = $diario * $row_datosper[14];
-				echo "$".round($vaca, 2) ?></td>
+				echo "$".number_format(round($vaca, 2),2) ?></td>
 			</tr>
 			<tr>
 				<td>Prima Vacacional</td>
-				<td><?php 
+				<td style="text-align: right;"><?php 
 				$pvaca = $vaca * .25;
-				echo "$".round($pvaca, 2) ?></td>
+				echo "$".number_format(round($pvaca, 2),2) ?></td>
 			</tr>
 			<tr>
 				<td><strong>TOTAL NETO</strong></td>
-				<td><?php 
+				<td style="text-align: right; font-weight: bold;"><?php 
 				$totalito = $vaca + $pvaca;
-				echo "$".round($totalito, 2) ?></td>
+				echo "$".number_format(round($totalito, 2),2) ?></td>
 			</tr>
 		</tbody>
 	</table>

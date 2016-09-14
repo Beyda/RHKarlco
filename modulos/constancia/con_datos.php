@@ -47,7 +47,7 @@ $row_rh = $res_rh->fetch_array();
 <ul>
 	<li><strong>CURP: </strong><?php echo strtoupper($row_demp[4]) ?></li>
 	<li><strong>RFC: </strong><?php echo strtoupper($row_demp[5]) ?></li>
-	<li><strong>SUELDO MENSUAL: </strong><?php echo $row_const_dat[6] ?></li>
+	<li><strong>SUELDO MENSUAL: </strong><?php echo number_format($row_const_dat[6],2) ?></li>
 	<li><strong>FECHA DE INGRESO: </strong><?php 
 		$ano = date("Y", strtotime($row_const_dat[7]));
 		$mes = date('n', strtotime($row_const_dat[7]));

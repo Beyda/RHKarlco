@@ -1083,12 +1083,12 @@ if ($numrowsDvaca2 == 0) {
                       $prof1 = 0;
                       while ($row_dvac = $res_dvac->fetch_array()) 
                       {
-                        $ano = date(Y);
+                        $ano = date("Y", strtotime($row_dvac[4]));
                         if ($row_anos["1"] == $ano) {
                           if ($row_dvac["7"] == "+") {
                             $total = $total + $row_dvac["2"];
                           }
-                          if ($row_dvac["7"] == "-") {
+                          elseif ($row_dvac["7"] == "-") {
                             $total = $total - $row_dvac["2"];
                           }
                           
@@ -1097,7 +1097,7 @@ if ($numrowsDvaca2 == 0) {
                       ?>
                      <tr>
                         <td><?php echo $row_dvac["4"] ?></td>
-                        <td><?php echo $row_dvac["2"] ?></td>
+                        <td><?php echo $row_dvac["7"] ." ". $row_dvac["2"] ?></td>
                         <td><center><a href="modal/modal_mdvaca.php?id=<?php echo $row_dvac["0"] ?>" data-toggle="modal" data-target=".modalVac" class='modalLoad'><button class="btn btn-block btn-success btn-sm">Ver</button></a></center></td>
                       </tr>
                     <?php

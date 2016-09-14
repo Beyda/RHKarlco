@@ -36,14 +36,14 @@ $row_rh = $res_rh->fetch_array();
 	?></p>
 <center><h1>CONSTANCIA DE TRABAJO</h1></center>
 <h4>A QUIEN CORRESPONDA:</h4>
-<p>El que subscribe la <input type="text" name="subscribe" maxlength="50">, Encargado <input type="text" name="encargado" maxlength="50"> hace constar que:</p>
+<p>El que subscribe <?php echo $row_rh[1] ." ". $row_rh[2] ." ". $row_rh[3] ." ". $row_rh[4] ?>, encargado de R.H. y Asuntos Legales hace constar que:</p>
 
 <center><h1><?php echo $row_demp[0] ." ". $row_demp[1] ." ". $row_demp[2] ." ". $row_demp[3] ?></h1></center>
 <p>Desempeña el cargo de: <strong><?php echo $row_puesto[0] ?></strong>, contando con los siguientes datos administrativos de registro por medio de aoutsorcing:</p>
 <ul>
 	<li><strong>CURP: </strong><?php echo strtoupper($row_demp[4]) ?></li>
 	<li><strong>RFC: </strong><?php echo strtoupper($row_demp[5]) ?></li>
-	<li><strong>SUELDO MENSUAL: </strong><?php echo $row_puesto[1] ?></li>
+	<li><strong>SUELDO MENSUAL: </strong><?php echo number_format($row_puesto[1],2) ?></li>
 	<li><strong>FECHA DE INGRESO: </strong><?php 
 		$ano = date("Y", strtotime($row_ingreso[0]));
 		$mes = date('n', strtotime($row_ingreso[0]));
