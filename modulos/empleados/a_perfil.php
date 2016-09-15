@@ -1016,9 +1016,24 @@ if ($numrowsDvaca2 == 0) {
               
               ?>
                 <?php
-            $ctr_dvac = "SELECT * FROM `dias_vacaciones` dv INNER JOIN `datos_personales` dp ON dv.`id_datosper` = dp.`id_datosper` WHERE dp.`id_datosper` = $id";
+            $ctr_dvac = "SELECT * FROM `dias_vacaciones` dv INNER JOIN `datos_personales` dp ON dv.`id_datosper` = dp.`id_datosper` WHERE dp.`id_datosper` = $id ORDER BY `fecha` DESC";
             $res_dvac = $mysqli->query($ctr_dvac);
             $numrowsDvac = $res_dvac->num_rows;
+
+            $ctr_fing = "SELECT * FROM `puesto_per` WHERE `id_datosper` = $id ORDER BY `fecha` ASC LIMIT 1";
+            $res_fing = $mysqli->query($ctr_fing);
+            $row_resfing = $res_fing->fetch_array();
+
+            $ano_actual = date(Y);
+            $ano_ingreso = $ano = date("Y", strtotime($row_resfing[1]));
+            $anos_diferencia = $ano_actual - $ano_ingreso;
+
+            $f1 = strtotime('+'. $anos_diferencia .' year' , strtotime($row_resfing[1]));
+            $f1 = date ( 'Y-m-j' , $f1 );
+
+            $f2 = strtotime('+1 year' , strtotime($f1));
+            $f2 = date ( 'Y-m-j' , $f2 );
+
             if ($numrowsDvac <= 0) {
               $sigDvac = "fa fa-warning";
               $botonDvac = "<a href=modal/modal_dvaca.php data-toggle=modal data-target=.modalVac class='modalLoad'><button class='btn btn-block btn-primary btn-sm'>Insertar días de vacaciones</button></a>";
@@ -1046,7 +1061,6 @@ if ($numrowsDvaca2 == 0) {
                   echo $botonDvac; 
                 }
                 ?>
-                 <div class="prof">
                 
                   <!-- Profesion -->
                     <?php
@@ -1084,7 +1098,7 @@ if ($numrowsDvaca2 == 0) {
                       while ($row_dvac = $res_dvac->fetch_array()) 
                       {
                         $ano = date("Y", strtotime($row_dvac[4]));
-                        if ($row_anos["1"] == $ano) {
+                        if ($row_dvac[4] >= $f1 && $row_dvac[4] <= $f2) {
                           if ($row_dvac["7"] == "+") {
                             $total = $total + $row_dvac["2"];
                           }
@@ -1106,16 +1120,35 @@ if ($numrowsDvaca2 == 0) {
                       ?>
                       <strong>Total de días de vacaciones: <?php echo $total ?></strong>
                       </tbody>
+                      <tfoot>
+                      <tr>
+                        <th>Fecha</th>
+                        <th>Días</th>
+                        <th>Detalles</th>
+                      </tr>
+                    </tfoot>
                     </table>
                   </div><!-- /.box-body -->
                 </div><!-- /.box -->
               </div><!-- /.col -->
             </div><!-- /.row -->
           </section><!-- /.content -->
+          <script type="text/javascript">
+      $(function () {
+        $("#example1").dataTable();
+        /*$('#example2').dataTable({
+          "bPaginate": true,
+          "bLengthChange": false,
+          "bFilter": false,
+          "bSort": true,
+          "bInfo": true,
+          "bAutoWidth": false
+        });*/
+      });
+    </script>
                       <?php
                     }
                     ?>
-                  </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->

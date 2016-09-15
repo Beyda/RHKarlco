@@ -91,10 +91,21 @@ if ($numrowsDvaca2 == 0) {
 
 $divacas = "SELECT dv.*, e.`ano` FROM `dias_vacaciones` dv INNER JOIN `datos_personales` dp ON dv.`id_datosper` = dp.`id_datosper` INNER JOIN `ejercicio` e ON dv.`id_ejercicio` = e.`id_ejercicio` WHERE dp.`id_datosper` = $id_tmp";
 $res_divacas = $mysqli->query($divacas);
+
+$ano_actual = date(Y);
+$ano_ingreso = $ano = date("Y", strtotime($row_resfing[1]));
+$anos_diferencia = $ano_actual - $ano_ingreso;
+
+$f1 = strtotime('+'. $anos_diferencia .' year' , strtotime($row_resfing[1]));
+$f1 = date ( 'Y-m-j' , $f1 );
+
+$f2 = strtotime('+1 year' , strtotime($f1));
+$f2 = date ( 'Y-m-j' , $f2 );
+
 $an = date('Y');
 while($row_redivacas = $res_divacas->fetch_array())
 {
-	if ($row_redivacas["8"] == $an) 
+	if ($row_redivacas[4] >= $f1 && $row_redivacas[4] <= $f2) 
 	{ 
       if ($row_redivacas["7"] == "+") {
         $totaldis = $totaldis + $row_redivacas["2"];
@@ -168,6 +179,13 @@ while($row_redivacas = $res_divacas->fetch_array())
 $actual = date('Y-m-j');
 $total_ano = strtotime($actual) - strtotime($row_resfing[1]);
 $tot = $total_ano / (60 * 60 * 24 * 365);
+if ($totaldis <= 0 || floor($tot) == 0) {
+		echo "<script>if(confirm('No puedes tomar vacaciones ya que aún no tienes las tienes disponibles')){ 
+		document.location='vacaciones.php';} 
+		else{ document.location='vacaciones.php'; 
+		}</script>";
+		
+}
 ?>
 	<table id="dtv">
 		<tbody>
