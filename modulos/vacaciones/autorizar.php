@@ -64,11 +64,16 @@ session_start();
 					}</script>";
 	            } else
 	            {
-	            	$dias = "SELECT `dias`, `id_solicitante` FROM `vacaciones` WHERE `id_solicitante` = $id"; //Busca todos los días vacaciones
+	            	$ano = "SELECT * FROM `ejercicio` WHERE `estatus` = 1";
+					$res_anos = $mysqli->query($ano);
+					$row_anos = $res_anos->fetch_array();
+					$fecha = date("Y-m-d");
+	            	$dias = "SELECT `dias`, `id_solicitante` FROM `vacaciones` WHERE `id_vaca` = $id"; //Busca todos los días vacaciones
 					$res_dias = $mysqli->query($dias);
-	            	$rembolso = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Días devueltos por rechazo de solicitud',$res_dias[0],$row_anos[0],'$fecha',$res_dias[1],77,'+')"; //regresa los días quitados
-					//$res_rembolso = $mysqli->query($rembolso);
-	            	//echo "<script> document.location='vacaciones.php'; </script>";
+					$row_dias = $res_dias->fetch_array();
+	            	$rembolso = "INSERT INTO `dias_vacaciones`(`descripcion`, `dias`, `id_ejercicio`, `fecha`, `id_datosper`, `id_autoriza`, `signo`) VALUES ('Días devueltos por rechazo de solicitud',$row_dias[0],$row_anos[0],'$fecha',$row_dias[1],77,'+')"; //regresa los días quitados
+					$res_rembolso = $mysqli->query($rembolso);
+	            	echo "<script> document.location='vacaciones.php'; </script>";
 	            }
 	  	}
 

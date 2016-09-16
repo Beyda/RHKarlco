@@ -69,6 +69,7 @@ if ($tipo_usuario_session == "Administrador"){
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
                 <li><a href="/rhkarlco/modulos/constancia/l_constancia.php"><i class="fa fa-circle-o"></i>Constancia</a></li>
+                <li><a href="/rhkarlco/modulos/correo/l_correo.php"><i class="fa fa-circle-o"></i>Correo Masivo</a></li>
                 </ul>
             </li>
 
@@ -110,6 +111,7 @@ if ($tipo_usuario_session == "Recursos Humanos"){
                 <li><a href="/rhkarlco/modulos/areas/l_areas.php"><i class="fa fa-circle-o"></i>Áreas de trabajo</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
                 <li><a href="/rhkarlco/modulos/constancia/l_constancia.php"><i class="fa fa-circle-o"></i>Constancia</a></li>
+                <li><a href="/rhkarlco/modulos/correo/l_correo.php"><i class="fa fa-circle-o"></i>Correo Masivo</a></li>
                 </ul>
             </li>
 
@@ -135,6 +137,7 @@ if ($tipo_usuario_session == "Empleado"){
                 <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
                 </ul>
+                <li><a href="/rhkarlco/modulos/correo/l_correo.php"><i class="fa fa-circle-o"></i>Correos</a></li>
             </li>
 
 <?php
@@ -164,6 +167,7 @@ if($tipo_usuario_session == "Jefe"){
                 <li><a href="/rhkarlco/modulos/permiso/permisos.php"><i class="fa fa-circle-o"></i>Permisos</a></li>
                 <li><a href="/rhkarlco/modulos/cumple/cumples.php"><i class="fa fa-circle-o"></i>Cumpleaños</a></li>
                 </ul>
+                <li><a href="/rhkarlco/modulos/correo/l_correo.php"><i class="fa fa-circle-o"></i>Correos</a></li>
             </li>
 
 
