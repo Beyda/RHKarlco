@@ -50,7 +50,7 @@ include("../../template/todo2.php");
             <a href="modal/modal_correo.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-navy margin" >Redactar</button></a>
           </h1>
           <form method="post" action="ajax_solic.php" id="fo3" name="fo3" >
-            <select class="form-control tooltipster-shadow-preview" title="Filtrar los puestos por empresa al seleccionarla" style="width: 30%;" name="empresa" id="empresa" required>
+            <select class="form-control tooltipster-shadow-preview" title="Filtrar los correos por empresa al seleccionarla" style="width: 30%;" name="empresa" id="empresa" required>
               <option value="">Selecciona una empresa</option>
               <?php
               $obt_emp = "SELECT * FROM `empresas` WHERE `status` = 1";       
@@ -133,6 +133,14 @@ include("../../template/todo2.php");
         </section><!-- /.content -->
 
             <?php
+            if (isset($_POST["empresa"])) {
+              $empresa = $_POST["empresa"];
+              $asunto = $_POST["asunto"];
+              $mensaje = $_POST["mensaje"];
+              $archivo = $archivo["archivo"];
+              $clasCorreo = new empleosAn($empresa, $asunto, $mensaje, $archivo);
+              $clasCorreo->insertar();
+            }
               }
             ?>
       </div><!-- /.content-wrapper -->
