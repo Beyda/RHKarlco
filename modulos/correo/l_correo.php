@@ -134,11 +134,16 @@ include("../../template/todo2.php");
 
             <?php
             if (isset($_POST["empresa"])) {
+              include "cls_correo.php";
               $empresa = $_POST["empresa"];
               $asunto = $_POST["asunto"];
               $mensaje = $_POST["mensaje"];
-              $archivo = $archivo["archivo"];
-              $clasCorreo = new empleosAn($empresa, $asunto, $mensaje, $archivo);
+              $archivo = $_FILES['archivo']['name'];
+              $type = $_FILES['archivo']['type'];
+              $tamano = $_FILES['archivo']['size'];
+              $tmp_name = $_FILES['archivo']['tmp_name'];
+              $error = $_FILES['archivo']['error'];
+              $clasCorreo = new correo($empresa, $asunto, $mensaje, $archivo, $type, $tamano, $tmp_name, $error);
               $clasCorreo->insertar();
             }
               }

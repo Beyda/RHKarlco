@@ -8,10 +8,21 @@ $id = $_GET["id"];
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Correo</h4>
                   </div>
-                  <div class="modal-body">
                   <form method="post" enctype="multipart/form-data">
+                  <div class="modal-body">
                   <div class="form-group">
-                    <input class="form-control" placeholder="Empresa:" name="empresa" />
+                    <select class="form-control tooltipster-shadow-preview" title="Seleccionar la empresa a quienes se envía el correo" style="width: 30%;" name="empresa" id="empresa" required>
+                      <option value="">Selecciona una empresa</option>
+                      <?php
+                      $obt_emp = "SELECT * FROM `empresas` WHERE `status` = 1";       
+                      $res_emp = $mysqli->query($obt_emp);
+                      while ($row_emp = $res_emp->fetch_array()) { 
+                        ?>
+                          <option value="<?php echo $row_emp[0] ?>"><?php echo $row_emp[1] ?></option>
+                        <?php
+                      }
+                      ?>  
+                    </select>
                   </div>
                   <div class="form-group">
                     <input class="form-control" placeholder="Asunto:" name="asunto" />
@@ -22,15 +33,15 @@ $id = $_GET["id"];
                   <div class="form-group">
                     <div class="btn btn-default btn-file">
                       <i class="fa fa-paperclip"></i> Archivo
-                      <input type="file" name="attachment" name="archivo" />
+                      <input type="file" name="archivo"/>
                     </div>
                     <p class="help-block">Max. 10MB</p>
                   </div>
-                  </form>
                 </div><!-- /.box-body -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-envelope-o"></i> Send</button>
                 </div><!-- /.box-footer -->
+              </form>
      
     <script type="text/javascript">
 
