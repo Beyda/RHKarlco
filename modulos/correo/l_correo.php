@@ -24,7 +24,7 @@ include("../../template/todo2.php");
           var dataString2 = 'empresa='+ empresa;
           $.ajax({
               type: "POST",
-              url: "todos.php",
+              url: "empresa.php",
               data: dataString2,
               cache: false,
           success: function(html){
@@ -64,12 +64,6 @@ include("../../template/todo2.php");
             </select>
             </form>
         </section>
-      <?php 
-        $rh = "SELECT d.`id_datosper` FROM `datos_personales` d INNER JOIN `usuarios` u ON u.`id_datosper` = d.`id_datosper` INNER JOIN `tipo_usuario` t ON t.`id_tipous` = u.`id_tipous` AND t.`nombre` = 'Recursos Humanos'";
-        $res_rh = $mysqli->query($rh);
-        $row_rh = $res_rh->fetch_array();
-    ?>
-
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -82,36 +76,34 @@ include("../../template/todo2.php");
                   <h3 class="box-title">Empleados</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="example1" class="table table-bordered table-striped">
+                  <table id="example1" class="table table-striped">
                     <thead>
                       <tr>
-                        <th>Fecha</th>
                         <th>Asunto</th>
                         <th>Empresa</th>
-                        <th>Ver mensaje</th>
+                        <th>Fecha</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php
-                    $ctr_emp = "SELECT DISTINCT `id_solicitante` FROM `constancia` c INNER JOIN `datos_personales` d ON c.`id_solicitante` = d.`id_datosper`"; //Busca a todos los empleados de ese usuario
-                    $res_emp = $mysqli->query($ctr_emp);
-                    while ($row_resemp = $res_emp->fetch_array()) {
-                      $ultimo = "SELECT `id_cons` FROM `constancia` WHERE `id_solicitante` = $row_resemp[0]  ORDER BY `fecha` DESC LIMIT 1"; //Busca la última solicitud de vacaciones enviada
-                      $res_ultimo = $mysqli->query($ultimo);
-                      $row_resultimo = $res_ultimo->fetch_array();
-
-                     $info = "SELECT DISTINCT e.`nombre`, p.`puesto`, p.`id_puesto`, d.`id_datosper`, d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, j.`id_jefin`, j.`id_jefar` FROM `datos_personales` d INNER JOIN `constancia` c ON d.`id_datosper` = c.`id_solicitante`  AND c.`id_cons` = $row_resultimo[0] INNER JOIN `puesto_per` pp ON pp.`id_datosper` = d.`id_datosper` INNER JOIN `puestos` p ON p.`id_puesto` = pp.`id_puesto` INNER JOIN `empresas` e ON e.`id_empresa` = p.`id_empresa` INNER JOIN `jefes` j ON pp.`id_puesto` = j.`id_puesto`";
-                      $res_info = $mysqli->query($info);
-                      $row_resinfo = $res_info->fetch_array();
-
+                    $obt_correo = "SELECT * FROM `correos` ORDER BY `id_correo` ASC";       
+                    $res_correo = $mysqli->query($obt_correo);
+                    while ($row_correo = $res_correo->fetch_array()) {
+                      $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";       
+                      $res_empresa = $mysqli->query($obt_empresa);
+                      $row_empresa = $res_empresa->fetch_array();
                       ?>
                       <tr>
-                        <td><?php echo $row_resinfo[4] ." ". $row_resinfo[5] ." ". $row_resinfo[6] ." ". $row_resinfo[7] ?></td>
-                        <td><?php echo $row_resinfo[0] ?></td>
-                        <td><?php echo $row_resinfo[1] ?></td>
-                        <td>
-                          <center><a href="modal/modal_correo.php?id=<?php echo $row_resemp[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><button class="btn bg-blue margin" style="width: 50%;" >Ver</button></a></center>
-                        </td>
+                        <td><a href=""><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
+                        <td><?php echo $row_empresa[0] ?></td>
+                        <td><?php 
+                          $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
+                          $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
+                          $ano = date("Y", strtotime($row_correo[5]));
+                          $dia = date('d', strtotime($row_correo[5]));
+                          $mes = date('n', strtotime($row_correo[5]));
+                          echo $dia." de ".$meses[$mes-1]. " de ".$ano ;
+                        ?></td>
                       </tr>
                       <?php
                         }
@@ -119,10 +111,9 @@ include("../../template/todo2.php");
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Fecha</th>
                         <th>Asunto</th>
                         <th>Empresa</th>
-                        <th>Ver mensaje</th>
+                        <th>Fecha</th>
                       </tr>
                     </tfoot>
                   </table>
