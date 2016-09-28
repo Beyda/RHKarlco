@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Formulario de contacto</title>
+<link href="estilo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Contactanos</h1>
+<p>Favor de ingresas los siguientes datos y a la brevedad nos pondremos en contacto contigo</p>
+
+<form action="envio2.php" method="POST" enctype="multipart/form-data"> <!--determinar el tipo de información-->
+<table cellspacing="20">
+<tr><td>Nombre:</td><td><input type="text" name="nombre" maxlength="50" placeholder="Introduce el nombre" required /></td></tr>
+<tr><td>Apellidos:</td><td><input type="text" name="apellidos" maxlength="50" placeholder="Introduce tus apellidos" required /></td></tr>
+<tr><td>Email:</td><td><input type="email" name="correo" placeholder="Introduce un correo valido" required /></td></tr>
+<tr><td valign="top">Comentario:</td><td><textarea rows="10" cols="40" name="comentario" required></textarea></td></tr>
+<tr><td colspan="2"><input type="file" name="archivo"></td></tr>
+<tr><td><input type="submit" value="Enviar correo" name="submit" /></td><td></td></tr>
+</table>
+</form>
+</body>
+</html>
