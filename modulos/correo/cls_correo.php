@@ -87,7 +87,7 @@
 
 				$fecha = date('Y-m-j');
 				
-				echo $correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','$this->mensaje','$this->archivo', '$fecha', $row_ejer[0])";
+				$correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','$this->mensaje','$this->archivo', '$fecha', $row_ejer[0])";
 				$correo = $mysqli->query($correo);
 
 				if ($mysqli->error) {
@@ -98,7 +98,72 @@
 					unlink("../carga_archivos/correos/$this->archivo");
 				}else
 				{
-					echo "<script> document.location='l_correo.php'; </script>";
+					//echo "<script> document.location='l_correo.php'; </script>";
+					header("Content-Type: text/html; charset=utf-8");
+					date_default_timezone_set('America/Phoenix');
+
+					$correos = "SELECT DISTINCT d.`primer_nombre`, d.`segundo_nombre`, d.`ap_paterno`, d.`ap_materno`, d.`correo` FROM `datos_personales` d INNER JOIN `puesto_per` pp ON d.`id_datosper` = pp.`id_datosper` INNER JOIN `puestos` p ON pp.`id_puesto` = p.`id_puesto` INNER JOIN `empresas` e ON p.`id_empresa` = e.`id_empresa` AND e.`id_empresa` = $this->empresa";
+					$resul_correos = $mysqli->query($correos);
+
+					require '../mail/PHPMailerAutoload.php';
+
+
+					$mail = new PHPMailer;//Create a new PHPMailer instance
+
+
+					$mail->isSMTP();//Tell PHPMailer to use SMTP
+
+
+					$mail->SMTPDebug = 0;//Enable SMTP debugging
+					// 0 = off (for production use)
+					// 1 = client messages
+					// 2 = client and server messages
+
+
+					$mail->Debugoutput = 'html';//Ask for HTML-friendly debug output
+					$mail->Host = 'smtp.gmail.com';//hostname del servidor de gmail
+					$mail->Port = 465;//puerto del host de gmail
+					$mail->SMTPSecure = 'ssl';//envio de encriptación ssl
+					$mail->SMTPAuth = true;//Whether to use SMTP authentication
+					$mail->Username = "rhkarlco";//usuario creado en gmail de smtp
+					$mail->Password = 'rhkarlco2016';//contraseña del smtp
+					$mail->setFrom('amor.sanchez@karlcogroup.com', 'Recursos Humanos');//correo que envia el correo
+					$mail->addReplyTo('rhkarlco@gmail.com', 'Recursos Humanos');//correo donde se debe responder el correo
+					while ($row_correos = $resul_correos->fetch_array()) 
+                      	{
+                      		echo "$row_correos[4]";
+					echo $mail->addAddress($row_correos[4] , $row_correos[0] $row_correos[1] $row_correos[2] $row_correos[3]);//correos a donde se envia el mensaje
+						}
+					$mail->Subject = $this->asunto ;//Tema del mensaje
+
+					//Read an HTML message body from an external file, convert referenced images to embedded,
+					//convert HTML into a basic plain-text alternative body
+					//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
+					//$mail->isHTML(true);
+					$mail->msgHTML("
+						<!DOCTYPE html>
+					  	<html>
+					  	<head>
+					  		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+					  	</head>
+					  	<body>
+					  		<p>$this->mensaje </p>
+					  	</body>
+					  	</html>
+						");
+					$name=$this->asunto;
+					$mail->AltBody = $this->asunto;//Replace the plain text body with one created manually
+
+					//Attach an image file
+					//$mail->addAttachment('images/phpmailer_mini.png');
+					//send the message, check for errors
+					if (!$mail->send()) {
+					    echo "Mailer Error: " . $mail->ErrorInfo;
+					} else {
+					    echo "Message enviado!";
+					    header("Location: l_correo.php");
+
+					}//Termina lo del correo
 				}
 			}
 

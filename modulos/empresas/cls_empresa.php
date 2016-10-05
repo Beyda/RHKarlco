@@ -127,7 +127,6 @@
 				$resul_empresa = $mysqli->query($empresas); 
 				$v = 0;
 			} 
-
 		    	if ($this->error == 0){
 						
 						//ahora vamos a verificar si el tipo de archivo es un tipo de imagen permitido.
@@ -139,7 +138,7 @@
 							//esta es la ruta donde copiaremos la imagen
 							//recuerden que deben crear un directorio con este mismo nombre
 							//en el mismo lugar donde se encuentra el archivo subir.php
-							$ruta = "../carga_archivos/archivos_subidos/empresas/" . $this->id ."___".$this->archivo;
+							echo $ruta = "../carga_archivos/archivos_subidos/empresas/" . $this->id ."___".$this->archivo;
 							//comprovamos si este archivo existe para no volverlo a copiar.
 							//pero si quieren pueden obviar esto si no es necesario.
 							//o pueden darle otro nombre para que no sobreescriba el actual.
