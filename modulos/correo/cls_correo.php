@@ -81,7 +81,7 @@
 
 				$fecha = date('Y-m-j');
 				
-				$correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','$this->mensaje','$this->archivo', '$fecha', $row_ejer[0])";
+				echo $correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','".addslashes(."$this->mensaje'".).",'$this->archivo', '$fecha', $row_ejer[0])";
 				$correo = $mysqli->query($correo);
 
 				if ($mysqli->error) {
@@ -134,7 +134,7 @@
 					//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 					//$mail->isHTML(true);
 					$mail->msgHTML("
-						<!DOCTYPE>
+						<!DOCTYPE html PUBLIC -//W3C//DTD XHTML 1.0 Strict//EN http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd>
 <html xmlns=http://www.w3.org/1999/xhtml>
 <head>
 	<meta http-equiv=Content-Type content=text/html; charset=UTF-8 />
@@ -149,7 +149,7 @@
 		table{border-collapse:collapse;}
 		table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
 		img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
-		a {text-decoration:none !important;border-bottom: 1px solid;}
+		a {text-decoration:none !important;border-bottom: 1px solid; color: #e1e1e1;}
 		h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
 
 		/* CLIENT-SPECIFIC STYLES */
@@ -271,107 +271,15 @@
 		}
 		/* end IOS targeting */
 	</style>
-	<!--
-		Outlook Conditional CSS
-
-		These two style blocks target Outlook 2007 & 2010 specifically, forcing
-		columns into a single vertical stack as on mobile clients. This is
-		primarily done to avoid the 'page break bug' and is optional.
-
-		More information here:
-		http://templates.mailchimp.com/development/css/outlook-conditional-css
-	-->
-	<!--[if mso 12]>
-		<style type=text/css>
-			.flexibleContainer{display:block !important; width:100% !important;}
-		</style>
-	<![endif]-->
-	<!--[if mso 14]>
-		<style type=text/css>
-			.flexibleContainer{display:block !important; width:100% !important;}
-		</style>
-	<![endif]-->
 </head>
 <body bgcolor=#E1E1E1 leftmargin=0 marginwidth=0 topmargin=0 marginheight=0 offset=0>
 
-	<!-- CENTER THE EMAIL // -->
-	<!--
-	1.  The center tag should normally put all the
-		content in the middle of the email page.
-		I added table-layout: fixed; style to force
-		yahoomail which by default put the content left.
-
-	2.  For hotmail and yahoomail, the contents of
-		the email starts from this center, so we try to
-		apply necessary styling e.g. background-color.
-	-->
 	<center style=background-color:#E1E1E1;>
 		<table border=0 cellpadding=0 cellspacing=0 height=100% width=100% id=bodyTable style=table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;>
 			<tr>
 				<td align=center valign=top id=bodyCell>
 
-					<!-- EMAIL HEADER // -->
-					<!--
-						The table emailBody is the email's container.
-						Its width can be set to 100% for a color band
-						that spans the width of the page.
-					-->
-					<table bgcolor=#E1E1E1 border=0 cellpadding=0 cellspacing=0 width=500 id=emailHeader>
-
-						<!-- HEADER ROW // -->
-						<tr>
-							<td align=center valign=top>
-								<!-- CENTERING TABLE // -->
-								<table border=0 cellpadding=0 cellspacing=0 width=100%>
-									<tr>
-										<td align=center valign=top>
-											<!-- FLEXIBLE CONTAINER // -->
-											<table border=0 cellpadding=10 cellspacing=0 width=500 class=flexibleContainer>
-												<tr>
-													<td valign=top width=500 class=flexibleContainerCell>
-
-														<!-- CONTENT TABLE // -->
-														<table align=left border=0 cellpadding=0 cellspacing=0 width=100%>
-															<tr>
-																<!--
-																	The invisibleIntroduction is the text used for short preview
-																	of the email before the user opens it (50 characters max). Sometimes,
-																	you do not want to show this message depending on your design but this
-																	text is highly recommended.
-
-																	You do not have to worry if it is hidden, the next <td> will automatically
-																	center and apply to the width 100% and also shrink to 50% if the first <td>
-																	is visible.
-																-->
-																<td align=left valign=middle id=invisibleIntroduction class=flexibleContainerBox style=display:none !important; mso-hide:all;>
-																	<table border=0 cellpadding=0 cellspacing=0 width=100% style=max-width:100%;>
-																		<tr>
-																			<td align=left class=textContent>
-																				<div style=font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;>
-																					The introduction of your message preview goes here. Try to make it short.
-																				</div>
-																			</td>
-																		</tr>
-																	</table>
-																</td>
-																<td align=right valign=middle class=flexibleContainerBox>
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-											<!-- // FLEXIBLE CONTAINER -->
-										</td>
-									</tr>
-								</table>
-								<!-- // CENTERING TABLE -->
-							</td>
-						</tr>
-						<!-- // END -->
-
-					</table>
-					<!-- // END -->
+					<p></p>
 
 					<!-- EMAIL BODY // -->
 					<!--
@@ -395,7 +303,7 @@
 									tables centered in the emailBody table,
 									in case its width is set to 100%.
 								-->
-								<table border=0 cellpadding=0 cellspacing=0 width=100% style=color:#FFFFFF; bgcolor=#3498db>
+								<table border=0 cellpadding=0 cellspacing=0 width=100% style=color:#FFFFFF; bgcolor=#27ae60>
 									<tr>
 										<td align=center valign=top>
 											<!-- FLEXIBLE CONTAINER // -->
@@ -418,9 +326,8 @@
 														<table border=0 cellpadding=30 cellspacing=0 width=100%>
 															<tr>
 																<td align=center valign=top class=textContent>
-																	<h1 style=color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;>Recursos Humanos</h1>
-																	<h2 style=text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#205478;line-height:135%;>Subheader introduction</h2>
-																	<div style=text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</div>
+																	<h1 style=color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center; font-weight: bold>Recursos Humanos</h1>
+																	<img src=http://admonkco.com/rhkarlco/imagenes/logo.png style=width: 300px;>
 																</td>
 															</tr>
 														</table>
@@ -458,13 +365,8 @@
 																	<table border=0 cellpadding=0 cellspacing=0 width=100%>
 																		<tr>
 																			<td valign=top class=textContent>
-																				<!--
-																					The mc:edit is a feature for MailChimp which allows
-																					you to edit certain row. It makes it easy for you to quickly edit row sections.
-																					http://kb.mailchimp.com/templates/code/create-editable-content-areas-with-mailchimps-template-language
-																				-->
-																				<h3 mc:edit=header style=color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Message Title</h3>
-																				<div mc:edit=body style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</div>
+																				<h3 mc:edit=header style=color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>$this->asunto</h3>
+																				<div mc:edit=body style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;>$this->mensaje</div>
 																			</td>
 																		</tr>
 																	</table>
@@ -502,22 +404,18 @@
 														<!-- CONTENT TABLE // -->
 														<table align=left border=0 cellpadding=0 cellspacing=0 width=100%>
 															<tr>
-																<td align=left valign=top class=flexibleContainerBox style=background-color:#5F5F5F;>
+																<td align=left valign=top class=flexibleContainerBox style=background-color:#5F5F5F; padding-top: -100px;>
 																	<table border=0 cellpadding=30 cellspacing=0 width=100% style=max-width:100%;>
 																		<tr>
 																			<td align=left class=textContent>
-																				<h3 style=color:#FFFFFF;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Left Column</h3>
-																				<div style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis.</div>
-																			</td>
-																		</tr>
-																	</table>
-																</td>
-																<td align=right valign=top class=flexibleContainerBox style=background-color:#27ae60;>
-																	<table class=flexibleContainerBoxNext border=0 cellpadding=30 cellspacing=0 width=100% style=max-width:100%;>
-																		<tr>
-																			<td align=left class=textContent>
-																				<h3 style=color:#FFFFFF;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Right Column</h3>
-																				<div style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis.</div>
+																				<h3 style=color:#FFFFFF;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:normal;text-align:left; margin-top: -20px;>Contacto de validación</h3>
+																				<div style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:10px;margin-bottom:-30px;color:#FFFFFF;line-height:135%;>
+																				<p>Telefono: 642 4280 302<br>
+																				Email: <a href='mailto:rhkarlco@gmail.com '>rhkarlco@gmail.com </a><br>
+																				Direccion: No. Reeleccion 301 -A C.P. 85830 Navojoa, Sonora México <br>
+
+																				<a href=http://admonkco.com/ target=blanck> karlcogroup.com/</a> | <a href=http://karlcogroup.com/ target=blanck>admonkco.com</a></p>
+																				</div>
 																			</td>
 																		</tr>
 																	</table>
@@ -539,45 +437,7 @@
 						<!-- // MODULE ROW -->
 
 
-						<!-- MODULE ROW // -->
-						<tr>
-							<td align=center valign=top>
-								<!-- CENTERING TABLE // -->
-								<table border=0 cellpadding=0 cellspacing=0 width=100%>
-									<tr>
-										<td align=center valign=top>
-											<!-- FLEXIBLE CONTAINER // -->
-											<table border=0 cellpadding=0 cellspacing=0 width=500 class=flexibleContainer>
-												<tr>
-													<td align=center valign=top width=500 class=flexibleContainerCell>
-														<table border=0 cellpadding=30 cellspacing=0 width=100%>
-															<tr>
-																<td align=center valign=top>
-
-																	<!-- CONTENT TABLE // -->
-																	<table border=0 cellpadding=0 cellspacing=0 width=100%>
-																		<tr>
-																			<td valign=top class=textContent>
-																				<div style=text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;>Empty row for your custom contents</div>
-																			</td>
-																		</tr>
-																	</table>
-																	<!-- // CONTENT TABLE -->
-
-																</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-											</table>
-											<!-- // FLEXIBLE CONTAINER -->
-										</td>
-									</tr>
-								</table>
-								<!-- // CENTERING TABLE -->
-							</td>
-						</tr>
-						<!-- // MODULE ROW -->
+						
 
 					</table>
 					<!-- // END -->
