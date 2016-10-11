@@ -134,1053 +134,462 @@
 					//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
 					//$mail->isHTML(true);
 					$mail->msgHTML("
-						<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
-						<html xmlns='http://www.w3.org/1999/xhtml'>
-						<head>
-						  <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-						  <meta name='viewport' content='width=device-width'/>
-						  <style>
-						  
-						  #outlook a { 
-						    padding:0; 
-						  } 
-
-						  body{ 
-						    width:100% !important; 
-						    min-width: 100%;
-						    -webkit-text-size-adjust:100%; 
-						    -ms-text-size-adjust:100%; 
-						    margin:0; 
-						    padding:0;
-						  }
-
-						  .ExternalClass { 
-						    width:100%;
-						  } 
-
-						  .ExternalClass, 
-						  .ExternalClass p, 
-						  .ExternalClass span, 
-						  .ExternalClass font, 
-						  .ExternalClass td, 
-						  .ExternalClass div { 
-						    line-height: 100%; 
-						  } 
-
-						  #backgroundTable { 
-						    margin:0; 
-						    padding:0; 
-						    width:100% !important; 
-						    line-height: 100% !important; 
-						  }
-
-						  img { 
-						    outline:none; 
-						    text-decoration:none; 
-						    -ms-interpolation-mode: bicubic;
-						    width: auto;
-						    max-width: 100%; 
-						    float: left; 
-						    clear: both; 
-						    display: block;
-						  }
-
-						  center {
-						    width: 100%;
-						    min-width: 580px;
-						  }
-
-						  a img { 
-						    border: none;
-						  }
-
-						  p {
-						    margin: 0 0 0 10px;
-						  }
-
-						  table {
-						    border-spacing: 0;
-						    border-collapse: collapse;
-						  }
-
-						  td { 
-						    word-break: break-word;
-						    -webkit-hyphens: auto;
-						    -moz-hyphens: auto;
-						    hyphens: auto;
-						    border-collapse: collapse !important; 
-						  }
-
-						  table, tr, td {
-						    padding: 0;
-						    vertical-align: top;
-						    text-align: left;
-						  }
-
-						  hr {
-						    color: #d9d9d9; 
-						    background-color: #d9d9d9; 
-						    height: 1px; 
-						    border: none;
-						  }
-
-						  /* Responsive Grid */
-
-						  table.body {
-						    height: 100%;
-						    width: 100%;
-						  }
-
-						  table.container {
-						    width: 580px;
-						    margin: 0 auto;
-						    text-align: inherit;
-						  }
-
-						  table.row { 
-						    padding: 0px; 
-						    width: 100%;
-						    position: relative;
-						  }
-
-						  table.container table.row {
-						    display: block;
-						  }
-
-						  td.wrapper {
-						    padding: 10px 20px 0px 0px;
-						    position: relative;
-						  }
-
-						  table.columns,
-						  table.column {
-						    margin: 0 auto;
-						  }
-
-						  table.columns td,
-						  table.column td {
-						    padding: 0px 0px 10px; 
-						  }
-
-						  table.columns td.sub-columns,
-						  table.column td.sub-columns,
-						  table.columns td.sub-column,
-						  table.column td.sub-column {
-						    padding-right: 10px;
-						  }
-
-						  td.sub-column, td.sub-columns {
-						    min-width: 0px;
-						  }
-
-						  table.row td.last,
-						  table.container td.last {
-						    padding-right: 0px;
-						  }
-
-						  table.one { width: 30px; }
-						  table.two { width: 80px; }
-						  table.three { width: 130px; }
-						  table.four { width: 180px; }
-						  table.five { width: 230px; }
-						  table.six { width: 280px; }
-						  table.seven { width: 330px; }
-						  table.eight { width: 380px; }
-						  table.nine { width: 430px; }
-						  table.ten { width: 480px; }
-						  table.eleven { width: 530px; }
-						  table.twelve { width: 580px; }
-
-						  table.one center { min-width: 30px; }
-						  table.two center { min-width: 80px; }
-						  table.three center { min-width: 130px; }
-						  table.four center { min-width: 180px; }
-						  table.five center { min-width: 230px; }
-						  table.six center { min-width: 280px; }
-						  table.seven center { min-width: 330px; }
-						  table.eight center { min-width: 380px; }
-						  table.nine center { min-width: 430px; }
-						  table.ten center { min-width: 480px; }
-						  table.eleven center { min-width: 530px; }
-						  table.twelve center { min-width: 580px; }
-
-						  table.one .panel center { min-width: 10px; }
-						  table.two .panel center { min-width: 60px; }
-						  table.three .panel center { min-width: 110px; }
-						  table.four .panel center { min-width: 160px; }
-						  table.five .panel center { min-width: 210px; }
-						  table.six .panel center { min-width: 260px; }
-						  table.seven .panel center { min-width: 310px; }
-						  table.eight .panel center { min-width: 360px; }
-						  table.nine .panel center { min-width: 410px; }
-						  table.ten .panel center { min-width: 460px; }
-						  table.eleven .panel center { min-width: 510px; }
-						  table.twelve .panel center { min-width: 560px; }
-
-						  .body .columns td.one,
-						  .body .column td.one { width: 8.333333%; }
-						  .body .columns td.two,
-						  .body .column td.two { width: 16.666666%; }
-						  .body .columns td.three,
-						  .body .column td.three { width: 25%; }
-						  .body .columns td.four,
-						  .body .column td.four { width: 33.333333%; }
-						  .body .columns td.five,
-						  .body .column td.five { width: 41.666666%; }
-						  .body .columns td.six,
-						  .body .column td.six { width: 50%; }
-						  .body .columns td.seven,
-						  .body .column td.seven { width: 58.333333%; }
-						  .body .columns td.eight,
-						  .body .column td.eight { width: 66.666666%; }
-						  .body .columns td.nine,
-						  .body .column td.nine { width: 75%; }
-						  .body .columns td.ten,
-						  .body .column td.ten { width: 83.333333%; }
-						  .body .columns td.eleven,
-						  .body .column td.eleven { width: 91.666666%; }
-						  .body .columns td.twelve,
-						  .body .column td.twelve { width: 100%; }
-
-						  td.offset-by-one { padding-left: 50px; }
-						  td.offset-by-two { padding-left: 100px; }
-						  td.offset-by-three { padding-left: 150px; }
-						  td.offset-by-four { padding-left: 200px; }
-						  td.offset-by-five { padding-left: 250px; }
-						  td.offset-by-six { padding-left: 300px; }
-						  td.offset-by-seven { padding-left: 350px; }
-						  td.offset-by-eight { padding-left: 400px; }
-						  td.offset-by-nine { padding-left: 450px; }
-						  td.offset-by-ten { padding-left: 500px; }
-						  td.offset-by-eleven { padding-left: 550px; }
-
-						  td.expander {
-						    visibility: hidden;
-						    width: 0px;
-						    padding: 0 !important;
-						  }
-
-						  table.columns .text-pad,
-						  table.column .text-pad {
-						    padding-left: 10px;
-						    padding-right: 10px;
-						  }
-
-						  table.columns .left-text-pad,
-						  table.columns .text-pad-left,
-						  table.column .left-text-pad,
-						  table.column .text-pad-left {
-						    padding-left: 10px;
-						  }
-
-						  table.columns .right-text-pad,
-						  table.columns .text-pad-right,
-						  table.column .right-text-pad,
-						  table.column .text-pad-right {
-						    padding-right: 10px;
-						  }
-
-						  /* Block Grid */
-
-						  .block-grid {
-						    width: 100%;
-						    max-width: 580px;
-						  }
-
-						  .block-grid td {
-						    display: inline-block;
-						    padding:10px;
-						  }
-
-						  .two-up td {
-						    width:270px;
-						  }
-
-						  .three-up td {
-						    width:173px;
-						  }
-
-						  .four-up td {
-						    width:125px;
-						  }
-
-						  .five-up td {
-						    width:96px;
-						  }
-
-						  .six-up td {
-						    width:76px;
-						  }
-
-						  .seven-up td {
-						    width:62px;
-						  }
-
-						  .eight-up td {
-						    width:52px;
-						  }
-
-						  /* Alignment & Visibility Classes */
-
-						  table.center, td.center {
-						    text-align: center;
-						  }
-
-						  h1.center,
-						  h2.center,
-						  h3.center,
-						  h4.center,
-						  h5.center,
-						  h6.center {
-						    text-align: center;
-						  }
-
-						  span.center {
-						    display: block;
-						    width: 100%;
-						    text-align: center;
-						  }
-
-						  img.center {
-						    margin: 0 auto;
-						    float: none;
-						  }
-
-						  .show-for-small,
-						  .hide-for-desktop {
-						    display: none;
-						  }
-
-						  /* Typography */
-
-						  body, table.body, h1, h2, h3, h4, h5, h6, p, td { 
-						    color: #222222;
-						    font-family: 'Helvetica', 'Arial', sans-serif; 
-						    font-weight: normal; 
-						    padding:0; 
-						    margin: 0;
-						    text-align: left; 
-						    line-height: 1.3;
-						  }
-
-						  h1, h2, h3, h4, h5, h6 {
-						    word-break: normal;
-						  }
-
-						  h1 {font-size: 40px;}
-						  h2 {font-size: 36px;}
-						  h3 {font-size: 32px;}
-						  h4 {font-size: 28px;}
-						  h5 {font-size: 24px;}
-						  h6 {font-size: 20px;}
-						  body, table.body, p, td {font-size: 14px;line-height:19px;}
-
-						  p.lead, p.lede, p.leed {
-						    font-size: 18px;
-						    line-height:21px;
-						  }
-
-						  p { 
-						    margin-bottom: 10px;
-						  }
-
-						  small {
-						    font-size: 10px;
-						  }
-
-						  a {
-						    color: #2ba6cb; 
-						    text-decoration: none;
-						  }
-
-						  a:hover { 
-						    color: #2795b6 !important;
-						  }
-
-						  a:active { 
-						    color: #2795b6 !important;
-						  }
-
-						  a:visited { 
-						    color: #2ba6cb !important;
-						  }
-
-						  h1 a, 
-						  h2 a, 
-						  h3 a, 
-						  h4 a, 
-						  h5 a, 
-						  h6 a {
-						    color: #2ba6cb;
-						  }
-
-						  h1 a:active, 
-						  h2 a:active,  
-						  h3 a:active, 
-						  h4 a:active, 
-						  h5 a:active, 
-						  h6 a:active { 
-						    color: #2ba6cb !important; 
-						  } 
-
-						  h1 a:visited, 
-						  h2 a:visited,  
-						  h3 a:visited, 
-						  h4 a:visited, 
-						  h5 a:visited, 
-						  h6 a:visited { 
-						    color: #2ba6cb !important; 
-						  } 
-
-						  /* Panels */
-
-						  .panel {
-						    background: #f2f2f2;
-						    border: 1px solid #d9d9d9;
-						    padding: 10px !important;
-						  }
-
-						  .sub-grid table {
-						    width: 100%;
-						  }
-
-						  .sub-grid td.sub-columns {
-						    padding-bottom: 0;
-						  }
-
-						  /* Buttons */
-
-						  table.button,
-						  table.tiny-button,
-						  table.small-button,
-						  table.medium-button,
-						  table.large-button {
-						    width: 100%;
-						    overflow: hidden;
-						  }
-
-						  table.button td,
-						  table.tiny-button td,
-						  table.small-button td,
-						  table.medium-button td,
-						  table.large-button td {
-						    display: block;
-						    width: auto !important;
-						    text-align: center;
-						    background: #2ba6cb;
-						    border: 1px solid #2284a1;
-						    color: #ffffff;
-						    padding: 8px 0;
-						  }
-
-						  table.tiny-button td {
-						    padding: 5px 0 4px;
-						  }
-
-						  table.small-button td {
-						    padding: 8px 0 7px;
-						  }
-
-						  table.medium-button td {
-						    padding: 12px 0 10px;
-						  }
-
-						  table.large-button td {
-						    padding: 21px 0 18px;
-						  }
-
-						  table.button td a,
-						  table.tiny-button td a,
-						  table.small-button td a,
-						  table.medium-button td a,
-						  table.large-button td a {
-						    font-weight: bold;
-						    text-decoration: none;
-						    font-family: Helvetica, Arial, sans-serif;
-						    color: #ffffff;
-						    font-size: 16px;
-						  }
-
-						  table.tiny-button td a {
-						    font-size: 12px;
-						    font-weight: normal;
-						  }
-
-						  table.small-button td a {
-						    font-size: 16px;
-						  }
-
-						  table.medium-button td a {
-						    font-size: 20px;
-						  }
-
-						  table.large-button td a {
-						    font-size: 24px;
-						  }
-
-						  table.button:hover td,
-						  table.button:visited td,
-						  table.button:active td {
-						    background: #2795b6 !important;
-						  }
-
-						  table.button:hover td a,
-						  table.button:visited td a,
-						  table.button:active td a {
-						    color: #fff !important;
-						  }
-
-						  table.button:hover td,
-						  table.tiny-button:hover td,
-						  table.small-button:hover td,
-						  table.medium-button:hover td,
-						  table.large-button:hover td {
-						    background: #2795b6 !important;
-						  }
-
-						  table.button:hover td a,
-						  table.button:active td a,
-						  table.button td a:visited,
-						  table.tiny-button:hover td a,
-						  table.tiny-button:active td a,
-						  table.tiny-button td a:visited,
-						  table.small-button:hover td a,
-						  table.small-button:active td a,
-						  table.small-button td a:visited,
-						  table.medium-button:hover td a,
-						  table.medium-button:active td a,
-						  table.medium-button td a:visited,
-						  table.large-button:hover td a,
-						  table.large-button:active td a,
-						  table.large-button td a:visited {
-						    color: #ffffff !important; 
-						  }
-
-						  table.secondary td {
-						    background: #e9e9e9;
-						    border-color: #d0d0d0;
-						    color: #555;
-						  }
-
-						  table.secondary td a {
-						    color: #555;
-						  }
-
-						  table.secondary:hover td {
-						    background: #d0d0d0 !important;
-						    color: #555;
-						  }
-
-						  table.secondary:hover td a,
-						  table.secondary td a:visited,
-						  table.secondary:active td a {
-						    color: #555 !important;
-						  }
-
-						  table.success td {
-						    background: #5da423;
-						    border-color: #457a1a;
-						  }
-
-						  table.success:hover td {
-						    background: #457a1a !important;
-						  }
-
-						  table.alert td {
-						    background: #c60f13;
-						    border-color: #970b0e;
-						  }
-
-						  table.alert:hover td {
-						    background: #970b0e !important;
-						  }
-
-						  table.radius td {
-						    -webkit-border-radius: 3px;
-						    -moz-border-radius: 3px;
-						    border-radius: 3px;
-						  }
-
-						  table.round td {
-						    -webkit-border-radius: 500px;
-						    -moz-border-radius: 500px;
-						    border-radius: 500px;
-						  }
-
-						  /* Outlook First */
-
-						  body.outlook p {
-						    display: inline !important;
-						  }
-
-						  /*  Media Queries */
-
-						  @media only screen and (max-width: 600px) {
-
-						    table[class='body'] img {
-						      width: auto !important;
-						      height: auto !important;
-						    }
-
-						    table[class='body'] center {
-						      min-width: 0 !important;
-						    }
-
-						    table[class='body'] .container {
-						      width: 95% !important;
-						    }
-
-						    table[class='body'] .row {
-						      width: 100% !important;
-						      display: block !important;
-						    }
-
-						    table[class='body'] .wrapper {
-						      display: block !important;
-						      padding-right: 0 !important;
-						    }
-
-						    table[class='body'] .columns,
-						    table[class='body'] .column {
-						      table-layout: fixed !important;
-						      float: none !important;
-						      width: 100% !important;
-						      padding-right: 0px !important;
-						      padding-left: 0px !important;
-						      display: block !important;
-						    }
-
-						    table[class='body'] .wrapper.first .columns,
-						    table[class='body'] .wrapper.first .column {
-						      display: table !important;
-						    }
-
-						    table[class='body'] table.columns td,
-						    table[class='body'] table.column td {
-						      width: 100% !important;
-						    }
-
-						    table[class='body'] .columns td.one,
-						    table[class='body'] .column td.one { width: 8.333333% !important; }
-						    table[class='body'] .columns td.two,
-						    table[class='body'] .column td.two { width: 16.666666% !important; }
-						    table[class='body'] .columns td.three,
-						    table[class='body'] .column td.three { width: 25% !important; }
-						    table[class='body'] .columns td.four,
-						    table[class='body'] .column td.four { width: 33.333333% !important; }
-						    table[class='body'] .columns td.five,
-						    table[class='body'] .column td.five { width: 41.666666% !important; }
-						    table[class='body'] .columns td.six,
-						    table[class='body'] .column td.six { width: 50% !important; }
-						    table[class='body'] .columns td.seven,
-						    table[class='body'] .column td.seven { width: 58.333333% !important; }
-						    table[class='body'] .columns td.eight,
-						    table[class='body'] .column td.eight { width: 66.666666% !important; }
-						    table[class='body'] .columns td.nine,
-						    table[class='body'] .column td.nine { width: 75% !important; }
-						    table[class='body'] .columns td.ten,
-						    table[class='body'] .column td.ten { width: 83.333333% !important; }
-						    table[class='body'] .columns td.eleven,
-						    table[class='body'] .column td.eleven { width: 91.666666% !important; }
-						    table[class='body'] .columns td.twelve,
-						    table[class='body'] .column td.twelve { width: 100% !important; }
-
-						    table[class='body'] td.offset-by-one,
-						    table[class='body'] td.offset-by-two,
-						    table[class='body'] td.offset-by-three,
-						    table[class='body'] td.offset-by-four,
-						    table[class='body'] td.offset-by-five,
-						    table[class='body'] td.offset-by-six,
-						    table[class='body'] td.offset-by-seven,
-						    table[class='body'] td.offset-by-eight,
-						    table[class='body'] td.offset-by-nine,
-						    table[class='body'] td.offset-by-ten,
-						    table[class='body'] td.offset-by-eleven {
-						      padding-left: 0 !important;
-						    }
-
-						    table[class='body'] table.columns td.expander {
-						      width: 1px !important;
-						    }
-
-						    table[class='body'] .right-text-pad,
-						    table[class='body'] .text-pad-right {
-						      padding-left: 10px !important;
-						    }
-
-						    table[class='body'] .left-text-pad,
-						    table[class='body'] .text-pad-left {
-						      padding-right: 10px !important;
-						    }
-
-						    table[class='body'] .hide-for-small,
-						    table[class='body'] .show-for-desktop {
-						      display: none !important;
-						    }
-
-						    table[class='body'] .show-for-small,
-						    table[class='body'] .hide-for-desktop {
-						      display: inherit !important;
-						    }
-						  }
-
-						    </style>
-						    <style>
-
-						      table.facebook td {
-						        background: #3b5998;
-						        border-color: #2d4473;
-						      }
-
-						      table.facebook:hover td {
-						        background: #2d4473 !important;
-						      }
-
-						      table.twitter td {
-						        background: #00acee;
-						        border-color: #0087bb;
-						      }
-
-						      table.twitter:hover td {
-						        background: #0087bb !important;
-						      }
-
-						      table.google-plus td {
-						        background-color: #DB4A39;
-						        border-color: #CC0000;
-						      }
-
-						      table.google-plus:hover td {
-						        background: #CC0000 !important;
-						      }
-
-						      .template-label {
-						        color: #ffffff;
-						        font-weight: bold;
-						        font-size: 11px;
-						      }
-
-						      .callout .panel {
-						        background: #ECF8FF;
-						        border-color: #b9e5ff;
-						      }
-
-						      .header {
-						        background: #999999;
-						      }
-
-						      .footer .wrapper {
-						        background: #ebebeb;
-						      }
-
-						      .footer h5 {
-						        padding-bottom: 10px;
-						      }
-
-						      table.columns .text-pad {
-						        padding-left: 10px;
-						        padding-right: 10px;
-						      }
-
-						      table.columns .left-text-pad {
-						        padding-left: 10px;
-						      }
-
-						      table.columns .right-text-pad {
-						        padding-right: 10px;
-						      }
-
-						      @media only screen and (max-width: 600px) {
-
-						        table[class='body'] .right-text-pad {
-						          padding-left: 10px !important;
-						        }
-
-						        table[class='body'] .left-text-pad {
-						          padding-right: 10px !important;
-						        }
-						      }
-						  </style>
-						  <style>
-
-						    table.facebook td {
-						      background: #3b5998;
-						      border-color: #2d4473;
-						    }
-
-						    table.facebook:hover td {
-						      background: #2d4473 !important;
-						    }
-
-						    table.twitter td {
-						      background: #00acee;
-						      border-color: #0087bb;
-						    }
-
-						    table.twitter:hover td {
-						      background: #0087bb !important;
-						    }
-
-						    table.google-plus td {
-						      background-color: #DB4A39;
-						      border-color: #CC0000;
-						    }
-
-						    table.google-plus:hover td {
-						      background: #CC0000 !important;
-						    }
-
-						    .template-label {
-						      color: #ffffff;
-						      font-weight: bold;
-						      font-size: 11px;
-						    }
-
-						    .callout .panel {
-						      background: #ECF8FF;
-						      border-color: #b9e5ff;
-						    }
-
-						    .header {
-						      background: #999999;
-						    }
-
-						    .footer .wrapper {
-						      background: #ebebeb;
-						    }
-
-						    .footer h5 {
-						      padding-bottom: 10px;
-						    }
-
-						    table.columns .text-pad {
-						      padding-left: 10px;
-						      padding-right: 10px;
-						    }
-
-						    table.columns .left-text-pad {
-						      padding-left: 10px;
-						    }
-
-						    table.columns .right-text-pad {
-						      padding-right: 10px;
-						    }
-
-						    @media only screen and (max-width: 600px) {
-
-						      table[class='body'] .right-text-pad {
-						        padding-left: 10px !important;
-						      }
-
-						      table[class='body'] .left-text-pad {
-						        padding-right: 10px !important;
-						      }
-						    }
-
-						  </style>
-						</head>
-						<body>
-						  <table class='body'>
-						    <tr>
-						      <td class='center' align='center' valign='top'>
-						        <center>
-
-
-						          <table class='row header'>
-						            <tr>
-						              <td class='center' align='center'>
-						                <center>
-
-						                  <table class='container'>
-						                    <tr>
-						                      <td class='wrapper last'>
-
-						                        <table class='twelve columns'>
-						                          <tr>
-
-						                            <td >
-						                              <img style=' border-radius: 50px; width: 100px' src='images/kco.jpg'>                              
-						                            </td>
-						                            <td>
-						                              <img style=' border-radius: 50px; width: 100px' src='images/aep.jpg'>
-						                            </td>
-						                            <td>
-						                              <img style=' border-radius: 50px; width: 100px' src='images/sma.jpg'>
-						                            </td>
-
-						                            
-						                            <td class='expander'></td>
-
-						                          </tr>
-						                        </table>
-
-						                      </td>
-						                    </tr>
-						                  </table>
-
-						                </center>
-						              </td>
-						            </tr>
-						          </table>
-						          <br>
-
-						          <table class='container'>
-						            <tr>
-						              <td>
-
-						                <!-- content start -->
-						                <table class='row'>
-						                  <tr>
-						                    <td class='wrapper last'>
-
-						                      <table class='twelve columns'>
-						                        <tr>
-						                          <td>
-
-						                            <h1>Solicitud de Préstamo</h1>
-						                            <center><p class='lead'>La solicitud proviene del campo <h1 style='color:red' >df45</h1></p><center>
-						                            <img width='580' height='300' src='images/logo.jpg'>
-
-						                          </td>
-						                          <td class='expander'></td>
-						                        </tr>
-						                      </table>
-
-						                    </td>
-						                  </tr>
-						                </table>
-
-						                <table class='row callout'>
-						                  <tr>
-						                    <td class='wrapper last'>
-
-						                      <table class='twelve columns'>
-						                        <tr>
-						                          <td class='panel'>
-
-						                            <p>El encargado de Campo $n_encargado  $a_encargado esta solicitanto un prestamo para: </p>
-
-						                          </td>
-						                          <td class='expander'></td>
-						                        </tr>
-						                      </table>
-
-						                    </td>
-						                  </tr>
-						                </table>
-
-						                <table class='row'>
-						                  <tr>
-						                    <td class='wrapper last'>
-
-						                      <table class='twelve columns'>
-						                        <tr>
-						                          <th>Matricula</th>
-						                          <th>Nombre</th>
-						                          <th>Apellido Paterno</th>
-						                          <th>Apellido Materno</th>
-						                          <th>Cantidad</th>
-						                          <th>fecha</th>
-						                          <td class='expander'></td>
-						                        </tr>
-						                        <br>
-						                        <tr>
-						                          <td>33333</td>
-						                          <td>fffff</td>
-						                          <td>fferer</td>
-						                          <td>3445435</td>
-						                          <td style='color:red'>45</td>
-						                          <td>ert</td> 
-						                          <td class='expander'></td>
-						                        </tr>
-						                        
-						                      </table>
-						                      <br>
-						                    </td>
-						                  </tr>
-						                </table>
-
-
-						                <table class='row'>
-						                  <tr>
-						                    <td class='wrapper last'>
-
-						                     <center> <table class='six columns'>
-						                        <tr>
-						                          <td>
-
-						                            <table class='button'>
-						                              <tr>
-						                                <td>
-						                                  <a href='http://admonkco.com/siskarlco/login.php'>Validar Préstamo</a>
-						                                </td>
-						                              </tr>
-						                            </table>
-
-						                          </td>
-						                          <td class='expander'></td>
-						                        </tr>
-						                      </table></center>
-
-						                    </td>
-						                  </tr>
-						                </table>
-
-
-						                <table class='row footer'>
-						                  <tr>
-						                    <td class='wrapper'>                 
-
-						                    </td>
-						                    <td class='wrapper last'>
-
-						                      <table class='twelve columns'>
-						                        <tr>
-						                          <td class='last right-text-pad'>
-						                            <h5>Contacto de Validacion:</h5>
-						                            <p>Telefono: 642 4280 302</p>
-						                            <p>Email: <a href='mailto:marisela.suarez@karlcogroup.com '>marisela.suarez@karlcogroup.com </a></p>
-						                            <p>Direccion: No. Reeleccion 301 -A C.P. 85830 Navojoa,, Sonora México</p>
-						                          </td>
-						                          <td class='expander'></td>
-						                        </tr>
-						                      </table>
-
-						                    </td>
-						                  </tr>
-						                </table>
-
-
-						                <table class='row'>
-						                  <tr>
-						                    <td class='wrapper last'>
-
-						                      <table class='twelve columns'>
-						                        <tr>
-						                          <td align='center'>
-						                            <center>
-						                              <p style='text-align:center;'><a href='http://karlcogroup.com/'>karlcogroup.com/</a> | <a href='http://admonkco.com/'>admonkco.com</a> </p>
-						                            </center>
-						                          </td>
-						                          <td class='expander'></td>
-						                        </tr>
-						                      </table>
-
-						                    </td>
-						                  </tr>
-						                </table>
-
-						                <!-- container end below -->
-						              </td>
-						            </tr>
-						          </table>
-
-						        </center>
-						      </td>
-						    </tr>
-						  </table>
-						</body>
-						</html>
+						<!DOCTYPE>
+<html xmlns=http://www.w3.org/1999/xhtml>
+<head>
+	<meta http-equiv=Content-Type content=text/html; charset=UTF-8 />
+	<meta name=viewport content=width=device-width, initial-scale=1.0>
+	<meta http-equiv=X-UA-Compatible content=IE=edge,chrome=1>
+	<meta name=format-detection content=telephone=no /> <!-- disable auto telephone linking in iOS -->
+	<title>Respmail is a response HTML email designed to work on all major email platforms and smartphones</title>
+	<style type=text/css>
+		/* RESET STYLES */
+		html { background-color:#E1E1E1; margin:0; padding:0; }
+		body, #bodyTable, #bodyCell, #bodyCell{height:100% !important; margin:0; padding:0; width:100% !important;font-family:Helvetica, Arial, Lucida Grande, sans-serif;}
+		table{border-collapse:collapse;}
+		table[id=bodyTable] {width:100%!important;margin:auto;max-width:500px!important;color:#7A7A7A;font-weight:normal;}
+		img, a img{border:0; outline:none; text-decoration:none;height:auto; line-height:100%;}
+		a {text-decoration:none !important;border-bottom: 1px solid;}
+		h1, h2, h3, h4, h5, h6{color:#5F5F5F; font-weight:normal; font-family:Helvetica; font-size:20px; line-height:125%; text-align:Left; letter-spacing:normal;margin-top:0;margin-right:0;margin-bottom:10px;margin-left:0;padding-top:0;padding-bottom:0;padding-left:0;padding-right:0;}
+
+		/* CLIENT-SPECIFIC STYLES */
+		.ReadMsgBody{width:100%;} .ExternalClass{width:100%;} /* Force Hotmail/Outlook.com to display emails at full width. */
+		.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{line-height:100%;} /* Force Hotmail/Outlook.com to display line heights normally. */
+		table, td{mso-table-lspace:0pt; mso-table-rspace:0pt;} /* Remove spacing between tables in Outlook 2007 and up. */
+		#outlook a{padding:0;} /* Force Outlook 2007 and up to provide a view in browser message. */
+		img{-ms-interpolation-mode: bicubic;display:block;outline:none; text-decoration:none;} /* Force IE to smoothly render resized images. */
+		body, table, td, p, a, li, blockquote{-ms-text-size-adjust:100%; -webkit-text-size-adjust:100%; font-weight:normal!important;} /* Prevent Windows- and Webkit-based mobile platforms from changing declared text sizes. */
+		.ExternalClass td[class=ecxflexibleContainerBox] h3 {padding-top: 10px !important;} /* Force hotmail to push 2-grid sub headers down */
+
+		/* /\/\/\/\/\/\/\/\/ TEMPLATE STYLES /\/\/\/\/\/\/\/\/ */
+
+		/* ========== Page Styles ========== */
+		h1{display:block;font-size:26px;font-style:normal;font-weight:normal;line-height:100%;}
+		h2{display:block;font-size:20px;font-style:normal;font-weight:normal;line-height:120%;}
+		h3{display:block;font-size:17px;font-style:normal;font-weight:normal;line-height:110%;}
+		h4{display:block;font-size:18px;font-style:italic;font-weight:normal;line-height:100%;}
+		.flexibleImage{height:auto;}
+		.linkRemoveBorder{border-bottom:0 !important;}
+		table[class=flexibleContainerCellDivider] {padding-bottom:0 !important;padding-top:0 !important;}
+
+		body, #bodyTable{background-color:#E1E1E1;}
+		#emailHeader{background-color:#E1E1E1;}
+		#emailBody{background-color:#FFFFFF;}
+		#emailFooter{background-color:#E1E1E1;}
+		.nestedContainer{background-color:#F8F8F8; border:1px solid #CCCCCC;}
+		.emailButton{background-color:#205478; border-collapse:separate;}
+		.buttonContent{color:#FFFFFF; font-family:Helvetica; font-size:18px; font-weight:bold; line-height:100%; padding:15px; text-align:center;}
+		.buttonContent a{color:#FFFFFF; display:block; text-decoration:none!important; border:0!important;}
+		.emailCalendar{background-color:#FFFFFF; border:1px solid #CCCCCC;}
+		.emailCalendarMonth{background-color:#205478; color:#FFFFFF; font-family:Helvetica, Arial, sans-serif; font-size:16px; font-weight:bold; padding-top:10px; padding-bottom:10px; text-align:center;}
+		.emailCalendarDay{color:#205478; font-family:Helvetica, Arial, sans-serif; font-size:60px; font-weight:bold; line-height:100%; padding-top:20px; padding-bottom:20px; text-align:center;}
+		.imageContentText {margin-top: 10px;line-height:0;}
+		.imageContentText a {line-height:0;}
+		#invisibleIntroduction {display:none !important;} /* Removing the introduction text from the view */
+
+		/*FRAMEWORK HACKS & OVERRIDES */
+		span[class=ios-color-hack] a {color:#275100!important;text-decoration:none!important;} /* Remove all link colors in IOS (below are duplicates based on the color preference) */
+		span[class=ios-color-hack2] a {color:#205478!important;text-decoration:none!important;}
+		span[class=ios-color-hack3] a {color:#8B8B8B!important;text-decoration:none!important;}
+		/* A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.  Use these two blocks of code to unstyle any numbers that may be linked.  The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
+		Inspired by Campaign Monitor's article on using phone numbers in email: http://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+		*/
+		.a[href^=tel], a[href^=sms] {text-decoration:none!important;color:#606060!important;pointer-events:none!important;cursor:default!important;}
+		.mobile_link a[href^=tel], .mobile_link a[href^=sms] {text-decoration:none!important;color:#606060!important;pointer-events:auto!important;cursor:default!important;}
+
+
+		/* MOBILE STYLES */
+		@media only screen and (max-width: 480px){
+			/*////// CLIENT-SPECIFIC STYLES //////*/
+			body{width:100% !important; min-width:100% !important;} /* Force iOS Mail to render the email at full width. */
+
+			/* FRAMEWORK STYLES */
+			/*
+			CSS selectors are written in attribute
+			selector format to prevent Yahoo Mail
+			from rendering media query styles on
+			desktop.
+			*/
+			/*td[class=textContent], td[class=flexibleContainerCell] { width: 100%; padding-left: 10px !important; padding-right: 10px !important; }*/
+			table[id=emailHeader],
+			table[id=emailBody],
+			table[id=emailFooter],
+			table[class=flexibleContainer],
+			td[class=flexibleContainerCell] {width:100% !important;}
+			td[class=flexibleContainerBox], td[class=flexibleContainerBox] table {display: block;width: 100%;text-align: left;}
+			/*
+			The following style rule makes any
+			image classed with 'flexibleImage'
+			fluid when the query activates.
+			Make sure you add an inline max-width
+			to those images to prevent them
+			from blowing out.
+			*/
+			td[class=imageContent] img {height:auto !important; width:100% !important; max-width:100% !important; }
+			img[class=flexibleImage]{height:auto !important; width:100% !important;max-width:100% !important;}
+			img[class=flexibleImageSmall]{height:auto !important; width:auto !important;}
+
+
+			/*
+			Create top space for every second element in a block
+			*/
+			table[class=flexibleContainerBoxNext]{padding-top: 10px !important;}
+
+			/*
+			Make buttons in the email span the
+			full width of their container, allowing
+			for left- or right-handed ease of use.
+			*/
+			table[class=emailButton]{width:100% !important;}
+			td[class=buttonContent]{padding:0 !important;}
+			td[class=buttonContent] a{padding:15px !important;}
+
+		}
+
+		/*  CONDITIONS FOR ANDROID DEVICES ONLY
+		*   http://developer.android.com/guide/webapps/targeting.html
+		*   http://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/ ;
+		=====================================================*/
+
+		@media only screen and (-webkit-device-pixel-ratio:.75){
+			/* Put CSS for low density (ldpi) Android layouts in here */
+		}
+
+		@media only screen and (-webkit-device-pixel-ratio:1){
+			/* Put CSS for medium density (mdpi) Android layouts in here */
+		}
+
+		@media only screen and (-webkit-device-pixel-ratio:1.5){
+			/* Put CSS for high density (hdpi) Android layouts in here */
+		}
+		/* end Android targeting */
+
+		/* CONDITIONS FOR IOS DEVICES ONLY
+		=====================================================*/
+		@media only screen and (min-device-width : 320px) and (max-device-width:568px) {
+
+		}
+		/* end IOS targeting */
+	</style>
+	<!--
+		Outlook Conditional CSS
+
+		These two style blocks target Outlook 2007 & 2010 specifically, forcing
+		columns into a single vertical stack as on mobile clients. This is
+		primarily done to avoid the 'page break bug' and is optional.
+
+		More information here:
+		http://templates.mailchimp.com/development/css/outlook-conditional-css
+	-->
+	<!--[if mso 12]>
+		<style type=text/css>
+			.flexibleContainer{display:block !important; width:100% !important;}
+		</style>
+	<![endif]-->
+	<!--[if mso 14]>
+		<style type=text/css>
+			.flexibleContainer{display:block !important; width:100% !important;}
+		</style>
+	<![endif]-->
+</head>
+<body bgcolor=#E1E1E1 leftmargin=0 marginwidth=0 topmargin=0 marginheight=0 offset=0>
+
+	<!-- CENTER THE EMAIL // -->
+	<!--
+	1.  The center tag should normally put all the
+		content in the middle of the email page.
+		I added table-layout: fixed; style to force
+		yahoomail which by default put the content left.
+
+	2.  For hotmail and yahoomail, the contents of
+		the email starts from this center, so we try to
+		apply necessary styling e.g. background-color.
+	-->
+	<center style=background-color:#E1E1E1;>
+		<table border=0 cellpadding=0 cellspacing=0 height=100% width=100% id=bodyTable style=table-layout: fixed;max-width:100% !important;width: 100% !important;min-width: 100% !important;>
+			<tr>
+				<td align=center valign=top id=bodyCell>
+
+					<!-- EMAIL HEADER // -->
+					<!--
+						The table emailBody is the email's container.
+						Its width can be set to 100% for a color band
+						that spans the width of the page.
+					-->
+					<table bgcolor=#E1E1E1 border=0 cellpadding=0 cellspacing=0 width=500 id=emailHeader>
+
+						<!-- HEADER ROW // -->
+						<tr>
+							<td align=center valign=top>
+								<!-- CENTERING TABLE // -->
+								<table border=0 cellpadding=0 cellspacing=0 width=100%>
+									<tr>
+										<td align=center valign=top>
+											<!-- FLEXIBLE CONTAINER // -->
+											<table border=0 cellpadding=10 cellspacing=0 width=500 class=flexibleContainer>
+												<tr>
+													<td valign=top width=500 class=flexibleContainerCell>
+
+														<!-- CONTENT TABLE // -->
+														<table align=left border=0 cellpadding=0 cellspacing=0 width=100%>
+															<tr>
+																<!--
+																	The invisibleIntroduction is the text used for short preview
+																	of the email before the user opens it (50 characters max). Sometimes,
+																	you do not want to show this message depending on your design but this
+																	text is highly recommended.
+
+																	You do not have to worry if it is hidden, the next <td> will automatically
+																	center and apply to the width 100% and also shrink to 50% if the first <td>
+																	is visible.
+																-->
+																<td align=left valign=middle id=invisibleIntroduction class=flexibleContainerBox style=display:none !important; mso-hide:all;>
+																	<table border=0 cellpadding=0 cellspacing=0 width=100% style=max-width:100%;>
+																		<tr>
+																			<td align=left class=textContent>
+																				<div style=font-family:Helvetica,Arial,sans-serif;font-size:13px;color:#828282;text-align:center;line-height:120%;>
+																					The introduction of your message preview goes here. Try to make it short.
+																				</div>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+																<td align=right valign=middle class=flexibleContainerBox>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<!-- // FLEXIBLE CONTAINER -->
+										</td>
+									</tr>
+								</table>
+								<!-- // CENTERING TABLE -->
+							</td>
+						</tr>
+						<!-- // END -->
+
+					</table>
+					<!-- // END -->
+
+					<!-- EMAIL BODY // -->
+					<!--
+						The table emailBody is the email's container.
+						Its width can be set to 100% for a color band
+						that spans the width of the page.
+					-->
+					<table bgcolor=#FFFFFF  border=0 cellpadding=0 cellspacing=0 width=500 id=emailBody>
+
+						<!-- MODULE ROW // -->
+						<!--
+							To move or duplicate any of the design patterns
+							in this email, simply move or copy the entire
+							MODULE ROW section for each content block.
+						-->
+						<tr>
+							<td align=center valign=top>
+								<!-- CENTERING TABLE // -->
+								<!--
+									The centering table keeps the content
+									tables centered in the emailBody table,
+									in case its width is set to 100%.
+								-->
+								<table border=0 cellpadding=0 cellspacing=0 width=100% style=color:#FFFFFF; bgcolor=#3498db>
+									<tr>
+										<td align=center valign=top>
+											<!-- FLEXIBLE CONTAINER // -->
+											<!--
+												The flexible container has a set width
+												that gets overridden by the media query.
+												Most content tables within can then be
+												given 100% widths.
+											-->
+											<table border=0 cellpadding=0 cellspacing=0 width=500 class=flexibleContainer>
+												<tr>
+													<td align=center valign=top width=500 class=flexibleContainerCell>
+
+														<!-- CONTENT TABLE // -->
+														<!--
+														The content table is the first element
+															that's entirely separate from the structural
+															framework of the email.
+														-->
+														<table border=0 cellpadding=30 cellspacing=0 width=100%>
+															<tr>
+																<td align=center valign=top class=textContent>
+																	<h1 style=color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center;>Recursos Humanos</h1>
+																	<h2 style=text-align:center;font-weight:normal;font-family:Helvetica,Arial,sans-serif;font-size:23px;margin-bottom:10px;color:#205478;line-height:135%;>Subheader introduction</h2>
+																	<div style=text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</div>
+																</td>
+															</tr>
+														</table>
+														<!-- // CONTENT TABLE -->
+
+													</td>
+												</tr>
+											</table>
+											<!-- // FLEXIBLE CONTAINER -->
+										</td>
+									</tr>
+								</table>
+								<!-- // CENTERING TABLE -->
+							</td>
+						</tr>
+						<!-- // MODULE ROW -->
+
+
+						<!-- MODULE ROW // -->
+						<tr>
+							<td align=center valign=top>
+								<!-- CENTERING TABLE // -->
+								<table border=0 cellpadding=0 cellspacing=0 width=100% bgcolor=#F8F8F8>
+									<tr>
+										<td align=center valign=top>
+											<!-- FLEXIBLE CONTAINER // -->
+											<table border=0 cellpadding=0 cellspacing=0 width=500 class=flexibleContainer>
+												<tr>
+													<td align=center valign=top width=500 class=flexibleContainerCell>
+														<table border=0 cellpadding=30 cellspacing=0 width=100%>
+															<tr>
+																<td align=center valign=top>
+
+																	<!-- CONTENT TABLE // -->
+																	<table border=0 cellpadding=0 cellspacing=0 width=100%>
+																		<tr>
+																			<td valign=top class=textContent>
+																				<!--
+																					The mc:edit is a feature for MailChimp which allows
+																					you to edit certain row. It makes it easy for you to quickly edit row sections.
+																					http://kb.mailchimp.com/templates/code/create-editable-content-areas-with-mailchimps-template-language
+																				-->
+																				<h3 mc:edit=header style=color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Message Title</h3>
+																				<div mc:edit=body style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</div>
+																			</td>
+																		</tr>
+																	</table>
+																	<!-- // CONTENT TABLE -->
+
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<!-- // FLEXIBLE CONTAINER -->
+										</td>
+									</tr>
+								</table>
+								<!-- // CENTERING TABLE -->
+							</td>
+						</tr>
+						<!-- // MODULE ROW -->
+
+
+
+						<!-- MODULE ROW // -->
+						<tr>
+							<td align=center valign=top>
+								<!-- CENTERING TABLE // -->
+								<table border=0 cellpadding=0 cellspacing=0 width=100%>
+									<tr>
+										<td align=center valign=top>
+											<!-- FLEXIBLE CONTAINER // -->
+											<table border=0 cellpadding=0 cellspacing=0 width=500 class=flexibleContainer>
+												<tr>
+													<td valign=top width=500 class=flexibleContainerCell>
+
+														<!-- CONTENT TABLE // -->
+														<table align=left border=0 cellpadding=0 cellspacing=0 width=100%>
+															<tr>
+																<td align=left valign=top class=flexibleContainerBox style=background-color:#5F5F5F;>
+																	<table border=0 cellpadding=30 cellspacing=0 width=100% style=max-width:100%;>
+																		<tr>
+																			<td align=left class=textContent>
+																				<h3 style=color:#FFFFFF;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Left Column</h3>
+																				<div style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis.</div>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+																<td align=right valign=top class=flexibleContainerBox style=background-color:#27ae60;>
+																	<table class=flexibleContainerBoxNext border=0 cellpadding=30 cellspacing=0 width=100% style=max-width:100%;>
+																		<tr>
+																			<td align=left class=textContent>
+																				<h3 style=color:#FFFFFF;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>Right Column</h3>
+																				<div style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#FFFFFF;line-height:135%;>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis.</div>
+																			</td>
+																		</tr>
+																	</table>
+																</td>
+															</tr>
+														</table>
+														<!-- // CONTENT TABLE -->
+
+													</td>
+												</tr>
+											</table>
+											<!-- // FLEXIBLE CONTAINER -->
+										</td>
+									</tr>
+								</table>
+								<!-- // CENTERING TABLE -->
+							</td>
+						</tr>
+						<!-- // MODULE ROW -->
+
+
+						<!-- MODULE ROW // -->
+						<tr>
+							<td align=center valign=top>
+								<!-- CENTERING TABLE // -->
+								<table border=0 cellpadding=0 cellspacing=0 width=100%>
+									<tr>
+										<td align=center valign=top>
+											<!-- FLEXIBLE CONTAINER // -->
+											<table border=0 cellpadding=0 cellspacing=0 width=500 class=flexibleContainer>
+												<tr>
+													<td align=center valign=top width=500 class=flexibleContainerCell>
+														<table border=0 cellpadding=30 cellspacing=0 width=100%>
+															<tr>
+																<td align=center valign=top>
+
+																	<!-- CONTENT TABLE // -->
+																	<table border=0 cellpadding=0 cellspacing=0 width=100%>
+																		<tr>
+																			<td valign=top class=textContent>
+																				<div style=text-align:center;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;margin-top:3px;color:#5F5F5F;line-height:135%;>Empty row for your custom contents</div>
+																			</td>
+																		</tr>
+																	</table>
+																	<!-- // CONTENT TABLE -->
+
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+											<!-- // FLEXIBLE CONTAINER -->
+										</td>
+									</tr>
+								</table>
+								<!-- // CENTERING TABLE -->
+							</td>
+						</tr>
+						<!-- // MODULE ROW -->
+
+					</table>
+					<!-- // END -->
+
+
+				</td>
+			</tr>
+		</table>
+	</center>
+</body>
+</html>
+
 						");
 					$name=$this->asunto;
 					$mail->AltBody = $this->asunto;//Replace the plain text body with one created manually
