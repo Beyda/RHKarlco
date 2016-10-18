@@ -18,7 +18,7 @@
       </thead>
       <tbody>
       <?php
-      $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $empresa ORDER BY `id_correo` ASC";       
+      $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $empresa ORDER BY `id_correo` DESC";       
       $res_correo = $mysqli->query($obt_correo);
       while ($row_correo = $res_correo->fetch_array()) {
         $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";       

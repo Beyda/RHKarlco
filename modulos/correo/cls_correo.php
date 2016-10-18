@@ -80,8 +80,10 @@
 				$row_ejer = $resul_sel_ejer->fetch_array();
 
 				$fecha = date('Y-m-j');
-				
-				echo $correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','".addslashes(."$this->mensaje'".).",'$this->archivo', '$fecha', $row_ejer[0])";
+				$mensaje = addslashes($this->mensaje);
+				$mensaje2 = nl2br($mensaje);
+				$mensajehtml = nl2br($this->mensaje);
+				echo $correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','". $mensaje2 ."','$this->archivo', '$fecha', $row_ejer[0])";
 				$correo = $mysqli->query($correo);
 
 				if ($mysqli->error) {
@@ -327,7 +329,7 @@
 															<tr>
 																<td align=center valign=top class=textContent>
 																	<h1 style=color:#FFFFFF;line-height:100%;font-family:Helvetica,Arial,sans-serif;font-size:35px;font-weight:normal;margin-bottom:5px;text-align:center; font-weight: bold>Recursos Humanos</h1>
-																	<img src=http://admonkco.com/rhkarlco/imagenes/logo.png style=width: 300px;>
+																	<img src=http://admonkco.com/rhkarlco/imagenes/logopeque.png style=width: 300px;>
 																</td>
 															</tr>
 														</table>
@@ -366,7 +368,7 @@
 																		<tr>
 																			<td valign=top class=textContent>
 																				<h3 mc:edit=header style=color:#5F5F5F;line-height:125%;font-family:Helvetica,Arial,sans-serif;font-size:20px;font-weight:normal;margin-top:0;margin-bottom:3px;text-align:left;>$this->asunto</h3>
-																				<div mc:edit=body style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;>$this->mensaje</div>
+																				<div mc:edit=body style=text-align:left;font-family:Helvetica,Arial,sans-serif;font-size:15px;margin-bottom:0;color:#5F5F5F;line-height:135%;>$mensajehtml</div>
 																			</td>
 																		</tr>
 																	</table>
