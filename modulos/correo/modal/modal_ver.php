@@ -28,18 +28,16 @@ $row_correo = $res_correo->fetch_array();
                     <ul class="mailbox-attachments clearfix">
                     <?php
                     if ($row_correo[4] != "") {
-                    $archivo = "../../carga_archivos/correos/$row_correo[4]";
+                    $archivo = "../carga_archivos/correos/$row_correo[4]";
                     $extension = end( explode('.', $archivo) );
                     if ($extension == "jpg" || $extension == "png" || $extension == "PNG") {
-                      echo $extension;
                       ?>
                     <li>
-                      <span class="mailbox-attachment-icon has-img"><img src="../../dist/img/photo2.png" alt="Attachment"/></span>
+                      <span class="mailbox-attachment-icon has-img"><img src="<?php echo $archivo ?>" alt="Attachment"/></span>
                       <div class="mailbox-attachment-info">
-                        <a href="#" class="mailbox-attachment-name"><i class="fa fa-camera"></i> photo2.png</a>
                         <span class="mailbox-attachment-size">
-                          1.9 MB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                        <a href="<?php echo $archivo ?>" target="blanck" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> <?php echo $row_correo[4] ?></a>
+                          <a href="<?php echo $archivo ?>" target="blanck" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                         </span>
                       </div>
                     </li>
@@ -50,10 +48,10 @@ $row_correo = $res_correo->fetch_array();
                     <li>
                       <span class="mailbox-attachment-icon"><i class="fa fa-file-text-o"></i></span>
                       <div class="mailbox-attachment-info">
-                        <a href="#" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> App Description.docx</a>
+                        
                         <span class="mailbox-attachment-size">
-                          1,245 KB
-                          <a href="#" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
+                        <a href="<?php echo $archivo ?>" target="blanck" class="mailbox-attachment-name"><i class="fa fa-paperclip"></i> <?php echo $row_correo[4] ?></a>
+                          <a href="<?php echo $archivo ?>" target="blanck" class="btn btn-default btn-xs pull-right"><i class="fa fa-cloud-download"></i></a>
                         </span>
                       </div>
                     </li>

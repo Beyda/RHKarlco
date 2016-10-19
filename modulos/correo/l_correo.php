@@ -86,7 +86,7 @@ include("../../template/todo2.php");
                     </thead>
                     <tbody>
                     <?php
-                    echo $obt_correo = "SELECT * FROM `correos` ORDER BY `id_correo` ASC";       
+                    $obt_correo = "SELECT * FROM `correos` ORDER BY `id_correo` ASC";       
                     $res_correo = $mysqli->query($obt_correo);
                     while ($row_correo = $res_correo->fetch_array()) {
                       $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";       
@@ -102,7 +102,8 @@ include("../../template/todo2.php");
                           $ano = date("Y", strtotime($row_correo[5]));
                           $dia = date('d', strtotime($row_correo[5]));
                           $mes = date('n', strtotime($row_correo[5]));
-                          echo $dia." de ".$meses[$mes-1]. " de ".$ano ;
+                          echo
+                           $dia." de ".$meses[$mes-1]. " de ".$ano ;
                         ?></td>
                       </tr>
                       <?php

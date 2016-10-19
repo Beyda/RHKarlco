@@ -83,7 +83,7 @@
 				$mensaje = addslashes($this->mensaje);
 				$mensaje2 = nl2br($mensaje);
 				$mensajehtml = nl2br($this->mensaje);
-				echo $correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','". $mensaje2 ."','$this->archivo', '$fecha', $row_ejer[0])";
+				$correo = "INSERT INTO `correos`(`id_empresa`, `asunto`, `mensaje`, `adjunto`, `fecha`, `id_ejercicio`) VALUES ($this->empresa,'$this->asunto','". $mensaje2 ."','$this->archivo', '$fecha', $row_ejer[0])";
 				$correo = $mysqli->query($correo);
 
 				if ($mysqli->error) {
@@ -129,8 +129,6 @@
 					      $mail->addAddress(utf8_decode($row_correos[4]) , utf8_decode($row_correos[0]) .' '. utf8_decode($row_correos[1]) .' '. utf8_decode($row_correos[2]) .' '. utf8_decode($row_correos[3]));//correos a donde se envia el mensaje
 					          }
 					$mail->Subject = $this->asunto;//Set the subject line
-
-					$mail->AddAttachment($this->tmp_name, $this->archivo);
 					//Read an HTML message body from an external file, convert referenced images to embedded,
 					//convert HTML into a basic plain-text alternative body
 					//$mail->msgHTML(file_get_contents('contents.html'), dirname(__FILE__));
@@ -454,6 +452,7 @@
 
 						");
 					$name=$this->asunto;
+					$mail->AddAttachment($this->tmp_name, $this->archivo);
 					$mail->AltBody = $this->asunto;//Replace the plain text body with one created manually
 
 					//Attach an image file
@@ -462,8 +461,9 @@
 					if (!$mail->send()) {
 					    echo "Mailer Error: " . $mail->ErrorInfo;
 					} else {
-					    echo "Message sent!";
-					    header("Location: l_correo.php");
+					    //echo "Message sent!";
+					    //header("Location: l_correo.php");
+					    echo "<script> document.location='l_correo.php'; </script>";
 
 					}
 				}
