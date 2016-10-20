@@ -340,7 +340,10 @@ include("template/todo2.php");
 
         </section><!-- /.content -->
 
-        <?php$obt_emp = "SELECT DISTINCT p.`id_empresa` FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_datosper` = $_SESSION[id_datosper] AND pp.`id_puesto` = p.`id_puesto`";       
+        <?php
+          }
+          
+        $obt_emp = "SELECT DISTINCT p.`id_empresa` FROM `puesto_per` pp INNER JOIN `puestos` p ON pp.`id_datosper` = $_SESSION[id_datosper] AND pp.`id_puesto` = p.`id_puesto`";       
           $res_emp = $mysqli->query($obt_emp);
           $row_demp = $res_emp->fetch_array();
           $row_emp = $res_emp->num_rows;
@@ -348,16 +351,16 @@ include("template/todo2.php");
         ?>
           <!-- Small boxes (Stat box) -->
           <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-6">
 
               <div class="col-xs-12" id="result">
 
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Empleados</h3>
+                  <h3 class="box-title">Correos</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="example1" class="table table-striped">
+                  <table id="example1" class="table table-hover">
                     <thead>
                       <tr>
                         <th>Asunto</th>
@@ -368,7 +371,7 @@ include("template/todo2.php");
                     <?php
                   
 
-                    $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` ASC";       
+                    $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` DESC LIMIT 5";       
                     $res_correo = $mysqli->query($obt_correo);
                     while ($row_correo = $res_correo->fetch_array()) {
                       $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";      
@@ -376,7 +379,7 @@ include("template/todo2.php");
                       $row_empresa = $res_empresa->fetch_array();
                       ?>
                       <tr>
-                        <td><a href="modal/modal_ver.php?id=<?php echo $row_correo[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
+                        <td><a href="modulos/correo/modal/modal_ver.php?id=<?php echo $row_correo[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 60);?>...</td>
                         <td><?php 
                           $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
                           $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
@@ -393,8 +396,8 @@ include("template/todo2.php");
                     </tbody>
                     <tfoot>
                       <tr>
-                        <th>Asunto</th>
-                        <th>Fecha</th>
+                        <th></th>
+                        <th><a href="modulos/correo/l_correo.php"><button class="btn btn-block btn-info btn-sm">Ver todos</button></a></th>
                       </tr>
                     </tfoot>
                   </table>
@@ -406,8 +409,6 @@ include("template/todo2.php");
           </div>
           <?php
 }
-          }
-          
           ?>
 
       </div><!-- /.content-wrapper -->
