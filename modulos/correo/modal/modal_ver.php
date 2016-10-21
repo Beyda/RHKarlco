@@ -6,7 +6,7 @@ $obt_correo = "SELECT c.*, e.`nombre` FROM `correos` c INNER JOIN `empresas` e O
 $res_correo = $mysqli->query($obt_correo);
 $row_correo = $res_correo->fetch_array();
 ?>
-<script type="text/javascript" src="/rhkarlco/bootstrap/js/scripts.js"></script>
+
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Correo</h4>
@@ -63,23 +63,3 @@ $row_correo = $res_correo->fetch_array();
                 </div><!-- /.box-footer -->
               </form>
      
-    <script type="text/javascript">
-
-      $(document).ready(function(){
-        $('.modalOb').click(function() { 
-          $('.modal').modal('show'); 
-          $('.modal-content').val('');
-          $('.modal-content').load($(this).attr('href'));
-           return false;
-        });
-
-      });
-      </script>
-
-      <div class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            
-          </div>
-        </div>
-      </div>
