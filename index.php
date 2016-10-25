@@ -369,17 +369,12 @@ include("template/todo2.php");
                     </thead>
                     <tbody>
                     <?php
-                  
-
-                    $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` DESC LIMIT 5";       
+                    echo $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` DESC LIMIT 5";       
                     $res_correo = $mysqli->query($obt_correo);
                     while ($row_correo = $res_correo->fetch_array()) {
-                      $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";      
-                      $res_empresa = $mysqli->query($obt_empresa);
-                      $row_empresa = $res_empresa->fetch_array();
                       ?>
                       <tr>
-                        <td><a href="modulos/correo/modal/modal_ver.php?id=<?php echo $row_correo[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 60);?>...</td>
+                        <td><a href="modulos/correo/v_correo.php?id=<?php echo $row_correo[0]?>"><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 60);?>...</td>
                         <td><?php 
                           $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
                           $meses = array("Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic");
@@ -459,11 +454,7 @@ require('template/footer.php');
 </html>
 
 <?php
-
-
 } else{
 header("location: /rhkarlco/login.php");
 }
-
-
 ?>

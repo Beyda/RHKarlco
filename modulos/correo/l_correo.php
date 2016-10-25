@@ -76,7 +76,7 @@ include("../../template/todo2.php");
                   <h3 class="box-title">Correos</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="example1" class="table table-striped">
+                  <table id="example1" class="table table-hover">
                     <thead>
                       <tr>
                         <th>Asunto</th>
@@ -86,7 +86,7 @@ include("../../template/todo2.php");
                     </thead>
                     <tbody>
                     <?php
-                    $obt_correo = "SELECT * FROM `correos` ORDER BY `id_correo` ASC";       
+                    echo $obt_correo = "SELECT * FROM `correos` ORDER BY `id_correo` DESC";       
                     $res_correo = $mysqli->query($obt_correo);
                     while ($row_correo = $res_correo->fetch_array()) {
                       $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";       
@@ -94,7 +94,7 @@ include("../../template/todo2.php");
                       $row_empresa = $res_empresa->fetch_array();
                       ?>
                       <tr>
-                        <td><a href="modal/modal_ver.php?id=<?php echo $row_correo[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
+                        <td><a href="v_correo.php?id=<?php echo $row_correo[0]?>"><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
                         <td><?php echo $row_empresa[0] ?></td>
                         <td><?php 
                           $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -177,7 +177,7 @@ include("../../template/todo2.php");
                     </thead>
                     <tbody>
                     <?php
-                    $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` ASC";       
+                    $obt_correo = "SELECT * FROM `correos` WHERE `id_empresa` = $row_demp[0] ORDER BY `id_correo` DESC";       
                     $res_correo = $mysqli->query($obt_correo);
                     while ($row_correo = $res_correo->fetch_array()) {
                       $obt_empresa = "SELECT `nombre` FROM `empresas` WHERE `id_empresa` = $row_correo[1]";
@@ -185,7 +185,7 @@ include("../../template/todo2.php");
                       $row_empresa = $res_empresa->fetch_array();
                       ?>
                       <tr>
-                        <td><a href="modal/modal_ver.php?id=<?php echo $row_correo[0]?>" data-toggle="modal" data-target=".bs-example-modal-lg" class='modalLoad'><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
+                        <td><a href="v_correo.php?id=<?php echo $row_correo[0]?>"><strong><?php echo $row_correo[2] ?></strong></a> - <?php echo substr($row_correo[3], 0, 90);?>...</td>
                         <td><?php echo $row_empresa[0] ?></td>
                         <td><?php 
                           $dias = array("Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sábado");
@@ -265,8 +265,6 @@ include("../../template/todo2.php");
           </div>
         </div>
       </div>
-
-  </body>
 <?php 
 require('../../template/footer.php');
     ?>
