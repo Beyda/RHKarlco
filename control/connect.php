@@ -1,5 +1,5 @@
 <?php
-$mysqli = new mysqli("localhost", "admin_rhkarlco", "bdrhk16", "admin_rhkarlco");
+$mysqli = new mysqli("localhost", "", "", "");
 //$mysqli = new mysqli("localhost", "root", "", "admin_rhkarlco");
 /* check connection */
 if (mysqli_connect_errno()) {
